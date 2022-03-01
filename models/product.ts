@@ -19,7 +19,7 @@ var productSchema = new Schema(
 			type: String,
 			required: true
 		},
-		inStock: {}
+		inStock: { type: String, required: true }
 	},
 	{ timestamps: true }
 )
