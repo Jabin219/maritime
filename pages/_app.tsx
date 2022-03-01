@@ -14,19 +14,19 @@ const theme = createTheme({
 	},
 	typography: {
 		body1: {
-			fontFamily: 'Source Sans 3',
+			fontFamily: 'Source Sans Pro',
 			color: '#333333'
 		},
 		body2: {
-			fontFamily: 'Source Sans 3',
+			fontFamily: 'Source Sans Pro',
 			color: '#333333'
 		},
-		h1: { fontFamily: 'Source Sans 3', color: '#333333' },
-		h2: { fontFamily: 'Source Sans 3', color: '#333333' },
-		h3: { fontFamily: 'Source Sans 3', color: '#333333' },
-		h4: { fontFamily: 'Source Sans 3', color: '#333333' },
-		h5: { fontFamily: 'Source Sans 3', color: '#333333' },
-		h6: { fontFamily: 'Source Sans 3', color: '#333333' }
+		h1: { fontFamily: 'Source Sans Pro', color: '#333333' },
+		h2: { fontFamily: 'Source Sans Pro', color: '#333333' },
+		h3: { fontFamily: 'Source Sans Pro', color: '#333333' },
+		h4: { fontFamily: 'Source Sans Pro', color: '#333333' },
+		h5: { fontFamily: 'Source Sans Pro', color: '#333333' },
+		h6: { fontFamily: 'Source Sans Pro', color: '#333333' }
 	}
 })
 
