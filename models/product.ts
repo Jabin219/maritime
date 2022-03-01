@@ -19,7 +19,7 @@ const productSchema = new Schema(
 			type: String,
 			required: true
 		},
-		inStock: { type: String, required: true }
+		inStock: { type: Boolean, required: true }
 	},
 	{ timestamps: true }
 )
