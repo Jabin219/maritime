@@ -7,7 +7,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	if (req.method === 'POST') {
 		try {
 			const test = new Test({ name: name })
-			var testAddedResult = await test.save()
+			const testAddedResult = await test.save()
 			res.send(testAddedResult)
 		} catch (error) {
 			console.error(error)

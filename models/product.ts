@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
-var Schema = mongoose.Schema
+const Schema = mongoose.Schema
 
-var productSchema = new Schema(
+const productSchema = new Schema(
 	{
 		name: {
 			type: String,
@@ -24,6 +24,6 @@ var productSchema = new Schema(
 	{ timestamps: true }
 )
 
-var User = mongoose.model('Product', productSchema)
+const User = mongoose.model('Product', productSchema)
 
 export default User
