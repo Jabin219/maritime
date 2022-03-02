@@ -10,6 +10,7 @@ import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { CustomTab, CustomGrid, HeaderButton } from './style'
 import { Search, ShoppingCart } from '@mui/icons-material'
 import CategoriesNavBar from '../CategoriesNavBar'
+import Link from 'next/link'
 import { HeaderLinks } from './constant'
 function Header() {
 	return (
@@ -62,10 +63,14 @@ function Header() {
 							marginRight: '2vw'
 						}}
 					>
-						Log in
+						<Link href='/login'>
+							<a>Log in</a>
+						</Link>
 					</HeaderButton>
 					<HeaderButton sx={{ backgroundColor: '#FF8800', color: '#ffffff' }}>
-						Sign up
+						<Link href='/sign-up'>
+							<a>Sign up</a>
+						</Link>
 					</HeaderButton>
 				</CustomGrid>
 			</Grid>
