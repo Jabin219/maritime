@@ -2,7 +2,7 @@ import { Box, Grid, List, ListItem } from '@mui/material'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { FooterListTitle, FooterTypography } from './style'
 import Link from 'next/link'
-import { footerSupportList, footerQuickLinksList } from './constant'
+import { FooterSupportLinks, FooterQuickLinks } from './constant'
 
 function Footer() {
 	return (
@@ -20,7 +20,9 @@ function Footer() {
 							height={159}
 						/>
 						<Box sx={{ marginTop: '30px', color: '#fff' }}>
-							<FooterTypography>Halifax, NS B0B 1T1</FooterTypography>
+							<FooterTypography sx={{ marginBottom: '10px' }}>
+								Halifax, NS B0B 1T1
+							</FooterTypography>
 							<FooterTypography>info@maritimehouseholds.ca</FooterTypography>
 						</Box>
 					</Box>
@@ -30,10 +32,10 @@ function Footer() {
 						<ListItem sx={{ paddingTop: 0 }}>
 							<FooterListTitle variant='h3'>Support</FooterListTitle>
 						</ListItem>
-						{footerSupportList.map((item, index) => (
+						{FooterSupportLinks.map((item, index) => (
 							<ListItem key={index}>
 								<a href='#'>
-									<Link href='/'>
+									<Link href='#'>
 										<FooterTypography>{item.label}</FooterTypography>
 									</Link>
 								</a>
@@ -46,10 +48,10 @@ function Footer() {
 						<ListItem sx={{ paddingTop: 0 }}>
 							<FooterListTitle variant='h3'>Quick Links</FooterListTitle>
 						</ListItem>
-						{footerQuickLinksList.map((item, index) => (
+						{FooterQuickLinks.map((item, index) => (
 							<ListItem key={index}>
 								<a href='#'>
-									<Link href='/'>
+									<Link href='#'>
 										<FooterTypography>{item.label}</FooterTypography>
 									</Link>
 								</a>

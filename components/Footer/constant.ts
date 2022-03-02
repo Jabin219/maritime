@@ -1,9 +1,9 @@
-export const footerSupportList = [
+export const FooterSupportLinks = [
 	{ label: 'Shipping & Return' },
 	{ label: 'Privacy Policy' },
 	{ label: 'Terms & Conditions' }
 ]
-export const footerQuickLinksList = [
+export const FooterQuickLinks = [
 	{ label: 'About us' },
 	{ label: 'Services' },
 	{ label: 'Contact' },
