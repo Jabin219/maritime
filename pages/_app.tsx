@@ -2,6 +2,7 @@ import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 import { createTheme, ThemeProvider, Box, CssBaseline } from '@mui/material'
 import Header from '../components/Header'
+import Footer from '../components/Footer'
 
 const theme = createTheme({
 	palette: {
@@ -34,9 +35,10 @@ function MyApp({ Component, pageProps }: AppProps) {
 	return (
 		<ThemeProvider theme={theme}>
 			<Header />
-			<Box sx={{ maxWidth: '1920px', margin: '0 auto' }}>
+			<Box sx={{ maxWidth: '1920px', margin: '0 auto', minHeight: '90vh' }}>
 				<Component {...pageProps} />
 			</Box>
+			<Footer />
 		</ThemeProvider>
 	)
 }
