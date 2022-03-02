@@ -11,6 +11,7 @@ import { CustomTab, CustomGrid, HeaderButton } from './style'
 import { Search, ShoppingCart } from '@mui/icons-material'
 import CategoriesNavBar from '../CategoriesNavBar'
 import { headerNavBarItems } from './constant'
+import Link from 'next/link'
 function Header() {
 	return (
 		<AppBar position='static' color='secondary' sx={{ boxShadow: 'none' }}>
@@ -62,10 +63,14 @@ function Header() {
 							marginRight: '2vw'
 						}}
 					>
-						Log in
+						<a href='#'>
+							<Link href='/login'>Log in</Link>
+						</a>
 					</HeaderButton>
 					<HeaderButton sx={{ backgroundColor: '#FF8800', color: '#ffffff' }}>
-						Sign up
+						<a href='#'>
+							<Link href='/sign-up'>Sign up</Link>
+						</a>
 					</HeaderButton>
 				</CustomGrid>
 			</Grid>
