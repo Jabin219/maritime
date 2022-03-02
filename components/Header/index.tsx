@@ -63,14 +63,14 @@ function Header() {
 							marginRight: '2vw'
 						}}
 					>
-						<a href='#'>
-							<Link href='/login'>Log in</Link>
-						</a>
+						<Link href='/login'>
+							<a>Log in</a>
+						</Link>
 					</HeaderButton>
 					<HeaderButton sx={{ backgroundColor: '#FF8800', color: '#ffffff' }}>
-						<a href='#'>
-							<Link href='/sign-up'>Sign up</Link>
-						</a>
+						<Link href='/sign-up'>
+							<a>Sign up</a>
+						</Link>
 					</HeaderButton>
 				</CustomGrid>
 			</Grid>
