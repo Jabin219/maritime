@@ -1,4 +1,4 @@
-export const headerNavBarItems = [
+export const HeaderLinks = [
 	{ label: 'HOME', link: '/home', value: 'home' },
 	{ label: 'ABOUT', link: '/about', value: 'about' },
 	{ label: 'SERVICE', link: '/service', value: 'service' },
