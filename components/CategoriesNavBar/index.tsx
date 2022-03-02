@@ -1,12 +1,12 @@
 import { Box, Tabs } from '@mui/material'
 import { CustomTab } from './style'
-import { categoriesNavItems } from './constant'
+import { Categories } from './constant'
 
 function CategoriesNavBar() {
 	return (
 		<Box>
 			<Tabs centered>
-				{categoriesNavItems.map((item, index) => (
+				{Categories.map((item, index) => (
 					<CustomTab
 						key={index}
 						value={item.value}

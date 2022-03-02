@@ -1,4 +1,4 @@
-export const categoriesNavItems = [
+export const Categories = [
 	{ label: 'All', value: 'all' },
 	{ label: 'New Arrivals', value: 'new-arrivals' },
 	{ label: 'Furniture', value: 'furniture' },
