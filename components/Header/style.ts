@@ -2,7 +2,7 @@ import { Tab, Grid, Button, CssBaseline } from '@mui/material'
 import { styled } from '@mui/system'
 
 const CustomTab = styled(Tab)({
-	fontFamily: 'Source Sans 3',
+	fontFamily: 'Source Sans Pro',
 	fontSize: '20px',
 	fontWeight: 700,
 	lineHeight: '28px',
@@ -20,7 +20,7 @@ const CustomGrid = styled(Grid)({
 })
 
 const HeaderButton = styled(Button)({
-	fontFamily: 'Source Sans 3',
+	fontFamily: 'Source Sans Pro',
 	borderRadius: '12px',
 	padding: '10px 35px',
 	fontSize: '20px',
