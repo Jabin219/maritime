@@ -10,7 +10,7 @@ import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { CustomTab, CustomGrid, HeaderButton } from './style'
 import { Search, ShoppingCart } from '@mui/icons-material'
 import CategoriesNavBar from '../CategoriesNavBar'
-import { headerNavBarItems } from './constant'
+import { HeaderLinks } from './constant'
 function Header() {
 	return (
 		<AppBar position='static' color='secondary' sx={{ boxShadow: 'none' }}>
@@ -29,7 +29,7 @@ function Header() {
 				<CustomGrid item sx={{ display: 'flex', alignItems: 'center' }} xs>
 					<Box>
 						<Tabs className='nav' value={false} indicatorColor='secondary'>
-							{headerNavBarItems.map((item, index) => (
+							{HeaderLinks.map((item, index) => (
 								<CustomTab
 									key={index}
 									value={item.value}
