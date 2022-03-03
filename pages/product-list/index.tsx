@@ -9,8 +9,10 @@ import {
 	ProductListTitle,
 	ProductListContainer
 } from './style'
+import { useRouter } from 'next/router'
 
 function ProductList() {
+	const router = useRouter()
 	const { category } = useContext(ProductContext)
 	const [showedProducts, setShowedProducts] = useState(SampleProducts)
 	const [title, setTitle] = useState('')
@@ -64,8 +66,20 @@ function ProductList() {
 						<Grid container>
 							{showedProducts.map((product, index) => (
 								<ProductListGrid key={index} item xs={3}>
-									<LazyLoadImage src={product.coverImage} alt='product' />
-									<Typography variant='h6' className='product-name'>
+									<LazyLoadImage
+										src={product.coverImage}
+										alt='product'
+										onClick={() => {
+											router.push(`/product?productId=${product.id}`)
+										}}
+									/>
+									<Typography
+										variant='h6'
+										className='product-name'
+										onClick={() => {
+											router.push(`/product?productId=${product.id}`)
+										}}
+									>
 										{product.name}
 									</Typography>
 									<Typography variant='h6' className='product-price'>
