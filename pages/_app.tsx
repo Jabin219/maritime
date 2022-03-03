@@ -3,6 +3,7 @@ import type { AppProps } from 'next/app'
 import { createTheme, ThemeProvider, Box, CssBaseline } from '@mui/material'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
+import ProductContextProvider from '../context/ProductContextProvider'
 
 const theme = createTheme({
 	palette: {
@@ -58,11 +59,13 @@ const theme = createTheme({
 function MyApp({ Component, pageProps }: AppProps) {
 	return (
 		<ThemeProvider theme={theme}>
-			<Header />
-			<Box sx={{ maxWidth: '1920px', margin: '0 auto', minHeight: '90vh' }}>
-				<Component {...pageProps} />
-			</Box>
-			<Footer />
+			<ProductContextProvider>
+				<Header />
+				<Box sx={{ maxWidth: '1920px', margin: '0 auto', minHeight: '90vh' }}>
+					<Component {...pageProps} />
+				</Box>
+				<Footer />
+			</ProductContextProvider>
 		</ThemeProvider>
 	)
 }
