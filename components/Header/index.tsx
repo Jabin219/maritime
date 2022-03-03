@@ -17,7 +17,7 @@ function Header() {
 		<AppBar position='static' color='secondary' sx={{ boxShadow: 'none' }}>
 			<Grid
 				container
-				sx={{ margin: '13px', borderBottom: '1px solid #ADADAD' }}
+				sx={{ margin: '13px 13px 0', borderBottom: '1px solid #ADADAD' }}
 			>
 				<Grid item xs={1}>
 					<LazyLoadImage
