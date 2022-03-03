@@ -8,7 +8,7 @@ function CategoriesNavBar() {
 	const { setCategory } = useContext(ProductContext)
 	return (
 		<Box sx={{ boxShadow: '0px 2px 10px rgba(0, 0, 0, 0.1)' }}>
-			<Tabs centered>
+			<Tabs centered value={false}>
 				{Categories.map((item, index) => (
 					<CustomTab
 						key={index}
