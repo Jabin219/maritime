@@ -12,12 +12,16 @@ const ProductListGrid = styled(Grid)({
 	alignItems: 'center',
 	'& img': {
 		width: '80%',
-		marginBottom: '20px'
+		marginBottom: '20px',
+		cursor: 'pointer'
 	},
-	'& .product-name, .product-name': {
+	'& .product-name, .product-price': {
 		fontSize: 20,
 		fontWeight: 600,
 		textAlign: 'center'
+	},
+	'& .product-name': {
+		cursor: 'pointer'
 	},
 	'& .product-price': {
 		color: '#FF8800'
