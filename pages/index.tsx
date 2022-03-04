@@ -8,7 +8,7 @@ import HomeProductGrid from '../components/HomeProductGrid'
 import { Category } from '../models'
 
 const Home: NextPage = () => {
-	const [bannerHeight, setBannerHeight] = useState(800)
+	const [bannerHeight, setBannerHeight] = useState(600)
 	useEffect(() => {
 		setBannerHeight(getBannerHeight(2.4))
 	}, [])

@@ -36,12 +36,17 @@ const theme = createTheme({
 			lineHeight: '85px',
 			fontFamily: 'Source Sans Pro',
 			color: '#333333',
-			fontStyle: 'normal'
+			fontStyle: 'normal',
+			textAlign: 'center'
 		},
 		h2: {
 			fontFamily: 'Source Sans Pro',
 			color: '#333333',
-			fontStyle: 'normal'
+			fontStyle: 'normal',
+			fontSize: 40,
+			fontWeight: 900,
+			lineHeight: '57px',
+			textAlign: 'center'
 		},
 		h3: {
 			fontFamily: 'Source Sans Pro',
