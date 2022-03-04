@@ -6,7 +6,7 @@ import { ProductListGrid, ProductListTitle, HomeGridButton } from './style'
 import { ProductContext } from '../../context/ProductContextProvider'
 import { FlexBox } from '../CustomComponents'
 import { ArrowForwardIos } from '@mui/icons-material'
-import Link from 'next/link'
+import CustomLink from '../../components/CustomLink'
 interface Props {
 	category: Category
 	products: Product[]
@@ -24,31 +24,35 @@ function HomeProductGrid({ category, products }: Props) {
 				<Grid container>
 					{products.map((product, index) => (
 						<ProductListGrid key={index} item xs={3}>
-							<Image
-								src={product.coverImage}
-								alt='product-image'
-								width={300}
-								height={300}
-							/>
-							<Typography variant='h6' className='product-name'>
-								{product.name}
-							</Typography>
+							<CustomLink href={`/product?productId=${product.id}`}>
+								<Image
+									src={product.coverImage}
+									alt='product-image'
+									width={300}
+									height={300}
+								/>
+							</CustomLink>
+							<CustomLink href={`/product?productId=${product.id}`}>
+								<Typography variant='h6' className='product-name'>
+									{product.name}
+								</Typography>
+							</CustomLink>
 							<Typography variant='h6' className='product-price'>
 								${product.price} CAD
 							</Typography>
 						</ProductListGrid>
 					))}
 				</Grid>
-				<Link href='/product-list'>
+				<CustomLink href='/product-list'>
 					<ArrowForwardIos
 						sx={{ cursor: 'pointer' }}
 						onClick={() => {
 							setCategory(category.value)
 						}}
 					/>
-				</Link>
+				</CustomLink>
 			</FlexBox>
-			<Link href='/product-list'>
+			<CustomLink href='/product-list'>
 				<HomeGridButton
 					onClick={() => {
 						setCategory(category.value)
@@ -56,7 +60,7 @@ function HomeProductGrid({ category, products }: Props) {
 				>
 					View all {category.name}
 				</HomeGridButton>
-			</Link>
+			</CustomLink>
 		</FlexBox>
 	)
 }

@@ -1,8 +1,8 @@
 import { Box, Grid, List, ListItem } from '@mui/material'
 import Image from 'next/image'
 import { FooterListTitle, FooterTypography } from './style'
-import Link from 'next/link'
 import { FooterSupportLinks, FooterQuickLinks } from './constant'
+import CustomLink from '../../components/CustomLink'
 
 function Footer() {
 	return (
@@ -34,11 +34,9 @@ function Footer() {
 						</ListItem>
 						{FooterSupportLinks.map((item, index) => (
 							<ListItem key={index}>
-								<Link href='/'>
-									<a>
-										<FooterTypography>{item.label}</FooterTypography>
-									</a>
-								</Link>
+								<CustomLink href='/'>
+									<FooterTypography>{item.label}</FooterTypography>
+								</CustomLink>
 							</ListItem>
 						))}
 					</List>
@@ -50,11 +48,11 @@ function Footer() {
 						</ListItem>
 						{FooterQuickLinks.map((item, index) => (
 							<ListItem key={index}>
-								<Link href={item.link}>
+								<CustomLink href={item.link}>
 									<a>
 										<FooterTypography>{item.label}</FooterTypography>
 									</a>
-								</Link>
+								</CustomLink>
 							</ListItem>
 						))}
 					</List>
