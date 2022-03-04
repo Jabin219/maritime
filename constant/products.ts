@@ -1,7 +1,7 @@
 export const SampleCategories = [
-	{ name: 'All', value: 'all' },
+	{ name: 'All Products', value: 'all' },
 	{ name: 'New Arrivals', value: 'new-arrivals' },
-	{ name: 'SALE', value: 'sale' },
+	{ name: 'On Sale', value: 'sale' },
 	{
 		id: '8846a096-ba3e-44e1-b417-eebc4ecddad3',
 		name: 'Furniture',

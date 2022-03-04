@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from 'react'
 import CategoryList from '../../components/CategoryList'
 import { SampleCategories, SampleProducts } from '../../constant/products'
 import { ProductContext } from '../../context/ProductContextProvider'
-import { LazyLoadImage } from 'react-lazy-load-image-component'
+import Image from 'next/image'
 import {
 	ProductListGrid,
 	ProductListTitle,
@@ -66,12 +66,14 @@ function ProductList() {
 						<Grid container>
 							{showedProducts.map((product, index) => (
 								<ProductListGrid key={index} item xs={3}>
-									<LazyLoadImage
+									<Image
 										src={product.coverImage}
-										alt='product'
+										alt='product-image'
 										onClick={() => {
 											router.push(`/product?productId=${product.id}`)
 										}}
+										width={500}
+										height={500}
 									/>
 									<Typography
 										variant='h6'

@@ -4,8 +4,8 @@ export const FooterSupportLinks = [
 	{ label: 'Terms & Conditions' }
 ]
 export const FooterQuickLinks = [
-	{ label: 'About us' },
-	{ label: 'Services' },
-	{ label: 'Contact' },
-	{ label: 'All products' }
+	{ label: 'About us', link: '' },
+	{ label: 'Services', link: '' },
+	{ label: 'Contact', link: '' },
+	{ label: 'All products', link: '/product-list' }
 ]

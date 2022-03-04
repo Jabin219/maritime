@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { SampleProducts } from '../../constant/products'
 import { Product } from '../../models'
-import { LazyLoadImage } from 'react-lazy-load-image-component'
+import Image from 'next/image'
 import {
 	ProductButtonContainer,
 	RelatedProductGrid,
@@ -44,7 +44,14 @@ function Product() {
 							}
 						}}
 					>
-						<LazyLoadImage src={showedProduct?.coverImage} />
+						{showedProduct && (
+							<Image
+								src={showedProduct.coverImage}
+								alt='product-image'
+								width={500}
+								height={500}
+							/>
+						)}
 					</Grid>
 					<Grid item xs={5}>
 						<Typography
@@ -62,7 +69,7 @@ function Product() {
 									color: '#FF8800'
 								}}
 							>
-								{showedProduct?.price}
+								${showedProduct?.price} CAD
 							</Typography>
 						) : (
 							<>
@@ -76,7 +83,7 @@ function Product() {
 										marginBottom: '15px'
 									}}
 								>
-									{showedProduct?.price}
+									${showedProduct?.price} CAD
 								</Typography>
 								<Typography
 									className='product-price'
@@ -86,10 +93,12 @@ function Product() {
 										color: '#FF8800'
 									}}
 								>
+									$
 									{priceFormatter(
 										Number(showedProduct?.price) -
 											Number(showedProduct?.discount)
-									)}
+									)}{' '}
+									CAD
 								</Typography>
 							</>
 						)}
@@ -109,11 +118,14 @@ function Product() {
 						{relatedProducts &&
 							relatedProducts.map((product, index) => (
 								<RelatedProductGrid key={index} xs={3}>
-									<LazyLoadImage
+									<Image
 										src={product.coverImage}
+										alt='product-image'
 										onClick={() => {
 											router.push(`/product?productId=${product.id}`)
 										}}
+										width={500}
+										height={500}
 									/>
 									<Typography
 										className='product-name'
@@ -127,7 +139,7 @@ function Product() {
 										$
 										{priceFormatter(
 											Number(product.price) - Number(product.discount)
-										)}
+										)}{' '}
 										CAD
 									</Typography>
 								</RelatedProductGrid>

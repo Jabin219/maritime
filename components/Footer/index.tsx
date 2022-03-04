@@ -1,5 +1,5 @@
 import { Box, Grid, List, ListItem } from '@mui/material'
-import { LazyLoadImage } from 'react-lazy-load-image-component'
+import Image from 'next/image'
 import { FooterListTitle, FooterTypography } from './style'
 import Link from 'next/link'
 import { FooterSupportLinks, FooterQuickLinks } from './constant'
@@ -13,7 +13,7 @@ function Footer() {
 			>
 				<Grid item xs>
 					<Box>
-						<LazyLoadImage
+						<Image
 							src='/images/logo/footer-logo.png'
 							alt='logo'
 							width={231}
@@ -34,11 +34,11 @@ function Footer() {
 						</ListItem>
 						{FooterSupportLinks.map((item, index) => (
 							<ListItem key={index}>
-								<a href='#'>
-									<Link href='#'>
+								<Link href='/'>
+									<a>
 										<FooterTypography>{item.label}</FooterTypography>
-									</Link>
-								</a>
+									</a>
+								</Link>
 							</ListItem>
 						))}
 					</List>
@@ -50,11 +50,11 @@ function Footer() {
 						</ListItem>
 						{FooterQuickLinks.map((item, index) => (
 							<ListItem key={index}>
-								<a href='#'>
-									<Link href='#'>
+								<Link href={item.link}>
+									<a>
 										<FooterTypography>{item.label}</FooterTypography>
-									</Link>
-								</a>
+									</a>
+								</Link>
 							</ListItem>
 						))}
 					</List>

@@ -6,7 +6,7 @@ import {
 	Tabs,
 	TextField
 } from '@mui/material'
-import { LazyLoadImage } from 'react-lazy-load-image-component'
+import Image from 'next/image'
 import { CustomTab, CustomGrid, HeaderButton } from './style'
 import { Search, ShoppingCart } from '@mui/icons-material'
 import CategoriesNavBar from '../CategoriesNavBar'
@@ -20,22 +20,30 @@ function Header() {
 				sx={{ margin: '13px 13px 0', borderBottom: '1px solid #ADADAD' }}
 			>
 				<Grid item xs={1}>
-					<LazyLoadImage
-						src='/images/logo/header-logo.png'
-						alt='logo'
-						width={155}
-						height={95}
-					/>
+					<Link href='/' passHref={true}>
+						<a>
+							<Image
+								src='/images/logo/header-logo.png'
+								alt='logo'
+								width={155}
+								height={95}
+							/>
+						</a>
+					</Link>
 				</Grid>
 				<CustomGrid item sx={{ display: 'flex', alignItems: 'center' }} xs>
 					<Box>
 						<Tabs className='nav' value={false} indicatorColor='secondary'>
 							{HeaderLinks.map((item, index) => (
-								<CustomTab
-									key={index}
-									value={item.value}
-									label={item.label}
-								></CustomTab>
+								<Link key={index} href={item.link}>
+									<a>
+										<CustomTab
+											key={index}
+											value={item.value}
+											label={item.label}
+										></CustomTab>
+									</a>
+								</Link>
 							))}
 						</Tabs>
 					</Box>
@@ -56,22 +64,22 @@ function Header() {
 					<ShoppingCart />
 				</CustomGrid>
 				<CustomGrid item xs={2} sx={{ marginRight: '2vw' }}>
-					<HeaderButton
-						sx={{
-							backgroundColor: '#EEEEEE',
-							color: '#333333',
-							marginRight: '2vw'
-						}}
-					>
-						<Link href='/login'>
+					<Link href='/login'>
+						<HeaderButton
+							sx={{
+								backgroundColor: '#EEEEEE',
+								color: '#333333',
+								marginRight: '2vw'
+							}}
+						>
 							<a>Log in</a>
-						</Link>
-					</HeaderButton>
-					<HeaderButton sx={{ backgroundColor: '#FF8800', color: '#ffffff' }}>
-						<Link href='/sign-up'>
+						</HeaderButton>
+					</Link>
+					<Link href='/sign-up'>
+						<HeaderButton sx={{ backgroundColor: '#FF8800', color: '#ffffff' }}>
 							<a>Sign up</a>
-						</Link>
-					</HeaderButton>
+						</HeaderButton>
+					</Link>
 				</CustomGrid>
 			</Grid>
 			<CategoriesNavBar />

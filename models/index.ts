@@ -7,3 +7,9 @@ export type Product = {
 	discount: string
 	newArrival: boolean
 }
+
+export type Category = {
+	id: string
+	name: string
+	value: string
+}
