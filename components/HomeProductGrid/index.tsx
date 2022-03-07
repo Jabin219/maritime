@@ -7,6 +7,7 @@ import { ProductContext } from '../../context/ProductContextProvider'
 import { FlexBox } from '../CustomComponents'
 import { ArrowForwardIos } from '@mui/icons-material'
 import CustomLink from '../../components/CustomLink'
+import { priceFormatter } from '../../utils'
 interface Props {
 	category: Category
 	products: Product[]
@@ -15,7 +16,10 @@ interface Props {
 function HomeProductGrid({ category, products }: Props) {
 	const { setCategory } = useContext(ProductContext)
 	return (
-		<FlexBox className='home-product-grid-container'>
+		<FlexBox
+			className='home-product-grid-container'
+			sx={{ marginBottom: '50px' }}
+		>
 			<ProductListTitle variant='h3'>{category.name}</ProductListTitle>
 			<FlexBox
 				className='products-container'
@@ -37,9 +41,29 @@ function HomeProductGrid({ category, products }: Props) {
 									{product.name}
 								</Typography>
 							</CustomLink>
-							<Typography variant='h6' className='product-price'>
-								${product.price} CAD
-							</Typography>
+							{Number(product?.discount) === 0 ? (
+								<Typography variant='h6' className='product-price'>
+									${product.price} CAD
+								</Typography>
+							) : (
+								<>
+									<Typography
+										sx={{
+											color: '#ADADAD',
+											textDecoration: 'line-through'
+										}}
+									>
+										${product?.price} CAD
+									</Typography>
+									<Typography className='product-price'>
+										$
+										{priceFormatter(
+											Number(product?.price) - Number(product?.discount)
+										)}{' '}
+										CAD
+									</Typography>
+								</>
+							)}
 						</ProductListGrid>
 					))}
 				</Grid>

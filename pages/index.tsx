@@ -9,8 +9,10 @@ import { Category } from '../models'
 
 const Home: NextPage = () => {
 	const [bannerHeight, setBannerHeight] = useState(600)
+	const [middleBannerHeight, setMiddleBannerHeight] = useState(400)
 	useEffect(() => {
 		setBannerHeight(getBannerHeight(2.4))
+		setMiddleBannerHeight(getBannerHeight(3.6))
 	}, [])
 	return (
 		<Box className='home-page' sx={{ marginBottom: '100px' }}>
@@ -47,24 +49,38 @@ const Home: NextPage = () => {
 				let listedProducts = []
 				if (item.value === 'all') {
 					return
-				}
-				if (item.value === 'sale') {
+				} else if (item.value === 'sale') {
 					listedProducts = SampleProducts.filter(
 						product => Number(product.discount) > 0
 					)
 				} else if (item.value === 'new-arrivals') {
 					listedProducts = SampleProducts.filter(product => product.newArrival)
+				} else if (item.value === 'organization' || item.value === 'gifts') {
+					return
 				} else {
 					listedProducts = SampleProducts.filter(
 						product => product.category === item.value
 					)
 				}
 				return (
-					<HomeProductGrid
-						key={index}
-						category={item as Category}
-						products={listedProducts.slice(0, 4)}
-					/>
+					<>
+						<HomeProductGrid
+							key={index}
+							category={item as Category}
+							products={listedProducts.slice(0, 4)}
+						/>
+						{item.value === 'sale' && (
+							<FlexBox
+								sx={{
+									width: '100%',
+									height: middleBannerHeight,
+									background:
+										'url(/images/home/home-middle-banner.jpg) no-repeat',
+									backgroundSize: 'cover'
+								}}
+							></FlexBox>
+						)}
+					</>
 				)
 			})}
 		</Box>
