@@ -17,7 +17,8 @@ const ProductListGrid = styled(Grid)({
 		textAlign: 'center'
 	},
 	'& .product-price': {
-		color: '#FF8800'
+		color: '#FF8800',
+		fontWeight: 600
 	}
 })
 const ProductListTitle = styled(Typography)({

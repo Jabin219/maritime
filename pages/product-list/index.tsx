@@ -10,6 +10,7 @@ import {
 	ProductListContainer
 } from './style'
 import { useRouter } from 'next/router'
+import { priceFormatter } from '../../utils'
 
 function ProductList() {
 	const router = useRouter()
@@ -84,9 +85,29 @@ function ProductList() {
 									>
 										{product.name}
 									</Typography>
-									<Typography variant='h6' className='product-price'>
-										${product.price} CAD
-									</Typography>
+									{Number(product?.discount) === 0 ? (
+										<Typography variant='h6' className='product-price'>
+											${product.price} CAD
+										</Typography>
+									) : (
+										<>
+											<Typography
+												sx={{
+													color: '#ADADAD',
+													textDecoration: 'line-through'
+												}}
+											>
+												${product?.price} CAD
+											</Typography>
+											<Typography className='product-price'>
+												$
+												{priceFormatter(
+													Number(product?.price) - Number(product?.discount)
+												)}{' '}
+												CAD
+											</Typography>
+										</>
+									)}
 								</ProductListGrid>
 							))}
 						</Grid>
