@@ -70,11 +70,12 @@ function ProductList() {
 									<Image
 										src={product.coverImage}
 										alt='product-image'
+										className='product-image'
 										onClick={() => {
 											router.push(`/product?productId=${product.id}`)
 										}}
-										width={500}
-										height={500}
+										width={300}
+										height={300}
 									/>
 									<Typography
 										variant='h6'

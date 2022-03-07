@@ -7,10 +7,6 @@ const ProductListGrid = styled(Grid)({
 	flexDirection: 'column',
 	justifyContent: 'center',
 	alignItems: 'center',
-	'& img': {
-		width: '80%',
-		marginBottom: '20px'
-	},
 	'& .product-name, .product-name': {
 		fontSize: 20,
 		fontWeight: 600,

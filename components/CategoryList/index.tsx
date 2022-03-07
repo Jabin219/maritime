@@ -73,16 +73,6 @@ function CategoryList({ Categories }: Props) {
 						))}
 					</List>
 				</Collapse>
-				<ListItemButton disableRipple onClick={handleClickOpenPriceRangeList}>
-					<ListItemText
-						primary='Price Range'
-						sx={{
-							'& span': { fontWeight: 700, fontSize: 28, lineHeight: '25px' }
-						}}
-					/>
-					{openPriceRange ? <ExpandLess /> : <ExpandMore />}
-				</ListItemButton>
-				<Divider variant='middle' />
 			</List>
 		</Box>
 	)
