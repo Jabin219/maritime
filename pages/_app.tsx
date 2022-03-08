@@ -1,10 +1,11 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
-import { createTheme, ThemeProvider, Box, CssBaseline } from '@mui/material'
+import { createTheme, ThemeProvider, Box } from '@mui/material'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import ProductContextProvider from '../context/ProductContextProvider'
 import Head from 'next/head'
+import SnackContextProvider from '../context/SnackContextProvider'
 
 const theme = createTheme({
 	palette: {
@@ -77,17 +78,19 @@ const theme = createTheme({
 function MyApp({ Component, pageProps }: AppProps) {
 	return (
 		<ThemeProvider theme={theme}>
-			<Head>
-				<title>Maritime Household</title>
-				<meta name='viewport' content='viewport-fit=cover' />
-			</Head>
-			<ProductContextProvider>
-				<Header />
-				<Box sx={{ maxWidth: '1920px', margin: '0 auto', minHeight: '90vh' }}>
-					<Component {...pageProps} />
-				</Box>
-				<Footer />
-			</ProductContextProvider>
+			<SnackContextProvider>
+				<Head>
+					<title>Maritime Household</title>
+					<meta name='viewport' content='viewport-fit=cover' />
+				</Head>
+				<ProductContextProvider>
+					<Header />
+					<Box sx={{ maxWidth: '1920px', margin: '0 auto', minHeight: '90vh' }}>
+						<Component {...pageProps} />
+					</Box>
+					<Footer />
+				</ProductContextProvider>
+			</SnackContextProvider>
 		</ThemeProvider>
 	)
 }

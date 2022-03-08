@@ -1,6 +1,6 @@
-import { Box, Button, Divider, Grid, Typography } from '@mui/material'
+import { Box, Button, Grid, Typography } from '@mui/material'
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { SampleProducts } from '../../constant/products'
 import { Product } from '../../models'
 import Image from 'next/image'
@@ -9,17 +9,30 @@ import {
 	RelatedProductGrid,
 	RelatedProductsTitle
 } from './style'
-import { getFourRandomNumberArray, priceFormatter } from '../../utils'
+import { fourRandomNumberArray, priceFormatter } from '../../utils'
+import { addToCart } from '../../utils/cartHandler'
+import { ProductContext } from '../../context/ProductContextProvider'
+import { SnackContext } from '../../context/SnackContextProvider'
 
 function Product() {
 	const router = useRouter()
 	const { productId } = router.query
 	const [showedProduct, setShowedProduct] = useState<Product>()
 	const relatedProducts: Product[] = []
-	const relatedProductsIndex = getFourRandomNumberArray(0, 17)
+	const relatedProductsIndex = fourRandomNumberArray
 	relatedProductsIndex.forEach(index => {
 		relatedProducts.push(SampleProducts[index])
 	})
+	const { cart, setCart } = useContext(ProductContext)
+	const { showSnackbar } = useContext(SnackContext)
+	const handleAddToCart = () => {
+		const thisProduct = {
+			...showedProduct,
+			quantity: 1
+		}
+		const result = addToCart(cart, thisProduct as Product)
+		showSnackbar('add-to-cart', 'success')
+	}
 	useEffect(() => {
 		setShowedProduct(
 			SampleProducts.find(item => {
@@ -56,7 +69,7 @@ function Product() {
 					<Grid item xs={5}>
 						<Typography
 							className='product-name'
-							sx={{ fontWeight: 900, fontSize: 40, marginBottom: '15px' }}
+							sx={{ fontWeight: 900, fontSize: 40, marginBottom: '40px' }}
 						>
 							{showedProduct?.name}
 						</Typography>
@@ -103,8 +116,22 @@ function Product() {
 							</>
 						)}
 						<ProductButtonContainer className='btn-container'>
-							<Button className='add-to-cart'>Add to Cart</Button>
-							<Button className='buy-now'>Buy Now</Button>
+							<Button
+								className='add-to-cart'
+								onClick={() => {
+									handleAddToCart()
+								}}
+							>
+								Add to Cart
+							</Button>
+							<Button
+								className='buy-now'
+								onClick={() => {
+									handleAddToCart()
+								}}
+							>
+								Buy Now
+							</Button>
 						</ProductButtonContainer>
 					</Grid>
 				</Grid>

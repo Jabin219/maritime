@@ -20,7 +20,7 @@ function Header() {
 				container
 				sx={{ margin: '13px 13px 0', borderBottom: '1px solid #ADADAD' }}
 			>
-				<Grid item xs={1}>
+				<Grid item xs>
 					<CustomLink href='/'>
 						<Image
 							src='/images/logo/header-logo.png'
@@ -30,7 +30,7 @@ function Header() {
 						/>
 					</CustomLink>
 				</Grid>
-				<CustomGrid item sx={{ display: 'flex', alignItems: 'center' }} xs>
+				<CustomGrid item sx={{ display: 'flex', alignItems: 'center' }} xs={4}>
 					<Box>
 						<Tabs className='nav' value={false} indicatorColor='secondary'>
 							{HeaderLinks.map((item, index) => (
@@ -48,6 +48,7 @@ function Header() {
 				<CustomGrid item xs={3}>
 					<TextField
 						fullWidth
+						size='small'
 						InputProps={{
 							startAdornment: (
 								<InputAdornment position='start'>
@@ -57,10 +58,12 @@ function Header() {
 						}}
 					></TextField>
 				</CustomGrid>
-				<CustomGrid item xs={0.5}>
-					<ShoppingCart />
+				<CustomGrid item xs={1}>
+					<CustomLink href='/order'>
+						<ShoppingCart />
+					</CustomLink>
 				</CustomGrid>
-				<CustomGrid item xs={2} sx={{ marginRight: '2vw' }}>
+				<CustomGrid item xs={3} sx={{ marginRight: '1vw' }}>
 					<CustomLink href='/login'>
 						<HeaderButton
 							sx={{

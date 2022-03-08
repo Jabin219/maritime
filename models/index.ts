@@ -6,6 +6,7 @@ export type Product = {
 	category: string
 	discount: string
 	newArrival: boolean
+	quantity?: number
 }
 
 export type Category = {
