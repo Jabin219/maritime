@@ -1,6 +1,6 @@
 import { Box, Typography } from '@mui/material'
-import { SubPageButton } from 'components/CustomComponents'
-import PageBanner from 'components/PageBanner'
+import { SubPageButton } from 'components/customComponents'
+import PageBanner from 'components/pageBanner'
 
 function Service() {
 	return (

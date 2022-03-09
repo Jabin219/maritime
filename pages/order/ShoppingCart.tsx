@@ -10,7 +10,7 @@ import {
 	Box
 } from '@mui/material'
 import { useContext } from 'react'
-import { FlexBox } from 'components/CustomComponents'
+import { FlexBox } from 'components/customComponents'
 import { ProductContext } from 'context/ProductContextProvider'
 import Image from 'next/image'
 import { Product } from 'models'
@@ -23,7 +23,7 @@ import {
 	quantityDecrease
 } from '../../utils/cartHandler'
 import { priceFormatter } from '../../utils'
-import CustomLink from '../../components/CustomLink'
+import CustomLink from '../../components/customLink'
 import { OrderContext } from '.'
 
 function ShoppingCart() {

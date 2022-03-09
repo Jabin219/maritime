@@ -1,7 +1,7 @@
 import { Box, Typography, Divider, Grid, Button } from '@mui/material'
 import { useContext } from 'react'
 import { OrderContext } from '.'
-import CustomLink from 'components/CustomLink'
+import CustomLink from 'components/customLink'
 import { priceFormatter } from 'utils'
 import { OrderSideSummaryContainer } from './style'
 

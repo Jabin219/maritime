@@ -13,7 +13,7 @@ import { fourRandomNumberArray, priceFormatter } from 'utils'
 import { addToCart } from 'utils/cartHandler'
 import { ProductContext } from 'context/ProductContextProvider'
 import { SnackContext } from 'context/SnackContextProvider'
-import CustomLink from 'components/CustomLink'
+import CustomLink from 'components/customLink'
 
 function Product() {
 	const router = useRouter()
