@@ -10,10 +10,10 @@ import {
 	Box
 } from '@mui/material'
 import { useContext } from 'react'
-import { FlexBox } from '../../components/CustomComponents'
-import { ProductContext } from '../../context/ProductContextProvider'
+import { FlexBox } from 'components/CustomComponents'
+import { ProductContext } from 'context/ProductContextProvider'
 import Image from 'next/image'
-import { Product } from '../../models'
+import { Product } from 'models'
 import { ShoppingCartContainer } from './style'
 import { Remove, Add, Delete } from '@mui/icons-material'
 import {

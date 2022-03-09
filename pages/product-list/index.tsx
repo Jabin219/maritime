@@ -1,16 +1,16 @@
 import { Box, Grid, Typography } from '@mui/material'
 import { useContext, useEffect, useState } from 'react'
-import CategoryList from '../../components/CategoryList'
-import { SampleCategories, SampleProducts } from '../../constant/products'
-import { ProductContext } from '../../context/ProductContextProvider'
+import CategoryList from 'components/CategoryList'
+import { SampleCategories, SampleProducts } from 'constant/products'
+import { ProductContext } from 'context/ProductContextProvider'
 import Image from 'next/image'
 import {
 	ProductListGrid,
 	ProductListTitle,
 	ProductListContainer
 } from './style'
-import { priceFormatter } from '../../utils'
-import CustomLink from '../../components/CustomLink'
+import { priceFormatter } from 'utils'
+import CustomLink from 'components/CustomLink'
 
 function ProductList() {
 	const { category } = useContext(ProductContext)

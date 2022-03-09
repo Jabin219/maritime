@@ -1,13 +1,13 @@
 import { useContext } from 'react'
 import { Grid, Typography } from '@mui/material'
-import { Category, Product } from '../../models'
+import { Category, Product } from 'models'
 import Image from 'next/image'
 import { ProductListGrid, ProductListTitle, HomeGridButton } from './style'
-import { ProductContext } from '../../context/ProductContextProvider'
+import { ProductContext } from 'context/ProductContextProvider'
 import { FlexBox } from '../CustomComponents'
 import { ArrowForwardIos } from '@mui/icons-material'
-import CustomLink from '../../components/CustomLink'
-import { priceFormatter } from '../../utils'
+import CustomLink from '../CustomLink'
+import { priceFormatter } from 'utils'
 interface Props {
 	category: Category
 	products: Product[]

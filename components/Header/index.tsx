@@ -11,7 +11,7 @@ import { CustomTab, CustomGrid, HeaderButton } from './style'
 import { Search, ShoppingCart } from '@mui/icons-material'
 import CategoriesNavBar from '../CategoriesNavBar'
 import { HeaderLinks } from './constant'
-import CustomLink from '../../components/CustomLink'
+import CustomLink from '../CustomLink'
 
 function Header() {
 	return (

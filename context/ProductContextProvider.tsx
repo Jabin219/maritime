@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
-import { cartStorage, countCartTotal } from '../utils/cartHandler'
+import { useState, createContext } from 'react'
+import { cartStorage } from '../utils/cartHandler'
 
-export const ProductContext = React.createContext<any>(null)
+export const ProductContext = createContext<any>(null)
 interface Props {
 	children: any
 }

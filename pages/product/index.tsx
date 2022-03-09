@@ -1,19 +1,19 @@
 import { Box, Button, Grid, Typography } from '@mui/material'
 import { useRouter } from 'next/router'
 import { useContext, useEffect, useState } from 'react'
-import { SampleProducts } from '../../constant/products'
-import { Product } from '../../models'
+import { SampleProducts } from 'constant/products'
+import { Product } from 'models'
 import Image from 'next/image'
 import {
 	ProductButtonContainer,
 	RelatedProductGrid,
 	RelatedProductsTitle
 } from './style'
-import { fourRandomNumberArray, priceFormatter } from '../../utils'
-import { addToCart } from '../../utils/cartHandler'
-import { ProductContext } from '../../context/ProductContextProvider'
-import { SnackContext } from '../../context/SnackContextProvider'
-import CustomLink from '../../components/CustomLink'
+import { fourRandomNumberArray, priceFormatter } from 'utils'
+import { addToCart } from 'utils/cartHandler'
+import { ProductContext } from 'context/ProductContextProvider'
+import { SnackContext } from 'context/SnackContextProvider'
+import CustomLink from 'components/CustomLink'
 
 function Product() {
 	const router = useRouter()

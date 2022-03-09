@@ -1,11 +1,11 @@
 import { Box, Typography } from '@mui/material'
 import type { NextPage } from 'next'
-import { SampleCategories, SampleProducts } from '../constant/products'
+import { SampleCategories, SampleProducts } from 'constant/products'
 import { useState, useEffect } from 'react'
-import { getBannerHeight } from '../utils'
-import { FlexBox } from '../components/CustomComponents'
-import HomeProductGrid from '../components/HomeProductGrid'
-import { Category } from '../models'
+import { getBannerHeight } from 'utils'
+import { FlexBox } from 'components/CustomComponents'
+import HomeProductGrid from 'components/HomeProductGrid'
+import { Category } from 'models'
 
 const Home: NextPage = () => {
 	const [bannerHeight, setBannerHeight] = useState(600)

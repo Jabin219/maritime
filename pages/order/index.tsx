@@ -1,14 +1,14 @@
 import { Box, Grid } from '@mui/material'
 import React from 'react'
-import { useContext, useState } from 'react'
-import { ProductContext } from '../../context/ProductContextProvider'
-import { countCartTotal } from '../../utils/cartHandler'
+import { useContext, useState, createContext } from 'react'
+import { ProductContext } from 'context/ProductContextProvider'
+import { countCartTotal } from 'utils/cartHandler'
 import OrderSideSummary from './OrderSideSummary'
 import PaymentMethod from './PaymentMethod'
 import ShippingForm from './ShippingForm'
 import ShoppingCart from './ShoppingCart'
 
-export const OrderContext = React.createContext<any>(null)
+export const OrderContext = createContext<any>(null)
 
 function Order() {
 	const [orderStep, setOrderStep] = useState(0)

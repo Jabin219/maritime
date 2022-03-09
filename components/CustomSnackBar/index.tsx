@@ -1,8 +1,8 @@
 import { Snackbar } from '@mui/material'
 import MuiAlert from '@mui/material/Alert'
-import React from 'react'
+import { forwardRef } from 'react'
 
-const Alert: any = React.forwardRef(function Alert(props, ref) {
+const Alert: any = forwardRef(function Alert(props, ref) {
 	return <MuiAlert elevation={6} ref={ref as any} variant='filled' {...props} />
 })
 

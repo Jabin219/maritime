@@ -1,6 +1,6 @@
 import { Box, Typography, Grid, TextField } from '@mui/material'
-import { SubPageButton } from '../../components/CustomComponents'
-import PageBanner from '../../components/PegeBanner'
+import { SubPageButton } from 'components/CustomComponents'
+import PageBanner from 'components/PageBanner'
 import { contactInputLabels } from './constant'
 
 function Contact() {

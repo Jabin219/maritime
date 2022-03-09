@@ -1,4 +1,4 @@
-import React, { createContext } from 'react'
+import { createContext, useReducer } from 'react'
 import CustomSnackBar from '../components/CustomSnackBar'
 export const SnackContext = createContext<ContextData>({
 	showSnackbar: () => {}
@@ -41,7 +41,7 @@ const reducer = (state: State, action: Action): State => {
 }
 
 const SnackContextProvider = ({ children }: any) => {
-	const [state, dispatch] = React.useReducer(reducer, initialState)
+	const [state, dispatch] = useReducer(reducer, initialState)
 	const snackClose = () => {
 		dispatch({ type: 'close' })
 	}

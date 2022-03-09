@@ -1,6 +1,6 @@
 import { Typography } from '@mui/material'
 import { useState, useEffect } from 'react'
-import { getBannerHeight } from '../../utils'
+import { getBannerHeight } from 'utils'
 import { FlexBox } from '../CustomComponents'
 
 interface Props {
