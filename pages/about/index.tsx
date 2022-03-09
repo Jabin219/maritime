@@ -1,5 +1,6 @@
 import { Box, Typography } from '@mui/material'
 import { SubPageButton } from 'components/customComponents'
+import CustomLink from 'components/customLink'
 import PageBanner from 'components/pageBanner'
 
 function About() {
@@ -27,7 +28,9 @@ function About() {
 					culpa qui officia deserunt mollit anim id est laborum.
 				</Typography>
 			</Box>
-			<SubPageButton disableElevation>INQUIRE MORE</SubPageButton>
+			<CustomLink href='/contact'>
+				<SubPageButton disableElevation>INQUIRE MORE</SubPageButton>
+			</CustomLink>
 		</Box>
 	)
 }

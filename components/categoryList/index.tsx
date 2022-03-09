@@ -16,13 +16,9 @@ interface Props {
 
 function CategoryList({ Categories }: Props) {
 	const [openCategory, setOpenCategory] = useState(true)
-	const [openPriceRange, setOpenPriceRange] = useState(true)
 	const { category, setCategory } = useContext(ProductContext)
 	const handleClickOpenCategoryList = () => {
 		setOpenCategory(!openCategory)
-	}
-	const handleClickOpenPriceRangeList = () => {
-		setOpenPriceRange(!openPriceRange)
 	}
 	const clickChangeCategory = (categoryValue: string) => {
 		setCategory(categoryValue)

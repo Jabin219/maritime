@@ -48,7 +48,7 @@ function Contact() {
 					</Box>
 				))}
 			</Box>
-			<SubPageButton disableElevation>INQUIRE MORE</SubPageButton>
+			<SubPageButton disableElevation>SEND</SubPageButton>
 		</Box>
 	)
 }
