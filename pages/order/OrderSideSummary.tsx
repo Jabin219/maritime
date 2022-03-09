@@ -8,7 +8,9 @@ import { OrderSideSummaryContainer } from './style'
 function OrderSideSummary() {
 	const { order, setOrderStep, orderStep } = useContext(OrderContext)
 	const handleNextStep = () => {
-		setOrderStep(orderStep + 1)
+		if (orderStep < 2) {
+			setOrderStep(orderStep + 1)
+		}
 	}
 	return (
 		<OrderSideSummaryContainer className='order-side-summary'>
