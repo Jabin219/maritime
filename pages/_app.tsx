@@ -62,7 +62,10 @@ const theme = createTheme({
 		h5: {
 			fontFamily: 'Source Sans Pro',
 			color: '#333333',
-			fontStyle: 'normal'
+			fontStyle: 'normal',
+			fontSize: 28,
+			fontWeight: 600,
+			lineHeight: '40px'
 		},
 		h6: {
 			fontFamily: 'Source Sans Pro',

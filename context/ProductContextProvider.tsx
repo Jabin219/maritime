@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { cartStorage } from '../utils/cartHandler'
+import { cartStorage, countCartTotal } from '../utils/cartHandler'
 
 export const ProductContext = React.createContext<any>(null)
 interface Props {

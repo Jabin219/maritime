@@ -1,18 +1,29 @@
 import { Box, Grid } from '@mui/material'
-import { useState } from 'react'
-import OrderContextProvider from '../../context/OrderContextProvider'
+import React from 'react'
+import { useContext, useState } from 'react'
+import { ProductContext } from '../../context/ProductContextProvider'
+import { countCartTotal } from '../../utils/cartHandler'
+import OrderSideSummary from './OrderSideSummary'
+import PaymentMethod from './PaymentMethod'
+import ShippingForm from './ShippingForm'
 import ShoppingCart from './ShoppingCart'
+
+export const OrderContext = React.createContext<any>(null)
 
 function Order() {
 	const [orderStep, setOrderStep] = useState(0)
+	const { cart } = useContext(ProductContext)
+	const [order, setOrder] = useState({
+		subtotal: countCartTotal(cart)
+	})
 	const getStepContent = (step: number) => {
 		switch (step) {
 			case 0:
 				return <ShoppingCart />
 			case 1:
-				return
+				return <ShippingForm />
 			case 2:
-				return
+				return <PaymentMethod />
 			case 3:
 				return
 			default:
@@ -20,16 +31,27 @@ function Order() {
 		}
 	}
 	return (
-		<OrderContextProvider>
+		<OrderContext.Provider
+			value={{
+				orderStep,
+				setOrderStep,
+				order,
+				setOrder
+			}}
+		>
 			<Box className='order-process-container' sx={{ margin: '70px 40px' }}>
-				<Grid container>
+				<Grid container spacing={5}>
 					<Grid item xs={orderStep !== 3 ? 8 : 12}>
 						{getStepContent(orderStep)}
 					</Grid>
-					<Grid item xs></Grid>
+					{orderStep !== 3 && (
+						<Grid item xs>
+							<OrderSideSummary />
+						</Grid>
+					)}
 				</Grid>
 			</Box>
-		</OrderContextProvider>
+		</OrderContext.Provider>
 	)
 }
 
