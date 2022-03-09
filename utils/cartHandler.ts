@@ -44,3 +44,64 @@ export const countCartTotal = (cartStorage: Product[]) => {
 export const checkSameProduct = (cartStorage: Product[], product: Product) => {
 	return cartStorage.find((cartItem: Product) => cartItem.id === product.id)
 }
+
+export const quantityDecrease = (
+	item: Product,
+	cart: Product[],
+	setCart,
+	order,
+	setOrder
+) => {
+	const currentCartProducts: Product[] = [...cart]
+	const findProductIndex = currentCartProducts.findIndex(
+		(product: Product) => product.id === item.id && Number(product.quantity) > 1
+	)
+	currentCartProducts[findProductIndex] &&
+		(currentCartProducts[findProductIndex] as any).quantity--
+	setCart(currentCartProducts)
+	saveCart(currentCartProducts)
+	setOrder({
+		...order,
+		products: currentCartProducts,
+		subtotal: countCartTotal(currentCartProducts)
+	})
+}
+export const quantityIncrease = (
+	item: Product,
+	cart: Product[],
+	setCart,
+	order,
+	setOrder
+) => {
+	const currentCartProducts: Product[] = [...cart]
+	const findProductIndex = currentCartProducts.findIndex(
+		(product: Product) => product.id === item.id
+	)
+	currentCartProducts[findProductIndex] &&
+		(currentCartProducts[findProductIndex] as any).quantity++
+	setCart(currentCartProducts)
+	saveCart(currentCartProducts)
+	setOrder({
+		...order,
+		products: currentCartProducts,
+		subtotal: countCartTotal(currentCartProducts)
+	})
+}
+export const itemRemove = (
+	item: Product,
+	cart: Product[],
+	setCart,
+	order,
+	setOrder
+) => {
+	const newProductList = cart.filter((product: Product) => {
+		return product.id !== item.id
+	})
+	setCart(newProductList)
+	saveCart(newProductList)
+	setOrder({
+		...order,
+		products: newProductList,
+		subtotal: countCartTotal(newProductList)
+	})
+}

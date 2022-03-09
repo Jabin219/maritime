@@ -13,6 +13,7 @@ import { fourRandomNumberArray, priceFormatter } from '../../utils'
 import { addToCart } from '../../utils/cartHandler'
 import { ProductContext } from '../../context/ProductContextProvider'
 import { SnackContext } from '../../context/SnackContextProvider'
+import CustomLink from '../../components/CustomLink'
 
 function Product() {
 	const router = useRouter()
@@ -23,14 +24,14 @@ function Product() {
 	relatedProductsIndex.forEach(index => {
 		relatedProducts.push(SampleProducts[index])
 	})
-	const { cart, setCart } = useContext(ProductContext)
+	const { cart } = useContext(ProductContext)
 	const { showSnackbar } = useContext(SnackContext)
 	const handleAddToCart = () => {
 		const thisProduct = {
 			...showedProduct,
 			quantity: 1
 		}
-		const result = addToCart(cart, thisProduct as Product)
+		addToCart(cart, thisProduct as Product)
 		showSnackbar('add-to-cart', 'success')
 	}
 	useEffect(() => {
@@ -124,14 +125,16 @@ function Product() {
 							>
 								Add to Cart
 							</Button>
-							<Button
-								className='buy-now'
-								onClick={() => {
-									handleAddToCart()
-								}}
-							>
-								Buy Now
-							</Button>
+							<CustomLink href='/order'>
+								<Button
+									className='buy-now'
+									onClick={() => {
+										handleAddToCart()
+									}}
+								>
+									Buy Now
+								</Button>
+							</CustomLink>
 						</ProductButtonContainer>
 					</Grid>
 				</Grid>
