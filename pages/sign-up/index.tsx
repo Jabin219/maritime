@@ -1,6 +1,6 @@
-import { Box, Typography, TextField, Button } from '@mui/material'
-import { signUpInputLabels } from './constant'
-import { SignUpButton } from './style'
+import { Box, Typography, TextField } from '@mui/material'
+import { signUpInputLabels } from 'constant/pages/sign-up'
+import { SignUpButton } from 'styles/pages/sign-up'
 
 function SignUp() {
 	return (

@@ -1,7 +1,10 @@
 import { Box, Grid, List, ListItem } from '@mui/material'
 import Image from 'next/image'
-import { FooterListTitle, FooterTypography } from './style'
-import { FooterSupportLinks, FooterQuickLinks } from './constant'
+import { FooterListTitle, FooterTypography } from 'styles/components/footer'
+import {
+	FooterSupportLinks,
+	FooterQuickLinks
+} from 'constant/components/footer'
 import CustomLink from '../customLink'
 
 function Footer() {

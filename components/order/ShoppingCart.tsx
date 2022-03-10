@@ -14,17 +14,17 @@ import { FlexBox } from 'components/customComponents'
 import { ProductContext } from 'context/ProductContextProvider'
 import Image from 'next/image'
 import { Product } from 'models'
-import { ShoppingCartContainer } from './style'
+import { ShoppingCartContainer } from 'styles/pages/order'
 import { Remove, Add, Delete } from '@mui/icons-material'
 import {
 	quantityIncrease,
 	countCartTotal,
 	itemRemove,
 	quantityDecrease
-} from '../../utils/cartHandler'
-import { priceFormatter } from '../../utils'
-import CustomLink from '../../components/customLink'
-import { OrderContext } from '.'
+} from 'utils/cartHandler'
+import { priceFormatter } from 'utils'
+import CustomLink from 'components/customLink'
+import { OrderContext } from 'context/OrderContextProvider'
 
 function ShoppingCart() {
 	const { cart, setCart } = useContext(ProductContext)

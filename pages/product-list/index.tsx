@@ -4,13 +4,13 @@ import CategoryList from 'components/categoryList'
 import { SampleCategories, SampleProducts } from 'constant/products'
 import { ProductContext } from 'context/ProductContextProvider'
 import Image from 'next/image'
-import {
-	ProductListGrid,
-	ProductListTitle,
-	ProductListContainer
-} from './style'
 import { priceFormatter } from 'utils'
 import CustomLink from 'components/customLink'
+import {
+	ProductListContainer,
+	ProductListTitle,
+	ProductListGrid
+} from 'styles/pages/product-list'
 
 function ProductList() {
 	const { category } = useContext(ProductContext)

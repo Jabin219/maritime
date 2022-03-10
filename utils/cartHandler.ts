@@ -1,4 +1,4 @@
-import { Product } from '../models'
+import { Product } from 'models'
 
 // init cartStorage
 export const cartStorage: Product[] =
@@ -16,7 +16,9 @@ export const addToCart = (cartStorage: Product[], product: Product) => {
 		}
 	)
 	if (findSameItemIndex !== -1) {
-		cartStorage[findSameItemIndex].quantity += product.quantity
+		;(cartStorage[findSameItemIndex].quantity as number) += Number(
+			product.quantity
+		)
 		saveCart(cartStorage)
 		return false
 	} else {
@@ -36,7 +38,7 @@ export const removeItem = (cartStorage: Product[], item: Product) => {
 
 export const countCartTotal = (cartStorage: Product[]) => {
 	const sum = cartStorage.reduce((total: number, cartItem: Product) => {
-		return total + Number(cartItem.price) * cartItem.quantity
+		return total + Number(cartItem.price) * Number(cartItem.quantity)
 	}, 0)
 	return sum
 }
@@ -48,9 +50,9 @@ export const checkSameProduct = (cartStorage: Product[], product: Product) => {
 export const quantityDecrease = (
 	item: Product,
 	cart: Product[],
-	setCart,
-	order,
-	setOrder
+	setCart: (cart: Product[]) => void,
+	order: any,
+	setOrder: (order: any) => void
 ) => {
 	const currentCartProducts: Product[] = [...cart]
 	const findProductIndex = currentCartProducts.findIndex(
@@ -69,9 +71,9 @@ export const quantityDecrease = (
 export const quantityIncrease = (
 	item: Product,
 	cart: Product[],
-	setCart,
-	order,
-	setOrder
+	setCart: (cart: Product[]) => void,
+	order: any,
+	setOrder: (order: any) => void
 ) => {
 	const currentCartProducts: Product[] = [...cart]
 	const findProductIndex = currentCartProducts.findIndex(
@@ -90,9 +92,9 @@ export const quantityIncrease = (
 export const itemRemove = (
 	item: Product,
 	cart: Product[],
-	setCart,
-	order,
-	setOrder
+	setCart: (cart: Product[]) => void,
+	order: any,
+	setOrder: (order: any) => void
 ) => {
 	const newProductList = cart.filter((product: Product) => {
 		return product.id !== item.id

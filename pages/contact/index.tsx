@@ -1,7 +1,7 @@
 import { Box, Typography, Grid, TextField } from '@mui/material'
 import { SubPageButton } from 'components/customComponents'
 import PageBanner from 'components/pageBanner'
-import { contactInputLabels } from './constant'
+import { contactInputLabels } from 'constant/pages/contact'
 
 function Contact() {
 	return (

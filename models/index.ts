@@ -1,7 +1,7 @@
 export type Product = {
 	id: string
 	name: string
-	price: string
+	price: string | number
 	coverImage: string
 	category: string
 	discount: string

@@ -6,13 +6,12 @@ const CustomTab = styled(Tab)({
 	fontSize: '20px',
 	fontWeight: 500,
 	lineHeight: '28px',
-	textTransform: 'uppercase',
+	textTransform: 'none',
+	marginRight: '1vw',
+	padding: '15px 1.2vw',
 	'& .MuiTouchRipple-root': {
 		display: 'none'
-	},
-	marginRight: '1vw',
-	textTransform: 'none',
-	padding: '15px 1.2vw'
+	}
 })
 
 export { CustomTab }

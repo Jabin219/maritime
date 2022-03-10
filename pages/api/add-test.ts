@@ -1,5 +1,5 @@
-import connectDB from '../../middleware/mongodb'
-import Test from '../../models/test'
+import connectDB from 'middleware/mongodb'
+import Test from 'models/test'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
