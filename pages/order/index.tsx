@@ -1,14 +1,14 @@
 import { Box, Grid } from '@mui/material'
 import React from 'react'
-import { useContext, useState, createContext } from 'react'
+import { useContext, useState } from 'react'
 import { ProductContext } from 'context/ProductContextProvider'
 import { countCartTotal } from 'utils/cartHandler'
-import OrderSideSummary from './OrderSideSummary'
-import PaymentMethod from './PaymentMethod'
-import ShippingForm from './ShippingForm'
-import ShoppingCart from './ShoppingCart'
+import OrderSideSummary from 'components/order/OrderSideSummary'
+import PaymentMethod from 'components/order/PaymentMethod'
+import ShippingForm from 'components/order/ShippingForm'
+import ShoppingCart from 'components/order/ShoppingCart'
 
-export const OrderContext = createContext<any>(null)
+import OrderContextProvider from 'context/OrderContextProvider'
 
 function Order() {
 	const [orderStep, setOrderStep] = useState(0)
@@ -31,7 +31,7 @@ function Order() {
 		}
 	}
 	return (
-		<OrderContext.Provider
+		<OrderContextProvider
 			value={{
 				orderStep,
 				setOrderStep,
@@ -51,7 +51,7 @@ function Order() {
 					)}
 				</Grid>
 			</Box>
-		</OrderContext.Provider>
+		</OrderContextProvider>
 	)
 }
 

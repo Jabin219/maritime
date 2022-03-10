@@ -7,10 +7,10 @@ import {
 	TextField
 } from '@mui/material'
 import Image from 'next/image'
-import { CustomTab, CustomGrid, HeaderButton } from './style'
+import { CustomTab, CustomGrid, HeaderButton } from 'styles/components/header'
 import { Search, ShoppingCart } from '@mui/icons-material'
 import CategoriesNavBar from '../categoriesNavBar'
-import { HeaderLinks } from './constant'
+import { HeaderLinks } from 'constant/components/header'
 import CustomLink from '../customLink'
 
 function Header() {

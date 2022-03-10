@@ -2,7 +2,11 @@ import { useContext } from 'react'
 import { Grid, Typography } from '@mui/material'
 import { Category, Product } from 'models'
 import Image from 'next/image'
-import { ProductListGrid, ProductListTitle, HomeGridButton } from './style'
+import {
+	ProductListGrid,
+	ProductListTitle,
+	HomeGridButton
+} from 'styles/components/homeProductGrid'
 import { ProductContext } from 'context/ProductContextProvider'
 import { FlexBox } from '../customComponents'
 import { ArrowForwardIos } from '@mui/icons-material'

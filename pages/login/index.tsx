@@ -1,5 +1,5 @@
 import { Box, Typography, TextField, Button } from '@mui/material'
-import { LoginButton } from './style'
+import { LoginButton } from 'styles/pages/login'
 
 function Login() {
 	return (

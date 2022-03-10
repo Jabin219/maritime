@@ -8,7 +8,7 @@ import {
 } from '@mui/material'
 import { useContext, useState } from 'react'
 import { ExpandLess, ExpandMore } from '@mui/icons-material'
-import { ProductContext } from '../../context/ProductContextProvider'
+import { ProductContext } from 'context/ProductContextProvider'
 
 interface Props {
 	Categories: any[]

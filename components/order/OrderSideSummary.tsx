@@ -1,9 +1,9 @@
 import { Box, Typography, Divider, Grid, Button } from '@mui/material'
 import { useContext } from 'react'
-import { OrderContext } from '.'
+import { OrderContext } from 'context/OrderContextProvider'
 import CustomLink from 'components/customLink'
 import { priceFormatter } from 'utils'
-import { OrderSideSummaryContainer } from './style'
+import { OrderSideSummaryContainer } from 'styles/pages/order'
 
 function OrderSideSummary() {
 	const { order, setOrderStep, orderStep } = useContext(OrderContext)

@@ -10,7 +10,10 @@ import {
 	Radio
 } from '@mui/material'
 import { useState } from 'react'
-import { ShippingMethodContainer, ShippingFormContainer } from './style'
+import {
+	ShippingMethodContainer,
+	ShippingFormContainer
+} from 'styles/pages/order'
 
 function ShippingForm() {
 	const [shippingMethod, setShippingMethod] = useState('pickup')

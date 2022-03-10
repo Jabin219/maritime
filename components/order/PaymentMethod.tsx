@@ -10,7 +10,10 @@ import {
 	TextField
 } from '@mui/material'
 import { useState } from 'react'
-import { BillingAddressContainer, PaymentMethodContainer } from './style'
+import {
+	BillingAddressContainer,
+	PaymentMethodContainer
+} from 'styles/pages/order'
 
 function PaymentMethod() {
 	const [paymentMethod, setPaymentMethod] = useState('credit-card')

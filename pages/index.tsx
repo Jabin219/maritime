@@ -63,9 +63,8 @@ const Home: NextPage = () => {
 					)
 				}
 				return (
-					<>
+					<Box key={index}>
 						<HomeProductGrid
-							key={index}
 							category={item as Category}
 							products={listedProducts.slice(0, 4)}
 						/>
@@ -80,7 +79,7 @@ const Home: NextPage = () => {
 								}}
 							></FlexBox>
 						)}
-					</>
+					</Box>
 				)
 			})}
 		</Box>

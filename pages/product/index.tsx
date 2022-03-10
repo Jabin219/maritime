@@ -8,7 +8,7 @@ import {
 	ProductButtonContainer,
 	RelatedProductGrid,
 	RelatedProductsTitle
-} from './style'
+} from 'styles/pages/product'
 import { fourRandomNumberArray, priceFormatter } from 'utils'
 import { addToCart } from 'utils/cartHandler'
 import { ProductContext } from 'context/ProductContextProvider'
