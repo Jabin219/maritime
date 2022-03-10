@@ -1,6 +1,6 @@
 import { Box, Typography } from '@mui/material'
 import type { NextPage } from 'next'
-import { SampleCategories, SampleProducts } from 'constant/products'
+import { HomePageCategories, SampleProducts } from 'constant/products'
 import { useState, useEffect } from 'react'
 import { getBannerHeight } from 'utils'
 import { FlexBox } from 'components/customComponents'
@@ -45,7 +45,7 @@ const Home: NextPage = () => {
 					save more on your households
 				</Typography>
 			</FlexBox>
-			{SampleCategories.map((item, index) => {
+			{HomePageCategories.map((item, index) => {
 				let listedProducts = []
 				if (item.value === 'all') {
 					return

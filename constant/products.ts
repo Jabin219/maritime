@@ -34,6 +34,42 @@ export const SampleCategories = [
 	{ name: 'On Sale', value: 'sale' }
 ]
 
+export const HomePageCategories = [
+	{ name: 'All Products', value: 'all' },
+	{ name: 'New Arrivals', value: 'new-arrivals' },
+	{ name: 'On Sale', value: 'sale' },
+	{
+		id: '8846a096-ba3e-44e1-b417-eebc4ecddad3',
+		name: 'Furniture',
+		value: 'furniture'
+	},
+	{
+		id: '6cffd51f-0471-486c-975c-3a7d385ccd0e',
+		name: 'Clothing',
+		value: 'clothing'
+	},
+	{
+		id: '0871abc6-d931-48ec-828c-2addec8bb6ed',
+		name: 'Appliance',
+		value: 'appliance'
+	},
+	{
+		id: '601474a2-3912-4cd5-963d-06ff2af1867b',
+		name: 'Organization',
+		value: 'organization'
+	},
+	{
+		id: 'a01fa386-aa07-4266-be32-2b7f3991ea98',
+		name: 'Decors',
+		value: 'decors'
+	},
+	{
+		id: '5894675f-9d9c-418c-afa6-bb7d22744c44',
+		name: 'Gifts',
+		value: 'gifts'
+	}
+]
+
 export const SampleProducts = [
 	{
 		id: 'f06e908f-6027-4626-9e9b-5ae14c783455',
