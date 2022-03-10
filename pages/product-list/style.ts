@@ -15,6 +15,9 @@ const ProductListGrid = styled(Grid)({
 		fontWeight: 600,
 		textAlign: 'center'
 	},
+	'& .product-name': {
+		cursor: 'pointer'
+	},
 	'& .product-price': {
 		color: '#FF8800',
 		fontWeight: 600
