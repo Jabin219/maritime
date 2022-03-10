@@ -1,8 +1,8 @@
 import { Box, Grid, List, ListItem } from '@mui/material'
-import { LazyLoadImage } from 'react-lazy-load-image-component'
+import Image from 'next/image'
 import { FooterListTitle, FooterTypography } from './style'
-import Link from 'next/link'
 import { FooterSupportLinks, FooterQuickLinks } from './constant'
+import CustomLink from '../customLink'
 
 function Footer() {
 	return (
@@ -13,7 +13,7 @@ function Footer() {
 			>
 				<Grid item xs>
 					<Box>
-						<LazyLoadImage
+						<Image
 							src='/images/logo/footer-logo.png'
 							alt='logo'
 							width={231}
@@ -34,11 +34,9 @@ function Footer() {
 						</ListItem>
 						{FooterSupportLinks.map((item, index) => (
 							<ListItem key={index}>
-								<a href='#'>
-									<Link href='#'>
-										<FooterTypography>{item.label}</FooterTypography>
-									</Link>
-								</a>
+								<CustomLink href='/'>
+									<FooterTypography>{item.label}</FooterTypography>
+								</CustomLink>
 							</ListItem>
 						))}
 					</List>
@@ -50,11 +48,9 @@ function Footer() {
 						</ListItem>
 						{FooterQuickLinks.map((item, index) => (
 							<ListItem key={index}>
-								<a href='#'>
-									<Link href='#'>
-										<FooterTypography>{item.label}</FooterTypography>
-									</Link>
-								</a>
+								<CustomLink href={item.link}>
+									<FooterTypography>{item.label}</FooterTypography>
+								</CustomLink>
 							</ListItem>
 						))}
 					</List>

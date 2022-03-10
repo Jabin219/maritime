@@ -1,14 +1,16 @@
 import { Box, Grid, Typography } from '@mui/material'
 import { useContext, useEffect, useState } from 'react'
-import CategoryList from '../../components/CategoryList'
-import { SampleCategories, SampleProducts } from '../../constant/products'
-import { ProductContext } from '../../context/ProductContextProvider'
-import { LazyLoadImage } from 'react-lazy-load-image-component'
+import CategoryList from 'components/categoryList'
+import { SampleCategories, SampleProducts } from 'constant/products'
+import { ProductContext } from 'context/ProductContextProvider'
+import Image from 'next/image'
 import {
 	ProductListGrid,
 	ProductListTitle,
 	ProductListContainer
 } from './style'
+import { priceFormatter } from 'utils'
+import CustomLink from 'components/customLink'
 
 function ProductList() {
 	const { category } = useContext(ProductContext)
@@ -64,13 +66,43 @@ function ProductList() {
 						<Grid container>
 							{showedProducts.map((product, index) => (
 								<ProductListGrid key={index} item xs={3}>
-									<LazyLoadImage src={product.coverImage} alt='product' />
-									<Typography variant='h6' className='product-name'>
-										{product.name}
-									</Typography>
-									<Typography variant='h6' className='product-price'>
-										${product.price} CAD
-									</Typography>
+									<CustomLink href={`/product?productId=${product.id}`}>
+										<Image
+											src={product.coverImage}
+											alt='product-image'
+											className='product-image'
+											width={300}
+											height={300}
+										/>
+									</CustomLink>
+									<CustomLink href={`/product?productId=${product.id}`}>
+										<Typography variant='h6' className='product-name'>
+											{product.name}
+										</Typography>
+									</CustomLink>
+									{Number(product?.discount) === 0 ? (
+										<Typography variant='h6' className='product-price'>
+											${product.price} CAD
+										</Typography>
+									) : (
+										<>
+											<Typography
+												sx={{
+													color: '#ADADAD',
+													textDecoration: 'line-through'
+												}}
+											>
+												${product?.price} CAD
+											</Typography>
+											<Typography className='product-price'>
+												$
+												{priceFormatter(
+													Number(product?.price) - Number(product?.discount)
+												)}{' '}
+												CAD
+											</Typography>
+										</>
+									)}
 								</ProductListGrid>
 							))}
 						</Grid>

@@ -10,12 +10,7 @@ const ProductListGrid = styled(Grid)({
 	flexDirection: 'column',
 	justifyContent: 'center',
 	alignItems: 'center',
-	'& img': {
-		width: '80%',
-		marginBottom: '20px',
-		cursor: 'pointer'
-	},
-	'& .product-name, .product-price': {
+	'& .product-name, .product-name': {
 		fontSize: 20,
 		fontWeight: 600,
 		textAlign: 'center'
@@ -24,7 +19,8 @@ const ProductListGrid = styled(Grid)({
 		cursor: 'pointer'
 	},
 	'& .product-price': {
-		color: '#FF8800'
+		color: '#FF8800',
+		fontWeight: 600
 	}
 })
 const ProductListTitle = styled(Typography)({

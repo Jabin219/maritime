@@ -1,7 +1,7 @@
 import { Box, Tabs } from '@mui/material'
 import { CustomTab } from './style'
 import { Categories } from './constant'
-import { ProductContext } from '../../context/ProductContextProvider'
+import { ProductContext } from 'context/ProductContextProvider'
 import { useContext } from 'react'
 import { useRouter } from 'next/router'
 

@@ -16,13 +16,9 @@ interface Props {
 
 function CategoryList({ Categories }: Props) {
 	const [openCategory, setOpenCategory] = useState(true)
-	const [openPriceRange, setOpenPriceRange] = useState(true)
 	const { category, setCategory } = useContext(ProductContext)
 	const handleClickOpenCategoryList = () => {
 		setOpenCategory(!openCategory)
-	}
-	const handleClickOpenPriceRangeList = () => {
-		setOpenPriceRange(!openPriceRange)
 	}
 	const clickChangeCategory = (categoryValue: string) => {
 		setCategory(categoryValue)
@@ -73,16 +69,6 @@ function CategoryList({ Categories }: Props) {
 						))}
 					</List>
 				</Collapse>
-				<ListItemButton disableRipple onClick={handleClickOpenPriceRangeList}>
-					<ListItemText
-						primary='Price Range'
-						sx={{
-							'& span': { fontWeight: 700, fontSize: 28, lineHeight: '25px' }
-						}}
-					/>
-					{openPriceRange ? <ExpandLess /> : <ExpandMore />}
-				</ListItemButton>
-				<Divider variant='middle' />
 			</List>
 		</Box>
 	)
