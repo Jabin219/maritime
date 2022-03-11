@@ -75,7 +75,8 @@ const Home: NextPage = () => {
 									height: middleBannerHeight,
 									background:
 										'url(/images/home/home-middle-banner.jpg) no-repeat',
-									backgroundSize: 'cover'
+									backgroundSize: 'cover',
+									backgroundPosition: 'center center'
 								}}
 							></FlexBox>
 						)}
