@@ -37,7 +37,7 @@ function Footer() {
 						</ListItem>
 						{FooterSupportLinks.map((item, index) => (
 							<ListItem key={index}>
-								<CustomLink href='/'>
+								<CustomLink href={item.link}>
 									<FooterTypography>{item.label}</FooterTypography>
 								</CustomLink>
 							</ListItem>
