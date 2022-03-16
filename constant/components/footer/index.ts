@@ -1,7 +1,7 @@
 export const FooterSupportLinks = [
-	{ label: 'Shipping & Return' },
-	{ label: 'Privacy Policy' },
-	{ label: 'Terms & Conditions' }
+	{ label: 'Shipping & Return', link: '/shipping-and-return' },
+	{ label: 'Privacy Policy', link: '/privacy-policy' },
+	{ label: 'Terms & Conditions', link: '/terms-and-conditions' }
 ]
 export const FooterQuickLinks = [
 	{ label: 'About us', link: '/about' },
