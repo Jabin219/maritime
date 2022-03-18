@@ -9,10 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@emotion/react": "^11.8.1",
+    "@emotion/react": "^11.8.2",
     "@emotion/styled": "^11.8.1",
     "@mui/icons-material": "^5.4.4",
-    "@mui/material": "^5.4.3",
+    "@mui/material": "^5.5.1",
     "@types/mongoose": "^5.11.97",
     "@types/prettier": "^2.4.4",
     "mongoose": "^6.2.3",
