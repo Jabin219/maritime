@@ -5,7 +5,7 @@ import CustomLink from 'components/customLink'
 import { priceFormatter } from 'utils'
 import { OrderSideSummaryContainer } from 'styles/pages/order'
 
-function OrderSideSummary() {
+const OrderSideSummary = () => {
 	const { order, setOrderStep, orderStep } = useContext(OrderContext)
 	const handleNextStep = () => {
 		if (orderStep < 2) {

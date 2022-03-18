@@ -1,7 +1,7 @@
 import { Box, Typography } from '@mui/material'
-import { FlexBox } from 'components/customComponents'
+import { FlexBox } from 'components/customStyle'
 
-function ShippingAndReturn() {
+const ShippingAndReturn = () => {
 	return (
 		<FlexBox>
 			<Box sx={{ width: '42%', margin: '300px auto' }}>

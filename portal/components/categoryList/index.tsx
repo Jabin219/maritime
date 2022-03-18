@@ -14,7 +14,7 @@ interface Props {
 	Categories: any[]
 }
 
-function CategoryList({ Categories }: Props) {
+const CategoryList = ({ Categories }: Props) => {
 	const [openCategory, setOpenCategory] = useState(true)
 	const { category, setCategory } = useContext(ProductContext)
 	const handleClickOpenCategoryList = () => {

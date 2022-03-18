@@ -1,9 +1,9 @@
 import { Box, Typography } from '@mui/material'
-import { SubPageButton } from 'components/customComponents'
+import { SubPageButton } from 'components/customStyle'
 import CustomLink from 'components/customLink'
 import PageBanner from 'components/pageBanner'
 
-function Service() {
+const Service = () => {
 	return (
 		<Box className='service-page' sx={{ marginBottom: '200px' }}>
 			<PageBanner

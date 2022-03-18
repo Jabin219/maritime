@@ -5,7 +5,7 @@ import { ProductContext } from 'context/ProductContextProvider'
 import { useContext } from 'react'
 import { useRouter } from 'next/router'
 
-function CategoriesNavBar() {
+const CategoriesNavBar = () => {
 	const router = useRouter()
 	const { setCategory } = useContext(ProductContext)
 	return (

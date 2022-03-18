@@ -10,7 +10,7 @@ import {
 	Box
 } from '@mui/material'
 import { useContext } from 'react'
-import { FlexBox } from 'components/customComponents'
+import { FlexBox } from 'components/customStyle'
 import { ProductContext } from 'context/ProductContextProvider'
 import Image from 'next/image'
 import { Product } from 'models'
@@ -26,7 +26,7 @@ import { priceFormatter } from 'utils'
 import CustomLink from 'components/customLink'
 import { OrderContext } from 'context/OrderContextProvider'
 
-function ShoppingCart() {
+const ShoppingCart = () => {
 	const { cart, setCart } = useContext(ProductContext)
 	const { order, setOrder } = useContext(OrderContext)
 	return (
