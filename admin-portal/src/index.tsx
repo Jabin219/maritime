@@ -2,12 +2,12 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
-import { BrowserRouter, Route } from 'react-router-dom'
+import { BrowserRouter as Router } from 'react-router-dom'
 
 ReactDOM.render(
-	<BrowserRouter>
+	<Router>
 		<App />
-	</BrowserRouter>,
+	</Router>,
 	document.getElementById('root')
 )
 
