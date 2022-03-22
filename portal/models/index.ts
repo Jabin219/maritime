@@ -1,3 +1,4 @@
+import Account from './admin/account'
 export type Product = {
 	id: string
 	name: string
@@ -14,3 +15,10 @@ export type Category = {
 	name: string
 	value: string
 }
+
+export type LoginRequestData = {
+	username: string
+	password: string
+}
+
+export { Account }
