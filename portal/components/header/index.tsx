@@ -1,19 +1,19 @@
-import {
-	AppBar,
-	Box,
-	Grid,
-	InputAdornment,
-	Tabs,
-	TextField
-} from '@mui/material'
+import { AppBar, Box, Grid, Tabs, Badge } from '@mui/material'
 import Image from 'next/image'
-import { CustomTab, CustomGrid, HeaderButton } from 'styles/components/header'
-import { Search, ShoppingCart } from '@mui/icons-material'
+import { CustomTab, CustomGrid } from 'styles/components/header'
+import { ShoppingCart } from '@mui/icons-material'
 import CategoriesNavBar from '../categoriesNavBar'
 import { HeaderLinks } from 'constant/components/header'
 import CustomLink from '../customLink'
+import { useContext } from 'react'
+import { ProductContext } from 'context/ProductContextProvider'
+import { useRouter } from 'next/router'
+import ClientOnly from 'components/clientOnly'
 
 function Header() {
+	const router = useRouter()
+	const { cart } = useContext(ProductContext)
+
 	return (
 		<AppBar position='static' color='secondary' sx={{ boxShadow: 'none' }}>
 			<Grid
@@ -30,9 +30,14 @@ function Header() {
 						/>
 					</CustomLink>
 				</Grid>
-				<CustomGrid item sx={{ display: 'flex', alignItems: 'center' }} xs={4}>
+				<CustomGrid item sx={{ display: 'flex', alignItems: 'center' }} xs={10}>
 					<Box>
-						<Tabs className='nav' value={false} indicatorColor='secondary'>
+						<Tabs
+							className='nav'
+							value={false}
+							indicatorColor='secondary'
+							centered
+						>
 							{HeaderLinks.map((item, index) => (
 								<CustomLink key={index} href={item.link}>
 									<CustomTab
@@ -45,41 +50,17 @@ function Header() {
 						</Tabs>
 					</Box>
 				</CustomGrid>
-				<CustomGrid item xs={3}>
-					<TextField
-						fullWidth
-						size='small'
-						InputProps={{
-							startAdornment: (
-								<InputAdornment position='start'>
-									<Search />
-								</InputAdornment>
-							)
-						}}
-					></TextField>
-				</CustomGrid>
-				<CustomGrid item xs={1}>
-					<CustomLink href='/order'>
-						<ShoppingCart />
-					</CustomLink>
-				</CustomGrid>
-				<CustomGrid item xs={3} sx={{ marginRight: '1vw' }}>
-					<CustomLink href='/login'>
-						<HeaderButton
-							sx={{
-								backgroundColor: '#EEEEEE',
-								color: '#333333',
-								marginRight: '2vw'
-							}}
-						>
-							Log in
-						</HeaderButton>
-					</CustomLink>
-					<CustomLink href='/sign-up'>
-						<HeaderButton sx={{ backgroundColor: '#FF8800', color: '#ffffff' }}>
-							Sign up
-						</HeaderButton>
-					</CustomLink>
+				<CustomGrid item xs>
+					<ClientOnly>
+						<Badge badgeContent={cart.length} color='primary' invisible={false}>
+							<ShoppingCart
+								sx={{ cursor: 'pointer' }}
+								onClick={() => {
+									router.push('/order')
+								}}
+							/>
+						</Badge>
+					</ClientOnly>
 				</CustomGrid>
 			</Grid>
 			<CategoriesNavBar />

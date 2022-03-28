@@ -1,4 +1,4 @@
-import { Tab, Grid, Button } from '@mui/material'
+import { Tab, Grid } from '@mui/material'
 import { styled } from '@mui/system'
 
 const CustomTab = styled(Tab)({
@@ -16,18 +16,10 @@ const CustomTab = styled(Tab)({
 const CustomGrid = styled(Grid)({
 	display: 'flex',
 	justifyContent: 'center',
-	alignItems: 'center'
+	alignItems: 'center',
+	'& .MuiBadge-badge': {
+		color: '#ffffff'
+	}
 })
 
-const HeaderButton = styled(Button)({
-	fontFamily: 'Source Sans Pro',
-	borderRadius: '12px',
-	padding: '10px 35px',
-	fontSize: '20px',
-	lineHeight: '28px',
-	fontWeight: 600,
-	textTransform: 'none',
-	whiteSpace: 'nowrap'
-})
-
-export { CustomTab, CustomGrid, HeaderButton }
+export { CustomTab, CustomGrid }

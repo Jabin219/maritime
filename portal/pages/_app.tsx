@@ -88,7 +88,14 @@ function MyApp({ Component, pageProps }: AppProps) {
 				</Head>
 				<ProductContextProvider>
 					<Header />
-					<Box sx={{ maxWidth: '1920px', margin: '0 auto', minHeight: '90vh' }}>
+					<Box
+						sx={{
+							maxWidth: '1920px',
+							minWidth: '1200px',
+							margin: '0 auto',
+							minHeight: '90vh'
+						}}
+					>
 						<Component {...pageProps} />
 					</Box>
 					<Footer />
