@@ -9,7 +9,7 @@ import { useContext } from 'react'
 import { ProductContext } from 'context/ProductContextProvider'
 import { useRouter } from 'next/router'
 import ClientOnly from 'components/clientOnly'
-	
+
 const Header = () => {
 	const router = useRouter()
 	const { cart } = useContext(ProductContext)

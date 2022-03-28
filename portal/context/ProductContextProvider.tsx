@@ -1,3 +1,4 @@
+import { Product } from 'models'
 import { useState, createContext } from 'react'
 import { cartStorage } from '../utils/cartHandler'
 
@@ -7,7 +8,7 @@ interface Props {
 }
 const ProductContextProvider = ({ children }: Props) => {
 	const [category, setCategory] = useState('all')
-	const [cart, setCart] = useState(cartStorage)
+	const [cart, setCart] = useState<Product[]>(cartStorage)
 	return (
 		<ProductContext.Provider
 			value={{

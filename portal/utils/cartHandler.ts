@@ -9,7 +9,11 @@ export const cartStorage: Product[] =
 export const saveCart = (cart: Product[]) => {
 	localStorage.setItem('cart', JSON.stringify(cart))
 }
-export const addToCart = (cartStorage: Product[], product: Product) => {
+export const addToCart = (
+	cartStorage: Product[],
+	product: Product,
+	setCart: (cart: Product[]) => void
+) => {
 	const findSameItemIndex: number = cartStorage.findIndex(
 		(cartProduct: Product) => {
 			return product.id === cartProduct.id
@@ -19,21 +23,11 @@ export const addToCart = (cartStorage: Product[], product: Product) => {
 		;(cartStorage[findSameItemIndex].quantity as number) += Number(
 			product.quantity
 		)
-		saveCart(cartStorage)
-		return false
 	} else {
 		cartStorage.push(product)
-		saveCart(cartStorage)
-		return true
 	}
-}
-export const removeItem = (cartStorage: Product[], item: Product) => {
-	for (let i = 0; i < cartStorage.length; i++) {
-		if (cartStorage[i].id === item.id) {
-			cartStorage.splice(i, 1)
-			saveCart(cartStorage)
-		}
-	}
+	setCart([...cartStorage])
+	saveCart(cartStorage)
 }
 
 export const countCartTotal = (cartStorage: Product[]) => {
@@ -41,10 +35,6 @@ export const countCartTotal = (cartStorage: Product[]) => {
 		return total + Number(cartItem.price) * Number(cartItem.quantity)
 	}, 0)
 	return sum
-}
-
-export const checkSameProduct = (cartStorage: Product[], product: Product) => {
-	return cartStorage.find((cartItem: Product) => cartItem.id === product.id)
 }
 
 export const quantityDecrease = (

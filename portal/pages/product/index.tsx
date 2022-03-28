@@ -24,14 +24,14 @@ const Product = () => {
 	relatedProductsIndex.forEach(index => {
 		relatedProducts.push(SampleProducts[index])
 	})
-	const { cart } = useContext(ProductContext)
+	const { cart, setCart } = useContext(ProductContext)
 	const { showSnackbar } = useContext(SnackContext)
 	const handleAddToCart = () => {
 		const thisProduct = {
 			...showedProduct,
 			quantity: 1
 		}
-		addToCart(cart, thisProduct as Product)
+		addToCart(cart, thisProduct as Product, setCart)
 		showSnackbar('add-to-cart', 'success')
 	}
 	useEffect(() => {
