@@ -87,13 +87,13 @@ function MyApp({ Component, pageProps }: AppProps) {
 					<meta name='viewport' content='viewport-fit=cover' />
 				</Head>
 				<ProductContextProvider>
-					<Header />
+					{<Header />}
 					<Box
 						sx={{
 							maxWidth: '1920px',
 							minWidth: '1200px',
 							margin: '0 auto',
-							minHeight: '90vh'
+							minHeight: '100vh'
 						}}
 					>
 						<Component {...pageProps} />

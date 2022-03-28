@@ -15,7 +15,7 @@ import { ProductContext } from 'context/ProductContextProvider'
 import { SnackContext } from 'context/SnackContextProvider'
 import CustomLink from 'components/customLink'
 
-function Product() {
+const Product = () => {
 	const router = useRouter()
 	const { productId } = router.query
 	const [showedProduct, setShowedProduct] = useState<Product>()

@@ -12,7 +12,7 @@ import {
 	ProductListGrid
 } from 'styles/pages/product-list'
 
-function ProductList() {
+const ProductList = () => {
 	const { category } = useContext(ProductContext)
 	const [showedProducts, setShowedProducts] = useState(SampleProducts)
 	const [title, setTitle] = useState('')

@@ -10,7 +10,7 @@ import ShoppingCart from 'components/order/ShoppingCart'
 
 import OrderContextProvider from 'context/OrderContextProvider'
 
-function Order() {
+const Order = () => {
 	const [orderStep, setOrderStep] = useState(0)
 	const { cart } = useContext(ProductContext)
 	const [order, setOrder] = useState({

@@ -1,9 +1,9 @@
 import { Box, Typography, Grid, TextField } from '@mui/material'
-import { SubPageButton } from 'components/customComponents'
+import { SubPageButton } from 'components/customStyle'
 import PageBanner from 'components/pageBanner'
 import { contactInputLabels } from 'constant/pages/contact'
 
-function Contact() {
+const Contact = () => {
 	return (
 		<Box className='about-page' sx={{ marginBottom: '200px' }}>
 			<PageBanner

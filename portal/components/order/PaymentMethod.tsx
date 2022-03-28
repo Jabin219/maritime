@@ -15,7 +15,7 @@ import {
 	PaymentMethodContainer
 } from 'styles/pages/order'
 
-function PaymentMethod() {
+const PaymentMethod = () => {
 	const [paymentMethod, setPaymentMethod] = useState('credit-card')
 	const [billingAddressRadio, setBillingAddressRadio] =
 		useState('same-as-shipping')

@@ -6,10 +6,18 @@ import {
 	FooterQuickLinks
 } from 'constant/components/footer'
 import CustomLink from '../customLink'
+import { useRouter } from 'next/router'
 
-function Footer() {
+const Footer = () => {
+	const router = useRouter()
 	return (
-		<Box sx={{ height: 600, backgroundColor: '#222222' }}>
+		<Box
+			sx={
+				router.pathname.startsWith('/admin')
+					? { display: 'none' }
+					: { height: 600, backgroundColor: '#222222' }
+			}
+		>
 			<Grid
 				container
 				sx={{ width: '80%', margin: '0 auto', padding: '110px 0' }}

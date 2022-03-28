@@ -9,13 +9,20 @@ import { useContext } from 'react'
 import { ProductContext } from 'context/ProductContextProvider'
 import { useRouter } from 'next/router'
 import ClientOnly from 'components/clientOnly'
-
-function Header() {
+	
+const Header = () => {
 	const router = useRouter()
 	const { cart } = useContext(ProductContext)
-
 	return (
-		<AppBar position='static' color='secondary' sx={{ boxShadow: 'none' }}>
+		<AppBar
+			position='static'
+			color='secondary'
+			sx={
+				router.pathname.startsWith('/admin')
+					? { display: 'none' }
+					: { boxShadow: 'none' }
+			}
+		>
 			<Grid
 				container
 				sx={{ margin: '13px 13px 0', borderBottom: '1px solid #ADADAD' }}

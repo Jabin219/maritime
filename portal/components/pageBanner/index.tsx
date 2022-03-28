@@ -1,7 +1,7 @@
 import { Typography } from '@mui/material'
 import { useState, useEffect } from 'react'
 import { getBannerHeight } from 'utils'
-import { FlexBox } from '../customComponents'
+import { FlexBox } from '../customStyle'
 
 interface Props {
 	pageTitle: string
@@ -9,7 +9,7 @@ interface Props {
 	pageDescription: string
 }
 
-function PageBanner({ pageTitle, pageDescription, bannerUrl }: Props) {
+const PageBanner = ({ pageTitle, pageDescription, bannerUrl }: Props) => {
 	const [bannerHeight, setBannerHeight] = useState(400)
 	useEffect(() => {
 		setBannerHeight(getBannerHeight(3.6))
