@@ -15,15 +15,28 @@ const productSchema = new Schema(
 			type: Number,
 			required: true
 		},
-		description: {
+		coverImage: {
 			type: String,
-			required: false
+			required: true
 		},
 		images: {
 			type: String,
 			required: true
 		},
-		inStock: { type: Boolean, required: true }
+		category: {
+			type: String,
+			required: false
+		},
+		status: {
+			type: String,
+			required: true,
+			default: 'inStock'
+		},
+		stock: {
+			type: Number,
+			required: true,
+			default: 10
+		}
 	},
 	{ timestamps: true }
 )

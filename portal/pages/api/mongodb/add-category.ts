@@ -1,21 +1,14 @@
 import connectDB from 'middleware/mongodb'
-import Product from 'models/mongodb/product'
+import Category from 'models/mongodb/category'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-	const { name, price, originalPrice, coverImage, images, category } = req.body
+	const { name, label } = req.body
 	if (req.method === 'POST') {
 		try {
-			const product = new Product({
-				name,
-				price,
-				originalPrice,
-				coverImage,
-				images,
-				category
-			})
-			const productAddedResult = await product.save()
-			res.send(productAddedResult)
+			const category = new Category({ name, label })
+			const categoryAddedResult = await category.save()
+			res.send(categoryAddedResult)
 		} catch (error) {
 			console.error(error)
 			res.status(500)

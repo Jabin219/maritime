@@ -3,10 +3,10 @@ export type Product = {
 	id: string
 	name: string
 	price: string | number
+	originalPrice: string | number
 	coverImage: string
+	images: Array<string>
 	category: string
-	discount: string
-	newArrival: boolean
 	quantity?: number
 }
 

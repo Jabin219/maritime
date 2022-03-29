@@ -7,7 +7,7 @@ interface Props {
 	children: any
 }
 const ProductContextProvider = ({ children }: Props) => {
-	const [category, setCategory] = useState('all')
+	const [category, setCategory] = useState('new')
 	const [cart, setCart] = useState<Product[]>(cartStorage)
 	return (
 		<ProductContext.Provider

@@ -7,6 +7,7 @@ const CustomTab = styled(Tab)({
 	fontWeight: 700,
 	lineHeight: '28px',
 	textTransform: 'uppercase',
+	color: '#000000',
 	'& .MuiTouchRipple-root': {
 		display: 'none'
 	},

@@ -70,7 +70,12 @@ const Product = () => {
 					<Grid item xs={5}>
 						<Typography
 							className='product-name'
-							sx={{ fontWeight: 900, fontSize: 40, marginBottom: '40px' }}
+							sx={{
+								fontWeight: 900,
+								fontSize: 40,
+								marginBottom: '40px',
+								lineHeight: '57px'
+							}}
 						>
 							{showedProduct?.name}
 						</Typography>

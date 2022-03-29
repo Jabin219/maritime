@@ -51,7 +51,7 @@ const Header = () => {
 										key={index}
 										value={item.value}
 										label={item.label}
-									></CustomTab>
+									/>
 								</CustomLink>
 							))}
 						</Tabs>
