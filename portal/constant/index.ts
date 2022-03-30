@@ -1,36 +1,4 @@
-export const SampleCategories = [
-	{ name: 'New Arrivals', value: 'new' },
-	{
-		id: '8846a096-ba3e-44e1-b417-eebc4ecddad3',
-		name: 'Furniture',
-		value: 'furniture'
-	},
-	{
-		id: '6cffd51f-0471-486c-975c-3a7d385ccd0e',
-		name: 'Clothing',
-		value: 'clothing'
-	},
-	{
-		id: '0871abc6-d931-48ec-828c-2addec8bb6ed',
-		name: 'Appliance',
-		value: 'appliance'
-	},
-	{
-		id: '601474a2-3912-4cd5-963d-06ff2af1867b',
-		name: 'Organization',
-		value: 'organization'
-	},
-	{
-		id: 'a01fa386-aa07-4266-be32-2b7f3991ea98',
-		name: 'Decors',
-		value: 'decors'
-	},
-	{
-		id: '5894675f-9d9c-418c-afa6-bb7d22744c44',
-		name: 'Gifts',
-		value: 'gifts'
-	}
-]
+export const Categories = [{ name: 'new', label: 'New Arrivals' }]
 
 export const SampleProducts = [
 	{

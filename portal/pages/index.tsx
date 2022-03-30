@@ -1,7 +1,7 @@
 import { Box, Typography } from '@mui/material'
 import type { NextPage } from 'next'
-import { SampleCategories, SampleProducts } from 'constant/products'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
+import { ProductContext } from 'context/ProductContextProvider'
 import { getBannerHeight } from 'utils'
 import { FlexBox } from 'components/customStyle'
 import HomeProductGrid from 'components/homeProductGrid'
@@ -10,6 +10,7 @@ import { Category } from 'models'
 const Home: NextPage = () => {
 	const [bannerHeight, setBannerHeight] = useState(600)
 	const [middleBannerHeight, setMiddleBannerHeight] = useState(400)
+	const { showedCategories } = useContext(ProductContext)
 	useEffect(() => {
 		setBannerHeight(getBannerHeight(2.4))
 		setMiddleBannerHeight(getBannerHeight(3.6))
@@ -45,7 +46,7 @@ const Home: NextPage = () => {
 					save more on your households
 				</Typography>
 			</FlexBox>
-			{SampleCategories.map((item, index) => {
+			{/* {showedCategories.map((item, index) => {
 				let listedProducts = []
 				if (item.value === 'new') {
 					listedProducts = SampleProducts.filter(product => product.newArrival)
@@ -76,7 +77,7 @@ const Home: NextPage = () => {
 						)}
 					</Box>
 				)
-			})}
+			})} */}
 		</Box>
 	)
 }

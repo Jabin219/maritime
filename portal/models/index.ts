@@ -1,6 +1,6 @@
 import Account from './admin/account'
 export type Product = {
-	id: string
+	_id: string
 	name: string
 	price: string | number
 	originalPrice: string | number
@@ -11,9 +11,9 @@ export type Product = {
 }
 
 export type Category = {
-	id: string
+	_id?: string
 	name: string
-	value: string
+	label: string
 }
 
 export type LoginRequestData = {

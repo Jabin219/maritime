@@ -75,7 +75,7 @@ const HomeProductGrid = ({ category, products }: Props) => {
 					<ArrowForwardIos
 						sx={{ cursor: 'pointer' }}
 						onClick={() => {
-							setCategory(category.value)
+							setCategory(category)
 						}}
 					/>
 				</CustomLink>
@@ -83,7 +83,7 @@ const HomeProductGrid = ({ category, products }: Props) => {
 			<CustomLink href='/product-list'>
 				<HomeGridButton
 					onClick={() => {
-						setCategory(category.value)
+						setCategory(category)
 					}}
 				>
 					View all {category.name}

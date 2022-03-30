@@ -9,10 +9,11 @@ import { useContext } from 'react'
 import { ProductContext } from 'context/ProductContextProvider'
 import { useRouter } from 'next/router'
 import ClientOnly from 'components/clientOnly'
+import { Categories } from 'constant'
 
 const Header = () => {
 	const router = useRouter()
-	const { cart } = useContext(ProductContext)
+	const { cart, setCategory } = useContext(ProductContext)
 	return (
 		<AppBar
 			position='static'
@@ -51,6 +52,11 @@ const Header = () => {
 										key={index}
 										value={item.value}
 										label={item.label}
+										onClick={() => {
+											if (item.value === 'product') {
+												setCategory(Categories[0])
+											}
+										}}
 									/>
 								</CustomLink>
 							))}
