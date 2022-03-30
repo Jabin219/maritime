@@ -35,6 +35,9 @@ const ProductContextProvider = ({ children }: Props) => {
 		countPagination(category.name)
 		storedProducts.splice(0, storedProducts.length)
 		setPagination(1)
+		if (category.name === 'new') {
+			setSortMethod('')
+		}
 	}, [category])
 	useEffect(() => {
 		storedProducts.splice(0, storedProducts.length)
