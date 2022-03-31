@@ -55,7 +55,7 @@ const CategoryList = () => {
 							>
 								<ListItemText
 									sx={
-										category === item.name
+										category.name === item.name
 											? { '& span': { fontWeight: 600 } }
 											: {}
 									}

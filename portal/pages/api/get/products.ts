@@ -6,7 +6,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	const { pagination, category, sortMethod } = req.query
 	let sortCondition: any = { createdAt: 'desc' }
 	let filter: any = {}
-	if (category === 'new' || !category) {
+	if (category === 'new-arrivals' || category === 'all-products' || !category) {
 		filter = {}
 	} else {
 		filter = { category }

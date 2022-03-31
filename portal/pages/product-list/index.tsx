@@ -74,22 +74,20 @@ const ProductList = () => {
 				<Grid item xs>
 					<ProductListContainer className='product-list-container'>
 						<ProductListTitle variant='h3'>{category.label}</ProductListTitle>
-						{category.name !== 'new' && (
-							<FormControl className='sort-by-select'>
-								<InputLabel>Sort by</InputLabel>
-								<Select
-									label='Sort by'
-									value={sortMethod}
-									onChange={event => {
-										setSortMethod(event.target.value)
-									}}
-								>
-									<MenuItem value='new-arrivals'>New Arrivals</MenuItem>
-									<MenuItem value='price-increase'>Price Increase</MenuItem>
-									<MenuItem value='price-decrease'>Price Decrease</MenuItem>
-								</Select>
-							</FormControl>
-						)}
+						<FormControl className='sort-by-select'>
+							<InputLabel>Sort by</InputLabel>
+							<Select
+								label='Sort by'
+								value={sortMethod}
+								onChange={event => {
+									setSortMethod(event.target.value)
+								}}
+							>
+								<MenuItem value='new-arrivals'>New Arrivals</MenuItem>
+								<MenuItem value='price-increase'>Price Increase</MenuItem>
+								<MenuItem value='price-decrease'>Price Decrease</MenuItem>
+							</Select>
+						</FormControl>
 						<Grid container>
 							{showedProducts &&
 								showedProducts.map((product, index) => (
@@ -123,17 +121,19 @@ const ProductList = () => {
 								))}
 						</Grid>
 					</ProductListContainer>
-					<Box className='pagination-container'>
-						<Pagination
-							count={paginationCount}
-							defaultPage={6}
-							color='primary'
-							showFirstButton
-							showLastButton
-							page={pagination}
-							onChange={handleChangePage}
-						/>
-					</Box>
+					{category.name !== 'new-arrivals' && (
+						<Box className='pagination-container'>
+							<Pagination
+								count={paginationCount}
+								defaultPage={6}
+								color='primary'
+								showFirstButton
+								showLastButton
+								page={pagination}
+								onChange={handleChangePage}
+							/>
+						</Box>
+					)}
 				</Grid>
 			</Grid>
 		</ProductListPageContainer>
