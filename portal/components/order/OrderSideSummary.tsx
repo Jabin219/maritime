@@ -33,14 +33,6 @@ const OrderSideSummary = () => {
 				<Grid className='rightFloat value' item xs={5}>
 					<Typography>{order.tax ? order.tax : 'TBD'}</Typography>
 				</Grid>
-				<Grid item xs={7} className='label shipping-label'>
-					<Typography variant='h6'>Shipping</Typography>
-				</Grid>
-				<Grid className='rightFloat value' item xs={5}>
-					<Typography>
-						{order.shippingFee ? order.shippingFee : 'TBD'}
-					</Typography>
-				</Grid>
 				<Divider style={{ width: '100%' }} />
 				<Grid item xs={7} className='label' style={{ marginTop: 20 }}>
 					<Typography variant='h6' className='total'>

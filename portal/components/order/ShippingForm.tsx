@@ -38,41 +38,21 @@ const ShippingForm = () => {
 								control={<Radio color='primary' />}
 								label='Pick Up'
 							/>
-							<FormControlLabel
-								value='delivery'
-								control={<Radio color='primary' />}
-								label='Delivery Via Canada Post'
-							/>
 						</RadioGroup>
 					</FormControl>
 				</Box>
 			</ShippingMethodContainer>
-			{shippingMethod === 'delivery' && (
-				<ShippingFormContainer>
-					<Box className='shipping-form-container'>
-						<Box className='header'>
-							<Typography variant='h5'>Shipping Address</Typography>
-							<Divider />
-						</Box>
-						<TextField label='Name' fullWidth size='small' />
-						<TextField label='Address Line1' fullWidth size='small' />
-						<TextField label='Address Line2' fullWidth size='small' />
-						<Grid container spacing={3}>
-							<Grid item xs>
-								<TextField label='States' fullWidth size='small' />
-							</Grid>
-							<Grid item xs>
-								<TextField label='City' fullWidth size='small' />
-							</Grid>
-							<Grid item xs>
-								<TextField label='Zip Code' fullWidth size='small' />
-							</Grid>
-						</Grid>
-						<TextField label='Email' fullWidth size='small' />
-						<TextField label='Phone' fullWidth size='small' />
+			<ShippingFormContainer>
+				<Box className='shipping-form-container'>
+					<Box className='header'>
+						<Typography variant='h5'>Contact Information</Typography>
+						<Divider />
 					</Box>
-				</ShippingFormContainer>
-			)}
+					<TextField label='Name' fullWidth size='small' />
+					<TextField label='Email' fullWidth size='small' />
+					<TextField label='Phone Number' fullWidth size='small' />
+				</Box>
+			</ShippingFormContainer>
 		</>
 	)
 }
