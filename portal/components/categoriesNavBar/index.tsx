@@ -9,7 +9,7 @@ const CategoriesNavBar = () => {
 	const router = useRouter()
 	const { setCategory, showedCategories } = useContext(ProductContext)
 	return (
-		<Box sx={{ boxShadow: '0px 2px 10px rgba(0, 0, 0, 0.1)' }}>
+		<Box>
 			<Tabs centered value={false}>
 				{showedCategories.map((item: Category, index: number) => (
 					<CustomTab

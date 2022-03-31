@@ -1,19 +1,17 @@
-import { AppBar, Box, Grid, Tabs, Badge } from '@mui/material'
+import { AppBar, Grid, Badge } from '@mui/material'
 import Image from 'next/image'
-import { CustomTab, CustomGrid } from 'styles/components/header'
+import { CustomGrid } from 'styles/components/header'
 import { ShoppingCart } from '@mui/icons-material'
 import CategoriesNavBar from '../categoriesNavBar'
-import { HeaderLinks } from 'constant/components/header'
 import CustomLink from '../customLink'
 import { useContext } from 'react'
 import { ProductContext } from 'context/ProductContextProvider'
 import { useRouter } from 'next/router'
 import ClientOnly from 'components/clientOnly'
-import { Categories } from 'constant'
 
 const Header = () => {
 	const router = useRouter()
-	const { cart, setCategory } = useContext(ProductContext)
+	const { cart } = useContext(ProductContext)
 	return (
 		<AppBar
 			position='static'
@@ -39,29 +37,7 @@ const Header = () => {
 					</CustomLink>
 				</Grid>
 				<CustomGrid item sx={{ display: 'flex', alignItems: 'center' }} xs={10}>
-					<Box>
-						<Tabs
-							className='nav'
-							value={false}
-							indicatorColor='secondary'
-							centered
-						>
-							{HeaderLinks.map((item, index) => (
-								<CustomLink key={index} href={item.link}>
-									<CustomTab
-										key={index}
-										value={item.value}
-										label={item.label}
-										onClick={() => {
-											if (item.value === 'product') {
-												setCategory(Categories[0])
-											}
-										}}
-									/>
-								</CustomLink>
-							))}
-						</Tabs>
-					</Box>
+					<CategoriesNavBar />
 				</CustomGrid>
 				<CustomGrid item xs>
 					<ClientOnly>
@@ -76,7 +52,6 @@ const Header = () => {
 					</ClientOnly>
 				</CustomGrid>
 			</Grid>
-			<CategoriesNavBar />
 		</AppBar>
 	)
 }

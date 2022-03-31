@@ -1,4 +1,7 @@
-export const Categories = [{ name: 'new', label: 'New Arrivals' }]
+export const Categories = [
+	{ name: 'all-products', label: 'All Products' },
+	{ name: 'new-arrivals', label: 'New Arrivals' }
+]
 
 export const SampleProducts = [
 	{
