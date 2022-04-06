@@ -113,9 +113,31 @@ export const OrderSideSummaryContainer = styled(Box)({
 	}
 })
 
+export const PaymentInfoContainer = styled(Box)({})
+
+export const ContactFormContainer = styled(Box)({
+	border: '10px solid #EEEEEE',
+	paddingBottom: '50px',
+	paddingTop: '32px',
+	marginBottom: '20px',
+	'& .contact-form-container': {
+		width: '95%',
+		margin: '0 auto'
+	},
+	'& .header': {
+		marginBottom: '30px',
+		'& h5': {
+			marginBottom: '5px'
+		}
+	},
+	'& .MuiTextField-root': {
+		marginBottom: '20px'
+	}
+})
+
 export const ShippingMethodContainer = styled(Box)({
 	border: '10px solid #EEEEEE',
-	paddingBottom: '60px',
+	paddingBottom: '50px',
 	paddingTop: '32px',
 	marginBottom: '20px',
 	'& .shipping-method-container': {
@@ -133,28 +155,9 @@ export const ShippingMethodContainer = styled(Box)({
 	}
 })
 
-export const ShippingFormContainer = styled(Box)({
-	border: '10px solid #EEEEEE',
-	paddingBottom: '60px',
-	paddingTop: '32px',
-	'& .shipping-form-container': {
-		width: '95%',
-		margin: '0 auto'
-	},
-	'& .header': {
-		marginBottom: '30px',
-		'& h5': {
-			marginBottom: '5px'
-		}
-	},
-	'& .MuiTextField-root': {
-		marginBottom: '20px'
-	}
-})
-
 export const PaymentMethodContainer = styled(Box)({
 	border: '10px solid #EEEEEE',
-	padding: '35px 0 150px 0',
+	padding: '35px 0 50px 0',
 	marginBottom: '20px',
 	'& .payment-method-container, .credit-info': {
 		width: '95%',
@@ -171,23 +174,5 @@ export const PaymentMethodContainer = styled(Box)({
 	},
 	'& .payment-method-container': {
 		marginBottom: '100px'
-	}
-})
-
-export const BillingAddressContainer = styled(Box)({
-	border: '10px solid #EEEEEE',
-	padding: '30px 0 70px 0',
-	'& .billing-address': {
-		width: '95%',
-		margin: '0 auto',
-		'& .header': {
-			marginBottom: '45px',
-			'& h5': {
-				marginBottom: '15px'
-			}
-		},
-		'& label': {
-			color: '#404041'
-		}
 	}
 })

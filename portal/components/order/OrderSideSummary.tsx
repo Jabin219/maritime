@@ -2,15 +2,71 @@ import { Box, Typography, Divider, Grid, Button } from '@mui/material'
 import { useContext } from 'react'
 import { OrderContext } from 'context/OrderContextProvider'
 import CustomLink from 'components/customLink'
-import { priceFormatter } from 'utils'
+import { priceFormatter, taxCalculator } from 'utils'
 import { OrderSideSummaryContainer } from 'styles/pages/order'
+import { Categories } from 'constant'
+import { ProductContext } from 'context/ProductContextProvider'
+import validator from 'validator'
+import { createOrder } from 'api/order'
 
-const OrderSideSummary = () => {
-	const { order, setOrderStep, orderStep } = useContext(OrderContext)
+interface Props {
+	contactInformation: { name: String; email: String; phone: String }
+}
+
+const OrderSideSummary = ({ contactInformation }: Props) => {
+	const { setCategory, cart } = useContext(ProductContext)
+	const {
+		order,
+		setOrderStep,
+		orderStep,
+		setOrder,
+		contactFormError,
+		setContactFormError,
+		shippingMethod,
+		paymentMethod
+	} = useContext(OrderContext)
 	const handleNextStep = () => {
 		if (orderStep < 2) {
 			setOrderStep(orderStep + 1)
 		}
+	}
+	const handleShoppingCartNext = () => {
+		setOrder({
+			...order,
+			tax: priceFormatter(taxCalculator(order.subtotal)),
+			total: priceFormatter(order.subtotal + taxCalculator(order.subtotal)),
+			products: cart
+		})
+		handleNextStep()
+	}
+	const handleSubmitOrder = () => {
+		if (!contactInformation.name) {
+			setContactFormError({ ...contactFormError, name: true })
+			return
+		}
+		if (
+			!contactInformation.email ||
+			!validator.isEmail(contactInformation.email as string)
+		) {
+			setContactFormError({ ...contactFormError, email: true })
+			return
+		}
+		if (!contactInformation.phone) {
+			setContactFormError({ ...contactFormError, phone: true })
+			return
+		}
+		setOrder({
+			...order,
+			contactInformation: contactInformation,
+			shippingMethod: shippingMethod,
+			paymentMethod: paymentMethod
+		})
+		createOrder({
+			contactInformation,
+			shippingMethod,
+			paymentMethod,
+			products: order.products
+		})
 	}
 	return (
 		<OrderSideSummaryContainer className='order-side-summary'>
@@ -50,15 +106,35 @@ const OrderSideSummary = () => {
 					</Typography>
 				</Grid>
 			</Grid>
-			<Button
-				className='btn-next-step'
-				onClick={() => {
-					handleNextStep()
-				}}
-			>
-				Next Step
-			</Button>
-			<CustomLink href='/product-list'>Continue Shopping</CustomLink>
+			{orderStep === 0 && (
+				<Button
+					className='btn-next-step'
+					onClick={() => {
+						handleShoppingCartNext()
+					}}
+				>
+					Next Step
+				</Button>
+			)}
+			{orderStep === 1 && (
+				<Button
+					className='btn-next-step'
+					onClick={() => {
+						handleSubmitOrder()
+					}}
+				>
+					Place Order
+				</Button>
+			)}
+			<CustomLink href='/product-list'>
+				<Typography
+					onClick={() => {
+						setCategory(Categories[0])
+					}}
+				>
+					Continue Shopping
+				</Typography>
+			</CustomLink>
 		</OrderSideSummaryContainer>
 	)
 }
