@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import passwordHash from 'password-hash'
 import { Account } from 'models'
-import connectDB from 'middleware/mongodb'
+import connectDB from 'pages/api/middleware/mongodb'
 import { corsHandler } from '../whoami'
 import { getToken } from 'services/token'
 
