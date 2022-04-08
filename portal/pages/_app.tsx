@@ -6,6 +6,7 @@ import Footer from '../components/footer'
 import ProductContextProvider from '../context/ProductContextProvider'
 import Head from 'next/head'
 import SnackContextProvider from '../context/SnackContextProvider'
+import { useRouter } from 'next/router'
 
 const theme = createTheme({
 	palette: {
@@ -79,6 +80,7 @@ const theme = createTheme({
 })
 
 function MyApp({ Component, pageProps }: AppProps) {
+	const router = useRouter()
 	return (
 		<ThemeProvider theme={theme}>
 			<SnackContextProvider>
@@ -87,7 +89,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 					<meta name='viewport' content='viewport-fit=cover' />
 				</Head>
 				<ProductContextProvider>
-					<Header />
+					{!router.pathname.startsWith('/admin') && <Header />}
 					<Box
 						sx={{
 							maxWidth: '1920px',
@@ -98,7 +100,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 					>
 						<Component {...pageProps} />
 					</Box>
-					<Footer />
+					{!router.pathname.startsWith('/admin') && <Footer />}
 				</ProductContextProvider>
 			</SnackContextProvider>
 		</ThemeProvider>

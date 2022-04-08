@@ -1,7 +1,6 @@
 import { Box } from '@mui/material'
 import { styled } from '@mui/system'
 export const LoginContainer = styled(Box)({
-	'& .MuiGrid-container': {},
 	'& .login-left': {
 		marginTop: '150px',
 		'& hr': {
