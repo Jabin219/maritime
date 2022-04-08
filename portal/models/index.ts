@@ -16,15 +16,9 @@ export type Category = {
 	value: string
 }
 
-export type LoginRequestData = {
+export type LoginRequest = {
 	username: string
 	password: string
-}
-
-export type LoginData = {
-	status: string
-	message?: string
-	token?: any
 }
 
 export { Account }
