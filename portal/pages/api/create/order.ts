@@ -10,6 +10,7 @@ import { createPaymentIntent } from 'server/service/stripeHandler'
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	const { products, contactInformation, paymentMethod, shippingMethod } =
 		req.body
+
 	const { subtotal, tax, total } = await orderCalculator(products)
 	const pickupNumber = generatePickupNumber()
 	if (req.method === 'POST') {

@@ -1,57 +1,42 @@
-import { Box, Grid } from '@mui/material'
-import React, { useReducer } from 'react'
+import { Box } from '@mui/material'
 import { useContext, useState } from 'react'
 import { ProductContext } from 'context/ProductContextProvider'
-import { countCartTotal } from 'utils/cartHandler'
-import OrderSideSummary from 'components/order/OrderSideSummary'
-import PaymentInformation from 'components/order/PaymentInformation'
-import ShoppingCart from 'components/order/ShoppingCart'
+import { countCartTotal, saveCart } from 'utils/cartHandler'
+import StripeElements from 'components/order/StripeElements'
+import ShoppingCartContainer from 'components/order/ShoppingCartContainer'
 import OrderContextProvider from 'context/OrderContextProvider'
-
-const initialContactInformation = { name: '', email: '', phone: '' }
-const reducer = (state: any, action: any) => {
-	switch (action.type) {
-		case 'change-name':
-			return { ...state, name: action.value }
-		case 'change-email':
-			return { ...state, email: action.value }
-		case 'change-phone':
-			return { ...state, phone: action.value }
-		default:
-			throw new Error()
-	}
-}
+import OrderConfirmation from 'components/order/OrderConfirmation'
 
 const Order = () => {
 	const [orderStep, setOrderStep] = useState(0)
-	const [contactFormError, setContactFormError] = useState({
-		name: false,
-		email: false,
-		phone: false
-	})
 	const [shippingMethod, setShippingMethod] = useState('pickup')
 	const [paymentMethod, setPaymentMethod] = useState('credit-card')
-	const { cart } = useContext(ProductContext)
+	const { cart, setCart } = useContext(ProductContext)
 	const [order, setOrder] = useState<any>({
 		subtotal: countCartTotal(cart)
 	})
-	const [contactInformation, dispatch] = useReducer(
-		reducer,
-		initialContactInformation
-	)
+
+	const clearCart = () => {
+		setCart([])
+		saveCart(cart)
+		localStorage.removeItem('cart')
+	}
+	const next = () => {
+		if (orderStep < 2) {
+			setOrderStep(orderStep + 1)
+		}
+	}
 
 	const getStepContent = (step: number) => {
 		switch (step) {
 			case 0:
-				return <ShoppingCart />
+				return <ShoppingCartContainer />
 			case 1:
-				return (
-					<PaymentInformation updateContactInformationDispatch={dispatch} />
-				)
+				return <StripeElements />
 			case 2:
-				return
+				return <OrderConfirmation />
 			default:
-				return <ShoppingCart />
+				return <ShoppingCartContainer />
 		}
 	}
 	return (
@@ -61,25 +46,16 @@ const Order = () => {
 				setOrderStep,
 				order,
 				setOrder,
-				contactFormError,
-				setContactFormError,
 				setShippingMethod,
 				setPaymentMethod,
 				shippingMethod,
-				paymentMethod
+				paymentMethod,
+				clearCart,
+				next
 			}}
 		>
 			<Box className='order-process-container' sx={{ margin: '70px 40px' }}>
-				<Grid container spacing={5}>
-					<Grid item xs={orderStep !== 3 ? 8 : 12}>
-						{getStepContent(orderStep)}
-					</Grid>
-					{orderStep !== 3 && (
-						<Grid item xs>
-							<OrderSideSummary contactInformation={contactInformation} />
-						</Grid>
-					)}
-				</Grid>
+				{getStepContent(orderStep)}
 			</Box>
 		</OrderContextProvider>
 	)

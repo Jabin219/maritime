@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const createOrder = (data: any) =>
-	axios.post('/api/order/create-order', {
+	axios.post('/api/create/order', {
 		...data
 	})
 

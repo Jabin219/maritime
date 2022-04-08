@@ -1,4 +1,5 @@
 import Product from 'models/mongodb/product'
+import { priceFormatter } from 'utils'
 
 const generateOrderNumber = () => {
 	let result = ''
@@ -22,19 +23,41 @@ const generatePickupNumber = () => {
 	return result
 }
 
-const orderCalculator = (products: []) => {
-	const orderProducts: [] = []
-	products.forEach(async (product: any) => {
-		const getProductResult = await Product.findOne({ _id: product._id })
-		orderProducts.push(getProductResult)
+const checkProductsStockInOrder = async (products: any) => {
+	const orderedProductIds: any = []
+	products.forEach((product: any) => {
+		orderedProductIds.push(product._id)
 	})
+	const getProductsResult = await Product.find({
+		_id: { $in: orderedProductIds }
+	})
+}
+
+const orderCalculator = async (products: []) => {
+	const orderedProductIds: any = []
+	products.forEach((product: any) => {
+		orderedProductIds.push(product._id)
+	})
+	const getProductsResult = await Product.find({
+		_id: { $in: orderedProductIds }
+	})
+	const orderedProducts: any = []
 	let subtotal = 0
-	orderProducts.forEach((product: any) => {
-		subtotal += product.price
+	getProductsResult.forEach((productResult: any) => {
+		products.forEach((product: any) => {
+			if (product._id === productResult._id.toString()) {
+				productResult.quantity = product.quantity
+			}
+			orderedProducts.push(productResult)
+		})
+		subtotal += productResult.price * productResult.quantity
 	})
 	const tax = subtotal * 0.15
 	const total = subtotal + tax
-	return { subtotal, total, tax }
+	return {
+		subtotal: priceFormatter(subtotal),
+		total: priceFormatter(total),
+		tax: priceFormatter(tax)
+	}
 }
-
 export { generateOrderNumber, generatePickupNumber, orderCalculator }

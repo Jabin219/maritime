@@ -44,7 +44,7 @@ const CategoryList = () => {
 					unmountOnExit
 					sx={{ marginTop: '20px' }}
 				>
-					<List component='div' disablePadding>
+					<List disablePadding>
 						{showedCategories.map((item: Category, index: number) => (
 							<ListItemButton
 								key={index}
