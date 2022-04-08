@@ -13,15 +13,7 @@ const Header = () => {
 	const router = useRouter()
 	const { cart } = useContext(ProductContext)
 	return (
-		<AppBar
-			position='static'
-			color='secondary'
-			sx={
-				router.pathname.startsWith('/admin')
-					? { display: 'none' }
-					: { boxShadow: 'none' }
-			}
-		>
+		<AppBar position='static' color='secondary' sx={{ boxShadow: 'none' }}>
 			<Grid
 				container
 				sx={{ margin: '13px 13px 0', borderBottom: '1px solid #ADADAD' }}
