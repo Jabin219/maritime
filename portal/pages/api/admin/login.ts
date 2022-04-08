@@ -1,18 +1,13 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import passwordHash from 'password-hash'
-import { Account } from 'models'
+import { Account, LoginData } from 'models'
 import connectDB from 'pages/api/middleware/mongodb'
 import { corsHandler } from '../whoami'
 import { getToken } from 'services/token'
 
-type Data = {
-	status: string
-	message?: string
-	token?: any
-}
 const loginHandler = async (
 	req: NextApiRequest,
-	res: NextApiResponse<Data>
+	res: NextApiResponse<LoginData>
 ) => {
 	corsHandler(req, res)
 	const { username, password } = req.body

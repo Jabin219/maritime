@@ -21,4 +21,10 @@ export type LoginRequestData = {
 	password: string
 }
 
+export type LoginData = {
+	status: string
+	message?: string
+	token?: any
+}
+
 export { Account }

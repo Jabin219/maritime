@@ -12,20 +12,10 @@ import { Search, ShoppingCart } from '@mui/icons-material'
 import CategoriesNavBar from '../categoriesNavBar'
 import { HeaderLinks } from 'constant/components/header'
 import CustomLink from '../customLink'
-import { useRouter } from 'next/router'
 
 const Header = () => {
-	const router = useRouter()
 	return (
-		<AppBar
-			position='static'
-			color='secondary'
-			sx={
-				router.pathname.startsWith('/admin')
-					? { display: 'none' }
-					: { boxShadow: 'none' }
-			}
-		>
+		<AppBar position='static' color='secondary' sx={{ boxShadow: 'none' }}>
 			<Grid
 				container
 				sx={{ margin: '13px 13px 0', borderBottom: '1px solid #ADADAD' }}
