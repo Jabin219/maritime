@@ -1,7 +1,7 @@
 import { Box, Typography, TextField, Button } from '@mui/material'
 import { LoginButton } from 'styles/pages/login'
 
-function Login() {
+const Login = () => {
 	return (
 		<Box
 			className='login-page'

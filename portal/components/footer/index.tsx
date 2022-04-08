@@ -7,7 +7,7 @@ import {
 } from 'constant/components/footer'
 import CustomLink from '../customLink'
 
-function Footer() {
+const Footer = () => {
 	return (
 		<Box sx={{ height: 600, backgroundColor: '#222222' }}>
 			<Grid

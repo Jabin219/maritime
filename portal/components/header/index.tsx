@@ -13,7 +13,7 @@ import CategoriesNavBar from '../categoriesNavBar'
 import { HeaderLinks } from 'constant/components/header'
 import CustomLink from '../customLink'
 
-function Header() {
+const Header = () => {
 	return (
 		<AppBar position='static' color='secondary' sx={{ boxShadow: 'none' }}>
 			<Grid

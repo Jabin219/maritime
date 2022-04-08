@@ -3,7 +3,7 @@ import type { NextPage } from 'next'
 import { HomePageCategories, SampleProducts } from 'constant/products'
 import { useState, useEffect } from 'react'
 import { getBannerHeight } from 'utils'
-import { FlexBox } from 'components/customComponents'
+import { FlexBox } from 'components/customStyle'
 import HomeProductGrid from 'components/homeProductGrid'
 import { Category } from 'models'
 

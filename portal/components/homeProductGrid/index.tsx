@@ -8,7 +8,7 @@ import {
 	HomeGridButton
 } from 'styles/components/homeProductGrid'
 import { ProductContext } from 'context/ProductContextProvider'
-import { FlexBox } from '../customComponents'
+import { FlexBox } from '../customStyle'
 import { ArrowForwardIos } from '@mui/icons-material'
 import CustomLink from '../customLink'
 import { priceFormatter } from 'utils'
@@ -17,7 +17,7 @@ interface Props {
 	products: Product[]
 }
 
-function HomeProductGrid({ category, products }: Props) {
+const HomeProductGrid = ({ category, products }: Props) => {
 	const { setCategory } = useContext(ProductContext)
 	return (
 		<FlexBox

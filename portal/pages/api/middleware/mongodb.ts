@@ -9,8 +9,8 @@ const connectDB = (handler: any) => async (req: Request, res: Response) => {
 	const connectDBUrl = process.env.mongodburl as string
 	await mongoose
 		.connect(connectDBUrl)
-		.then(result => {
-			console.log('connect database!')
+		.then(() => {
+			console.log('===================connect database!===================')
 		})
 		.catch(err => {
 			console.error(err)

@@ -15,7 +15,7 @@ import {
 	ShippingFormContainer
 } from 'styles/pages/order'
 
-function ShippingForm() {
+const ShippingForm = () => {
 	const [shippingMethod, setShippingMethod] = useState('pickup')
 	const handleChangeShippingMethod = (event: any) => {
 		setShippingMethod(event.target.value)
