@@ -1,6 +1,7 @@
 import connectDB from '../middleware/mongodb'
 import Product from 'models/mongodb/product'
 import type { NextApiRequest, NextApiResponse } from 'next'
+import { RESPONSE_STATUS } from '../constant'
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	const { pagination, category, sortMethod } = req.query
@@ -23,15 +24,19 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 			.sort(sortCondition)
 
 		if (!findAllProductsResult) {
-			res.status(200).json({ status: 'fail', message: 'no products' })
+			res.status(200).json({
+				status: RESPONSE_STATUS.NOT_FOUND,
+				message: 'There are no products for these conditions'
+			})
 		} else {
-			res
-				.status(200)
-				.json({ status: 'success', products: findAllProductsResult })
+			res.status(200).json({
+				status: RESPONSE_STATUS.SUCCESS,
+				products: findAllProductsResult
+			})
 		}
 	} catch (err) {
 		console.error(err)
-		res.status(500).json({ status: 'fail', message: err })
+		res.status(500).json({ status: RESPONSE_STATUS.FAIL, message: err })
 	}
 }
 export default connectDB(handler)

@@ -1,13 +1,17 @@
 import connectDB from '../middleware/mongodb'
 import Product from 'models/mongodb/product'
 import type { NextApiRequest, NextApiResponse } from 'next'
+import { RESPONSE_STATUS } from '../constant'
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	const { productId } = req.query
 	try {
 		const findProductResult = await Product.findOne({ _id: productId })
 		if (!findProductResult) {
-			res.status(200).json({ status: 'fail', message: 'no products' })
+			res.status(200).json({
+				status: RESPONSE_STATUS.NOT_FOUND,
+				message: 'There is no product for this id.'
+			})
 		} else {
 			res.status(200).json({ status: 'success', product: findProductResult })
 		}

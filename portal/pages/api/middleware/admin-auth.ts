@@ -1,4 +1,4 @@
-import { getAccountId } from 'services/token'
+import { getAccountId } from '../services/token'
 export let globalAccountId = ''
 export const verifyAuth = () => (req: any, res: any, next: any) => {
 	const { headers } = req
