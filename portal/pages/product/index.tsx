@@ -3,12 +3,8 @@ import { useRouter } from 'next/router'
 import { useContext, useEffect, useState } from 'react'
 import { Product } from 'models'
 import Image from 'next/image'
-import {
-	ProductButtonContainer,
-	RelatedProductGrid,
-	RelatedProductsTitle
-} from 'styles/pages/product'
-import { fourRandomNumberArray, priceFormatter } from 'utils'
+import { ProductButtonContainer } from 'styles/pages/product'
+import { priceFormatter } from 'utils'
 import { addToCart } from 'utils/cartHandler'
 import { ProductContext } from 'context/ProductContextProvider'
 import { SnackContext } from 'context/SnackContextProvider'
@@ -19,7 +15,6 @@ const Product = () => {
 	const router = useRouter()
 	const { productId } = router.query
 	const [showedProduct, setShowedProduct] = useState<Product>()
-	// const relatedProducts: Product[] = []
 	const { cart, setCart } = useContext(ProductContext)
 	const { showSnackbar } = useContext(SnackContext)
 	const handleAddToCart = () => {
@@ -30,12 +25,12 @@ const Product = () => {
 		addToCart(cart, thisProduct as Product, setCart)
 		showSnackbar('add-to-cart', 'success')
 	}
-	const getProduct = async () => {
-		const getProductResult = await getProductById({ productId })
+	const getProduct = async (productId: string) => {
+		const getProductResult = await getProductById(productId)
 		setShowedProduct(getProductResult.data.product)
 	}
 	useEffect(() => {
-		getProduct()
+		getProduct(productId as string)
 	}, [productId])
 
 	return (
@@ -75,7 +70,6 @@ const Product = () => {
 						>
 							{showedProduct?.name}
 						</Typography>
-
 						<Typography
 							className='product-price'
 							sx={{

@@ -1,20 +1,29 @@
 import axios from 'axios'
 
-const getProducts = (data: any) =>
-	axios.get('/api/get/products', {
-		params: { ...data }
+const getProductsByPagination = (
+	pagination: number,
+	category: string,
+	sortMethod: string
+) =>
+	axios.get('/api/get/products-by-pagination', {
+		params: { pagination, category, sortMethod }
 	})
 
-const getProductsCount = (data: any) =>
+const getProductsCount = (category: string) =>
 	axios.get('/api/get/products-count', {
-		params: { ...data }
+		params: { category }
 	})
 
-const getProductById = (data: any) =>
+const getProductById = (productId: string) =>
 	axios.get('/api/get/product-by-id', {
-		params: { ...data }
+		params: { productId }
 	})
 
 const getCategories = () => axios.get('/api/get/categories')
 
-export { getProducts, getProductsCount, getCategories, getProductById }
+export {
+	getProductsByPagination,
+	getProductsCount,
+	getCategories,
+	getProductById
+}

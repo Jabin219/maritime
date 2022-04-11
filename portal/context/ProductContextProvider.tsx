@@ -15,11 +15,11 @@ const ProductContextProvider = ({ children }: Props) => {
 	const [cart, setCart] = useState<Product[]>(cartStorage)
 	const [pagination, setPagination] = useState(1)
 	const [paginationCount, setPaginationCount] = useState(0)
-	const [sortMethod, setSortMethod] = useState('')
+	const [sortMethod, setSortMethod] = useState('new-arrivals')
 	let storedProducts: any = []
 
 	const countPagination = async (category: string) => {
-		const getPaginationCountResult = await getProductsCount({ category })
+		const getPaginationCountResult = await getProductsCount(category)
 		setPaginationCount(Math.ceil(getPaginationCountResult.data.count / 20) || 1)
 	}
 
@@ -35,7 +35,7 @@ const ProductContextProvider = ({ children }: Props) => {
 		countPagination(category.name)
 		storedProducts.splice(0, storedProducts.length)
 		setPagination(1)
-		if (category.name === 'new') {
+		if (category.name === 'new-arrivals') {
 			setSortMethod('')
 		}
 	}, [category])

@@ -48,7 +48,7 @@ const Home: NextPage = () => {
 			</FlexBox>
 			{/* {showedCategories.map((item, index) => {
 				let listedProducts = []
-				if (item.value === 'new') {
+				if (item.value === 'new-arrivals') {
 					listedProducts = SampleProducts.filter(product => product.newArrival)
 				} else if (item.value === 'organization' || item.value === 'gifts') {
 					return
@@ -63,7 +63,7 @@ const Home: NextPage = () => {
 							category={item as Category}
 							products={listedProducts.slice(0, 4)}
 						/>
-						{item.value === 'sale' && (
+						{item.value === 'new-arrivals' && (
 							<FlexBox
 								sx={{
 									width: '100%',

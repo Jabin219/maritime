@@ -20,7 +20,7 @@ import {
 	ProductListGrid,
 	ProductListPageContainer
 } from 'styles/pages/product-list'
-import { getProducts } from 'api/product'
+import { getProductsByPagination } from 'api/product'
 import { Product } from 'models'
 
 const ProductList = () => {
@@ -46,11 +46,11 @@ const ProductList = () => {
 			setShowedProducts(findStoredProductsResult.products)
 			return
 		}
-		const getProductsResult = await getProducts({
+		const getProductsResult = await getProductsByPagination(
 			pagination,
 			category,
 			sortMethod
-		})
+		)
 		setShowedProducts(getProductsResult.data.products)
 		storedProducts.push({
 			pagination,

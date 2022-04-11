@@ -93,7 +93,6 @@ function MyApp({ Component, pageProps }: AppProps) {
 					<Box
 						sx={{
 							maxWidth: '1920px',
-							minWidth: '1200px',
 							margin: '0 auto',
 							minHeight: '100vh'
 						}}
