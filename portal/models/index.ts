@@ -16,9 +16,4 @@ export type Category = {
 	label: string
 }
 
-export type LoginRequest = {
-	username: string
-	password: string
-}
-
 export { Account }
