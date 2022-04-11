@@ -1,19 +1,6 @@
 import Product from 'models/mongodb/product'
 import { priceFormatter } from 'utils'
 
-const generateOrderNumber = () => {
-	let result = ''
-	const characterInit: string = '1234567890'
-	for (let i = 0; i < 13; i++) {
-		if (i === 0) {
-			result += characterInit.charAt(
-				Math.floor(Math.random() * characterInit.length)
-			)
-		}
-		result += Math.floor(Math.random() * 10)
-	}
-	return result
-}
 const generatePickupNumber = () => {
 	const characters = '0123456789'
 	let result = ''
@@ -23,7 +10,7 @@ const generatePickupNumber = () => {
 	return result
 }
 
-const checkProductsStockInOrder = async (products: any) => {
+const checkProductsStock = async (products: any) => {
 	const orderedProductIds: any = []
 	products.forEach((product: any) => {
 		orderedProductIds.push(product._id)
@@ -31,6 +18,13 @@ const checkProductsStockInOrder = async (products: any) => {
 	const getProductsResult = await Product.find({
 		_id: { $in: orderedProductIds }
 	})
+	let checkStockResult = true
+	getProductsResult.forEach((product: any) => {
+		if (product.stock < 1) {
+			checkStockResult = false
+		}
+	})
+	return checkStockResult
 }
 
 const orderCalculator = async (products: []) => {
@@ -60,4 +54,4 @@ const orderCalculator = async (products: []) => {
 		tax: priceFormatter(tax)
 	}
 }
-export { generateOrderNumber, generatePickupNumber, orderCalculator }
+export { generatePickupNumber, orderCalculator, checkProductsStock }

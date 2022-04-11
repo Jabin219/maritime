@@ -7,6 +7,10 @@ const orderSchema = new Schema(
 			type: String,
 			required: true
 		},
+		holdProducts: {
+			type: String,
+			required: true
+		},
 		subtotal: {
 			type: Number,
 			required: true

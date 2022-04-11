@@ -1,16 +1,23 @@
-import connectDB from 'middleware/mongodb'
+import connectDB from '../middleware/mongodb'
 import Order from 'models/mongodb/order'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import {
 	generatePickupNumber,
-	orderCalculator
+	orderCalculator,
+	checkProductsStock
 } from 'server/service/orderHandler'
 import { createPaymentIntent } from 'server/service/stripeHandler'
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	const { products, contactInformation, paymentMethod, shippingMethod } =
 		req.body
-
+	const checkProductsStockResult = await checkProductsStock(products)
+	if (!checkProductsStockResult) {
+		res.status(200).json({
+			status: 'out-of-stock',
+			message: 'One or more products in your cart is out of stock.'
+		})
+	}
 	const { subtotal, tax, total } = await orderCalculator(products)
 	const pickupNumber = generatePickupNumber()
 	if (req.method === 'POST') {

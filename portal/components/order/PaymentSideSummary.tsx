@@ -63,15 +63,12 @@ const PaymentSideSummary = ({
 			shippingMethod: shippingMethod,
 			paymentMethod: paymentMethod
 		})
-		let createOrderResult: any
-		if (paymentMethod === 'credit-card') {
-			createOrderResult = await createOrder({
-				contactInformation,
-				shippingMethod,
-				paymentMethod,
-				products: order.products
-			})
-		}
+		const createOrderResult: any = await createOrder({
+			contactInformation,
+			shippingMethod,
+			paymentMethod,
+			products: order.products
+		})
 		if (createOrderResult.data.status === 'success') {
 			if (!stripe || !elements) {
 				setProcessing(false)
@@ -159,6 +156,7 @@ const PaymentSideSummary = ({
 				onClick={() => {
 					setOrderStep(0)
 				}}
+				sx={{ cursor: 'pointer' }}
 			>
 				Back To Cart
 			</Typography>
