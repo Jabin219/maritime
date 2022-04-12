@@ -6,14 +6,14 @@ import { RESPONSE_STATUS } from '../constant'
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	const { productId } = req.query
 	try {
-		const findProductResult = await Product.findOne({ _id: productId })
-		if (!findProductResult) {
+		const product = await Product.findOne({ _id: productId })
+		if (!product) {
 			res.status(200).json({
 				status: RESPONSE_STATUS.NOT_FOUND,
 				message: 'There is no product for this id.'
 			})
 		} else {
-			res.status(200).json({ status: 'success', product: findProductResult })
+			res.status(200).json({ status: 'success', product: product })
 		}
 	} catch (err) {
 		console.error(err)

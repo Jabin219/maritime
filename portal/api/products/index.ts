@@ -5,21 +5,21 @@ const getProductsByPagination = (
 	category: string,
 	sortMethod: string
 ) =>
-	axios.get('/api/get/products-by-pagination', {
+	axios.get('/api/products/products-by-pagination', {
 		params: { pagination, category, sortMethod }
 	})
 
 const getProductsCount = (category: string) =>
-	axios.get('/api/get/products-count', {
+	axios.get('/api/products/products-count', {
 		params: { category }
 	})
 
 const getProductById = (productId: string) =>
-	axios.get('/api/get/product-by-id', {
+	axios.get('/api/products/product-by-id', {
 		params: { productId }
 	})
 
-const getCategories = () => axios.get('/api/get/categories')
+const getCategories = () => axios.get('/api/categories')
 
 export {
 	getProductsByPagination,

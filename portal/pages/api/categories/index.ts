@@ -5,15 +5,15 @@ import { RESPONSE_STATUS } from '../constant'
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	try {
-		const findAllCategoriesResult = await Category.find()
-		if (!findAllCategoriesResult) {
+		const allCategories = await Category.find()
+		if (!allCategories) {
 			res
 				.status(200)
 				.json({ status: RESPONSE_STATUS.NOT_FOUND, message: 'no categories' })
 		} else {
 			res.status(200).json({
 				status: RESPONSE_STATUS.SUCCESS,
-				categories: findAllCategoriesResult
+				categories: allCategories
 			})
 		}
 	} catch (err) {

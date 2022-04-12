@@ -13,7 +13,7 @@ import { getProductById } from 'api/product'
 
 const Product = () => {
 	const router = useRouter()
-	const { productId } = router.query
+	const { productId } = router.quapi / products
 	const [showedProduct, setShowedProduct] = useState<Product>()
 	const { cart, setCart } = useContext(ProductContext)
 	const { showSnackbar } = useContext(SnackContext)
