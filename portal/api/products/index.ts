@@ -1,12 +1,12 @@
 import axios from 'axios'
 
 const getProductsByPagination = (
-	pagination: number,
+	currentPage: number,
 	category: string,
 	sortMethod: string
 ) =>
 	axios.get('/api/products/products-by-pagination', {
-		params: { pagination, category, sortMethod }
+		params: { currentPage, category, sortMethod }
 	})
 
 const getProductsCount = (category: string) =>

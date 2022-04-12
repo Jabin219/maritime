@@ -18,12 +18,12 @@ const ProductContextProvider = ({ children }: Props) => {
 	const [pageCount, setPageCount] = useState(0)
 	const [sortMethod, setSortMethod] = useState('new-arrivals')
 	const calculatePageCount = async (category: string) => {
-		const getPaginationCountResult = await getProductsCount(category)
-		setPageCount(Math.ceil(getPaginationCountResult.data.count / 20) || 1)
+		const pageCountResult = await getProductsCount(category)
+		setPageCount(Math.ceil(pageCountResult.data.count / 20) || 1)
 	}
 	const loadCategories = async () => {
-		const getCategoriesResult = await getCategories()
-		setCategories(Categories.concat(getCategoriesResult.data.categories))
+		const categoriesResult = await getCategories()
+		setCategories(Categories.concat(categoriesResult.data.categories))
 	}
 	let cachedProducts: any = []
 

@@ -33,28 +33,28 @@ const ProductList = () => {
 		sortMethod,
 		setSortMethod
 	} = useContext(ProductContext)
-	const [showedProducts, setShowedProducts] = useState<Product[]>()
-	const getShowedProducts = async (
-		pagination: number,
+	const [listedProducts, setListedProducts] = useState<Product[]>()
+	const loadListedProducts = async (
+		currentPage: number,
 		category: string,
 		sortMethod: string
 	) => {
-		const findStoredProductsResult = cachedProducts.find(
-			(item: any) => item.pagination === pagination
+		const cachedProductsResult = cachedProducts.find(
+			(item: any) => item.currentPage === currentPage
 		)
-		if (findStoredProductsResult) {
-			setShowedProducts(findStoredProductsResult.products)
+		if (cachedProductsResult) {
+			setListedProducts(cachedProductsResult.products)
 			return
 		}
-		const getProductsResult = await getProductsByPagination(
-			pagination,
+		const productsLoadedResult = await getProductsByPagination(
+			currentPage,
 			category,
 			sortMethod
 		)
-		setShowedProducts(getProductsResult.data.products)
+		setListedProducts(productsLoadedResult.data.products)
 		cachedProducts.push({
-			pagination,
-			products: getProductsResult.data.products
+			currentPage,
+			products: productsLoadedResult.data.products
 		})
 	}
 	const handleChangePage = (event: any, value: number) => {
@@ -62,7 +62,7 @@ const ProductList = () => {
 		window.scrollTo(0, 0)
 	}
 	useEffect(() => {
-		getShowedProducts(currentPage, selectedCategory.name, sortMethod)
+		loadListedProducts(currentPage, selectedCategory.name, sortMethod)
 	}, [selectedCategory, currentPage, sortMethod])
 
 	return (
@@ -91,8 +91,8 @@ const ProductList = () => {
 							</Select>
 						</FormControl>
 						<Grid container>
-							{showedProducts &&
-								showedProducts.map((product, index) => (
+							{listedProducts &&
+								listedProducts.map((product, index) => (
 									<ProductListGrid key={index} item xs={3}>
 										<CustomLink href={`/product?productId=${product._id}`}>
 											<Image

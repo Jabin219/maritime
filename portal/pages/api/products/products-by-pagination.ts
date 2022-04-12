@@ -4,7 +4,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { RESPONSE_STATUS } from '../constant'
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-	const { pagination, category, sortMethod } = req.query
+	const { currentPage, category, sortMethod } = req.query
 	let sortCondition: any = { createdAt: 'desc' }
 	let filter: any = {}
 	if (category === 'new-arrivals' || category === 'all-products' || !category) {
@@ -20,7 +20,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	try {
 		const allProducts = await Product.find(filter)
 			.limit(20)
-			.skip(20 * (Number(pagination) - 1))
+			.skip(20 * (Number(currentPage) - 1))
 			.sort(sortCondition)
 
 		if (!allProducts) {

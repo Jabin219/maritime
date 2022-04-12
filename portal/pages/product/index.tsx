@@ -9,11 +9,11 @@ import { addToCart } from 'utils/cartHandler'
 import { ProductContext } from 'context/ProductContextProvider'
 import { SnackContext } from 'context/SnackContextProvider'
 import CustomLink from 'components/customLink'
-import { getProductById } from 'api/product'
+import { getProductById } from 'api/products'
 
 const Product = () => {
 	const router = useRouter()
-	const { productId } = router.quapi / products
+	const { productId } = router.query
 	const [showedProduct, setShowedProduct] = useState<Product>()
 	const { cart, setCart } = useContext(ProductContext)
 	const { showSnackbar } = useContext(SnackContext)
@@ -26,8 +26,8 @@ const Product = () => {
 		showSnackbar('add-to-cart', 'success')
 	}
 	const getProduct = async (productId: string) => {
-		const getProductResult = await getProductById(productId)
-		setShowedProduct(getProductResult.data.product)
+		const productResult = await getProductById(productId)
+		setShowedProduct(productResult.data.product)
 	}
 	useEffect(() => {
 		getProduct(productId as string)
