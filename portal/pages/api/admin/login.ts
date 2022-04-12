@@ -10,19 +10,19 @@ const loginHandler = async (req: NextApiRequest, res: NextApiResponse) => {
 	corsHandler(req, res)
 	const { username, password } = req.body
 	try {
-		const findAccountResult = await Account.findOne({ username })
-		if (!findAccountResult) {
+		const account = await Account.findOne({ username })
+		if (!account) {
 			res.status(200).json({
 				status: RESPONSE_STATUS.NOT_FOUND,
 				message: 'Incorrect username'
 			})
-		} else if (!passwordHash.verify(password, findAccountResult.password)) {
+		} else if (!passwordHash.verify(password, account.password)) {
 			res.status(200).json({
 				status: RESPONSE_STATUS.NOT_FOUND,
 				message: 'Incorrect password'
 			})
 		} else {
-			const accountId = findAccountResult._id
+			const accountId = account._id
 			const token = setToken(accountId.toString())
 			res.status(200).json({
 				status: RESPONSE_STATUS.SUCCESS,
