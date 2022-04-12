@@ -1,6 +1,7 @@
 import connectDB from '../middleware/mongodb'
 import Product from 'models/mongodb/product'
 import type { NextApiRequest, NextApiResponse } from 'next'
+import { RESPONSE_STATUS } from '../constant'
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	const { category } = req.query
@@ -11,17 +12,20 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 		filter = { category }
 	}
 	try {
-		const findProductsCountResult = await Product.count(filter)
-		if (!findProductsCountResult) {
-			res.status(200).json({ status: 'fail', message: 'no products' })
-		} else {
+		const productsCount = await Product.count(filter)
+		if (!productsCount) {
 			res
 				.status(200)
-				.json({ status: 'success', count: findProductsCountResult })
+				.json({ status: RESPONSE_STATUS.NOT_FOUND, message: 'No products' })
+		} else {
+			res.status(200).json({
+				status: RESPONSE_STATUS.SUCCESS,
+				count: productsCount
+			})
 		}
 	} catch (err) {
 		console.error(err)
-		res.status(500).json({ status: 'fail', message: err })
+		res.status(500).json({ status: RESPONSE_STATUS.FAIL, message: err })
 	}
 }
 export default connectDB(handler)

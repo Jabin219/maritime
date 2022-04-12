@@ -13,12 +13,13 @@ import { Category } from 'models'
 
 const CategoryList = () => {
 	const [openCategory, setOpenCategory] = useState(true)
-	const { category, setCategory, showedCategories } = useContext(ProductContext)
+	const { selectedCategory, setSelectedCategory, categories } =
+		useContext(ProductContext)
 	const handleClickOpenCategoryList = () => {
 		setOpenCategory(!openCategory)
 	}
 	const clickChangeCategory = (category: Category) => {
-		setCategory(category)
+		setSelectedCategory(category)
 	}
 	return (
 		<Box
@@ -44,8 +45,8 @@ const CategoryList = () => {
 					unmountOnExit
 					sx={{ marginTop: '20px' }}
 				>
-					<List disablePadding>
-						{showedCategories.map((item: Category, index: number) => (
+					<List component='div' disablePadding>
+						{categories.map((item: Category, index: number) => (
 							<ListItemButton
 								key={index}
 								disableRipple
@@ -55,7 +56,7 @@ const CategoryList = () => {
 							>
 								<ListItemText
 									sx={
-										category.name === item.name
+										selectedCategory.name === item.name
 											? { '& span': { fontWeight: 600 } }
 											: {}
 									}

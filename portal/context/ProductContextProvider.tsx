@@ -1,4 +1,4 @@
-import { getCategories, getProductsCount } from 'api/product'
+import { getCategories, getProductsCount } from 'api/products'
 import { Category, Product } from 'models'
 import { useState, createContext, useEffect } from 'react'
 import { cartStorage, saveCart } from '../utils/cartHandler'
@@ -9,39 +9,37 @@ interface Props {
 	children: any
 }
 const ProductContextProvider = ({ children }: Props) => {
-	const [showedCategories, setShowedCategories] =
-		useState<Category[]>(Categories)
-	const [category, setCategory] = useState<Category>(Categories[0])
+	const [categories, setCategories] = useState<Category[]>([])
+	const [selectedCategory, setSelectedCategory] = useState<Category>(
+		Categories[0]
+	)
 	const [cart, setCart] = useState<Product[]>(cartStorage)
-	const [pagination, setPagination] = useState(1)
-	const [paginationCount, setPaginationCount] = useState(0)
-	const [sortMethod, setSortMethod] = useState('')
-	const [orderStep, setOrderStep] = useState(0)
-	let storedProducts: any = []
-
-	const countPagination = async (category: string) => {
-		const getPaginationCountResult = await getProductsCount({ category })
-		setPaginationCount(Math.ceil(getPaginationCountResult.data.count / 20) || 1)
+	const [currentPage, setCurrentPage] = useState(1)
+	const [pageCount, setPageCount] = useState(0)
+	const [sortMethod, setSortMethod] = useState('new-arrivals')
+	const calculatePageCount = async (category: string) => {
+		const pageCountResult = await getProductsCount(category)
+		setPageCount(Math.ceil(pageCountResult.data.count / 20) || 1)
 	}
-
-	const setCategories = async () => {
-		const getCategoriesResult = await getCategories()
-		setShowedCategories(Categories.concat(getCategoriesResult.data.categories))
+	const loadCategories = async () => {
+		const categoriesResult = await getCategories()
+		setCategories(Categories.concat(categoriesResult.data.categories))
 	}
+	let cachedProducts: any = []
 
 	useEffect(() => {
-		setCategories()
+		loadCategories()
 	}, [])
 	useEffect(() => {
-		countPagination(category.name)
-		storedProducts.splice(0, storedProducts.length)
-		setPagination(1)
-		if (category.name === 'new') {
+		calculatePageCount(selectedCategory.name)
+		cachedProducts.splice(0, cachedProducts.length)
+		setCurrentPage(1)
+		if (selectedCategory.name === 'new-arrivals') {
 			setSortMethod('')
 		}
-	}, [category])
+	}, [selectedCategory])
 	useEffect(() => {
-		storedProducts.splice(0, storedProducts.length)
+		cachedProducts.splice(0, cachedProducts.length)
 	}, [sortMethod])
 	useEffect(() => {
 		saveCart(cart)
@@ -50,19 +48,17 @@ const ProductContextProvider = ({ children }: Props) => {
 	return (
 		<ProductContext.Provider
 			value={{
-				category,
-				setCategory,
+				selectedCategory,
+				setSelectedCategory,
 				cart,
 				setCart,
-				pagination,
-				setPagination,
-				paginationCount,
-				storedProducts,
+				currentPage,
+				setCurrentPage,
+				pageCount,
+				cachedProducts,
 				sortMethod,
 				setSortMethod,
-				showedCategories,
-				orderStep,
-				setOrderStep
+				categories
 			}}
 		>
 			{children}
