@@ -83,12 +83,12 @@ function MyApp({ Component, pageProps }: AppProps) {
 	const router = useRouter()
 	return (
 		<ThemeProvider theme={theme}>
-			<SnackContextProvider>
-				<Head>
-					<title>Maritime Household</title>
-					<meta name='viewport' content='viewport-fit=cover' />
-				</Head>
-				<ProductContextProvider>
+			<Head>
+				<title>Maritime Household</title>
+				<meta name='viewport' content='viewport-fit=cover' />
+			</Head>
+			<ProductContextProvider>
+				<SnackContextProvider>
 					{!router.pathname.startsWith('/admin') && <Header />}
 					<Box
 						sx={{
@@ -100,8 +100,8 @@ function MyApp({ Component, pageProps }: AppProps) {
 						<Component {...pageProps} />
 					</Box>
 					{!router.pathname.startsWith('/admin') && <Footer />}
-				</ProductContextProvider>
-			</SnackContextProvider>
+				</SnackContextProvider>
+			</ProductContextProvider>
 		</ThemeProvider>
 	)
 }

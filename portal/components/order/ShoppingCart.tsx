@@ -76,6 +76,11 @@ const ShoppingCart = () => {
 														</Grid>
 														<Grid className='product-name' item xs>
 															{cartItem.name}
+															{cartItem.outOfStock && (
+																<Typography sx={{ color: '#FF0000' }}>
+																	This item is out of stock
+																</Typography>
+															)}
 															<Delete
 																className='icon-delete'
 																fontSize='medium'
