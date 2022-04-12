@@ -27,11 +27,10 @@ export const addToCart = (
 		cartStorage.push(product)
 	}
 	setCart([...cartStorage])
-	saveCart(cartStorage)
 }
 
-export const countCartTotal = (cartStorage: Product[]) => {
-	const sum = cartStorage.reduce((total: number, cartItem: Product) => {
+export const countCartTotal = (cart: Product[]) => {
+	const sum = cart.reduce((total: number, cartItem: Product) => {
 		return total + Number(cartItem.price) * Number(cartItem.quantity)
 	}, 0)
 	return sum
@@ -52,7 +51,6 @@ export const quantityDecrease = (
 	currentCartProducts[findProductIndex] &&
 		(currentCartProducts[findProductIndex] as any).quantity--
 	setCart(currentCartProducts)
-	saveCart(currentCartProducts)
 	setOrder({
 		...order,
 		products: currentCartProducts,
@@ -73,7 +71,6 @@ export const quantityIncrease = (
 	currentCartProducts[findProductIndex] &&
 		(currentCartProducts[findProductIndex] as any).quantity++
 	setCart(currentCartProducts)
-	saveCart(currentCartProducts)
 	setOrder({
 		...order,
 		products: currentCartProducts,
@@ -91,7 +88,6 @@ export const itemRemove = (
 		return product._id !== item._id
 	})
 	setCart(newProductList)
-	saveCart(newProductList)
 	setOrder({
 		...order,
 		products: newProductList,

@@ -4,25 +4,22 @@ export const SnackContext = createContext<ContextData>({
 	showSnackbar: () => {}
 })
 
-type Severity = 'success' | 'error' | ''
 interface State {
 	snackType: string
 	snackOpen: boolean
-	snackSeverity: Severity
 }
 const initialState: State = {
 	snackType: '',
-	snackOpen: false,
-	snackSeverity: ''
+	snackOpen: false
 }
 type Action =
 	| { type: 'close' }
 	| {
 			type: 'open'
-			payload: { snackType: string; snackSeverity: Severity }
+			payload: { snackType: string }
 	  }
 export type ContextData = {
-	showSnackbar: (snackType: string, snackSeverity: Severity) => void
+	showSnackbar: (snackType: string) => void
 }
 const reducer = (state: State, action: Action): State => {
 	switch (action.type) {
@@ -32,7 +29,6 @@ const reducer = (state: State, action: Action): State => {
 			return {
 				...state,
 				snackOpen: true,
-				snackSeverity: action.payload.snackSeverity,
 				snackType: action.payload.snackType
 			}
 		default:
@@ -45,8 +41,8 @@ const SnackContextProvider = ({ children }: any) => {
 	const snackClose = () => {
 		dispatch({ type: 'close' })
 	}
-	const showSnackbar = (snackType: string, snackSeverity: Severity) => {
-		dispatch({ type: 'open', payload: { snackType, snackSeverity } })
+	const showSnackbar = (snackType: string) => {
+		dispatch({ type: 'open', payload: { snackType } })
 	}
 	return (
 		<SnackContext.Provider
@@ -58,7 +54,6 @@ const SnackContextProvider = ({ children }: any) => {
 				open={state.snackOpen}
 				snackClose={snackClose}
 				snackType={state.snackType}
-				snackSeverity={state.snackSeverity}
 			/>
 			{children}
 		</SnackContext.Provider>

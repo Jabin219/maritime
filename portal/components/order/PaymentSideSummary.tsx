@@ -13,6 +13,9 @@ import { CartSideSummaryContainer } from 'styles/components/order'
 import validator from 'validator'
 import { createOrder } from 'api/order'
 import { useStripe, useElements } from '@stripe/react-stripe-js'
+import { ProductContext } from 'context/ProductContextProvider'
+import { Product } from 'models'
+import { SnackContext } from 'context/SnackContextProvider'
 
 interface Props {
 	contactInformation: { name: String; email: String; phone: String }
@@ -30,18 +33,19 @@ const PaymentSideSummary = ({
 	const {
 		order,
 		setOrder,
-		setOrderStep,
 		contactFormError,
 		shippingMethod,
 		paymentMethod,
 		clearCart,
 		next
 	} = useContext(OrderContext)
+	const { showSnackbar } = useContext(SnackContext)
+	const { setOrderStep, cart, setCart } = useContext(ProductContext)
 	const [processing, setProcessing] = useState(false)
 	const stripe: any = useStripe()
 	const elements: any = useElements()
 	const handleSubmitOrder = async () => {
-		// setProcessing(true)
+		setProcessing(true)
 		if (!contactInformation.name) {
 			setContactFormError({ ...contactFormError, name: true })
 			return
@@ -69,6 +73,17 @@ const PaymentSideSummary = ({
 			paymentMethod,
 			products: order.products
 		})
+		if (createOrderResult.data.status === 'out-of-stock') {
+			showSnackbar('out-of-stock')
+			createOrderResult.data.products.forEach((productId: string) => {
+				cart.find(
+					(cartProduct: Product) => cartProduct._id === productId
+				).outOfStock = true
+			})
+			setCart(cart)
+			setProcessing(false)
+			return
+		}
 		if (createOrderResult.data.status === 'success') {
 			if (!stripe || !elements) {
 				setProcessing(false)
@@ -116,7 +131,7 @@ const PaymentSideSummary = ({
 					<Typography variant='h6'>Tax</Typography>
 				</Grid>
 				<Grid className='rightFloat value' item xs={5}>
-					<Typography>{order.tax ? order.tax : 'TBD'}</Typography>
+					<Typography>{order.tax}</Typography>
 				</Grid>
 				<Divider style={{ width: '100%' }} />
 				<Grid item xs={7} className='label' style={{ marginTop: 20 }}>
@@ -130,9 +145,7 @@ const PaymentSideSummary = ({
 					item
 					style={{ marginTop: 20 }}
 				>
-					<Typography className='total'>
-						{order.total ? order.total : 'TBD'}
-					</Typography>
+					<Typography className='total'>{order.total}</Typography>
 				</Grid>
 			</Grid>
 			<Button

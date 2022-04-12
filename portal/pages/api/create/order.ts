@@ -12,11 +12,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	const { products, contactInformation, paymentMethod, shippingMethod } =
 		req.body
 	const checkProductsStockResult = await checkProductsStock(products)
-	if (!checkProductsStockResult) {
+	if (checkProductsStockResult.length > 0) {
 		res.status(200).json({
 			status: 'out-of-stock',
-			message: 'One or more products in your cart is out of stock.'
+			message: 'One or more products in your cart is out of stock.',
+			products: checkProductsStockResult
 		})
+		return
 	}
 	const { subtotal, tax, total } = await orderCalculator(products)
 	const pickupNumber = generatePickupNumber()

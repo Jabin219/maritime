@@ -8,6 +8,7 @@ export type Product = {
 	images: Array<string>
 	category: string
 	quantity?: number
+	outOfStock?: boolean
 }
 
 export type Category = {
@@ -20,5 +21,7 @@ export type LoginRequest = {
 	username: string
 	password: string
 }
+
+export type SnackSeverity = 'success' | 'error' | ''
 
 export { Account }

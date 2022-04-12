@@ -18,13 +18,16 @@ const checkProductsStock = async (products: any) => {
 	const getProductsResult = await Product.find({
 		_id: { $in: orderedProductIds }
 	})
-	let checkStockResult = true
+	const outOfStockProducts: any[] = []
 	getProductsResult.forEach((product: any) => {
-		if (product.stock < 1) {
-			checkStockResult = false
+		const findOrderedProductResult = products.find(
+			(orderedProduct: any) => orderedProduct._id === product._id.toString()
+		)
+		if (product.stock < findOrderedProductResult.quantity) {
+			outOfStockProducts.push(product._id.toString())
 		}
 	})
-	return checkStockResult
+	return outOfStockProducts
 }
 
 const orderCalculator = async (products: []) => {

@@ -8,7 +8,7 @@ import {
 	RelatedProductGrid,
 	RelatedProductsTitle
 } from 'styles/pages/product'
-import { fourRandomNumberArray, priceFormatter } from 'utils'
+import { priceFormatter } from 'utils'
 import { addToCart } from 'utils/cartHandler'
 import { ProductContext } from 'context/ProductContextProvider'
 import { SnackContext } from 'context/SnackContextProvider'
@@ -28,7 +28,7 @@ const Product = () => {
 			quantity: 1
 		}
 		addToCart(cart, thisProduct as Product, setCart)
-		showSnackbar('add-to-cart', 'success')
+		showSnackbar('add-to-cart')
 	}
 	const getProduct = async () => {
 		const getProductResult = await getProductById({ productId })

@@ -1,7 +1,7 @@
 import { getCategories, getProductsCount } from 'api/product'
 import { Category, Product } from 'models'
 import { useState, createContext, useEffect } from 'react'
-import { cartStorage } from '../utils/cartHandler'
+import { cartStorage, saveCart } from '../utils/cartHandler'
 import { Categories } from 'constant'
 
 export const ProductContext = createContext<any>(null)
@@ -16,6 +16,7 @@ const ProductContextProvider = ({ children }: Props) => {
 	const [pagination, setPagination] = useState(1)
 	const [paginationCount, setPaginationCount] = useState(0)
 	const [sortMethod, setSortMethod] = useState('')
+	const [orderStep, setOrderStep] = useState(0)
 	let storedProducts: any = []
 
 	const countPagination = async (category: string) => {
@@ -42,6 +43,9 @@ const ProductContextProvider = ({ children }: Props) => {
 	useEffect(() => {
 		storedProducts.splice(0, storedProducts.length)
 	}, [sortMethod])
+	useEffect(() => {
+		saveCart(cart)
+	}, [cart])
 
 	return (
 		<ProductContext.Provider
@@ -56,7 +60,9 @@ const ProductContextProvider = ({ children }: Props) => {
 				storedProducts,
 				sortMethod,
 				setSortMethod,
-				showedCategories
+				showedCategories,
+				orderStep,
+				setOrderStep
 			}}
 		>
 			{children}
