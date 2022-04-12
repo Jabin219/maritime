@@ -61,12 +61,6 @@ const PaymentSideSummary = ({
 			setContactFormError({ ...contactFormError, phone: true })
 			return
 		}
-		setOrder({
-			...order,
-			contactInformation: contactInformation,
-			shippingMethod: shippingMethod,
-			paymentMethod: paymentMethod
-		})
 		const createOrderResult: any = await createOrder({
 			contactInformation,
 			shippingMethod,
@@ -85,31 +79,36 @@ const PaymentSideSummary = ({
 			return
 		}
 		if (createOrderResult.data.status === 'success') {
-			if (!stripe || !elements) {
-				setProcessing(false)
-				return
-			}
-			const payload = await stripe.confirmCardPayment(
-				createOrderResult.data.intentSecret,
-				{
-					payment_method: {
-						card: elements.getElement(CardElement) as any,
-						billing_details: contactInformation
+			setOrder({
+				...createOrderResult.data.order
+			})
+			if (paymentMethod === 'credit-card') {
+				if (!stripe || !elements) {
+					setProcessing(false)
+					return
+				}
+				const payload = await stripe.confirmCardPayment(
+					createOrderResult.data.intentSecret,
+					{
+						payment_method: {
+							card: elements.getElement(CardElement) as any,
+							billing_details: contactInformation
+						}
 					}
+				)
+				if (!payload || payload.error) {
+					setProcessing(false)
+				} else {
+					if (
+						payload.paymentIntent &&
+						payload.paymentIntent.status === 'succeeded'
+					) {
+						clearCart()
+					}
+					setProcessing(false)
 				}
-			)
-			if (!payload || payload.error) {
-				setProcessing(false)
-			} else {
-				if (
-					payload.paymentIntent &&
-					payload.paymentIntent.status === 'succeeded'
-				) {
-					clearCart()
-					next()
-				}
-				setProcessing(false)
 			}
+			next()
 		}
 	}
 	return (
