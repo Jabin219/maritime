@@ -13,11 +13,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 				message: 'There is no product for this id.'
 			})
 		} else {
-			res.status(200).json({ status: 'success', product: product })
+			res
+				.status(200)
+				.json({ status: RESPONSE_STATUS.SUCCESS, product: product })
 		}
 	} catch (err) {
 		console.error(err)
-		res.status(500).json({ status: 'fail', message: err })
+		res.status(500).json({ status: RESPONSE_STATUS.FAIL, message: err })
 	}
 }
 export default connectDB(handler)

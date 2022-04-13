@@ -7,6 +7,7 @@ import {
 	checkProductsStock
 } from 'server/service/orderHandler'
 import { createPaymentIntent } from 'server/service/stripeHandler'
+import { RESPONSE_STATUS } from '../constant'
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	const { products, contactInformation, paymentMethod, shippingMethod } =
@@ -49,17 +50,18 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 				return
 			}
 			res.status(200).json({
-				status: 'success',
+				status: RESPONSE_STATUS.SUCCESS,
 				order
 			})
 		} catch (err) {
 			console.error(err)
-			res.status(500).json({ status: 'fail', message: err })
+			res.status(500).json({ status: RESPONSE_STATUS.FAIL, message: err })
 		}
 	} else {
-		res
-			.status(400)
-			.json({ status: 'fail', message: 'incorrect request method' })
+		res.status(400).json({
+			status: RESPONSE_STATUS.FAIL,
+			message: 'incorrect request method'
+		})
 	}
 }
 export default connectDB(handler)
