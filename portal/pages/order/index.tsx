@@ -5,7 +5,7 @@ import { countCartTotal } from 'utils/cartHandler'
 import PaymentInfoContainer from 'components/order/paymentInformation'
 import ShoppingCartContainer from 'components/order/shoppingCart/ShoppingCartContainer'
 import OrderContextProvider from 'context/OrderContextProvider'
-import OrderConfirmation from 'components/order/orderConfirmation/OrderConfirmation'
+import OrderConfirmation from 'components/order/orderConfirmation'
 
 const Order = () => {
 	const [shippingMethod, setShippingMethod] = useState('pickup')

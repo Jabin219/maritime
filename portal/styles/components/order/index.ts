@@ -192,3 +192,5 @@ export const PaymentMethodContainer = styled(Box)({
 		textAlign: 'center'
 	}
 })
+
+export const OrderConfirmationContainer = styled(Box)({})
