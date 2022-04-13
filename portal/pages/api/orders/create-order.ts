@@ -8,6 +8,7 @@ import {
 } from 'server/service/orderHandler'
 import { createPaymentIntent } from 'server/service/stripeHandler'
 import { RESPONSE_STATUS } from '../constant'
+import { PaymentMethod } from 'constant'
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	const { products, contactInformation, paymentMethod, shippingMethod } =
@@ -36,7 +37,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 				shippingMethod
 			})
 			// const orderAddedResult = await order.save()
-			if (paymentMethod === 'credit-card') {
+			if (paymentMethod === PaymentMethod.creditCard) {
 				const intent = await createPaymentIntent(total)
 				if (!intent.client_secret) {
 					res.json({ status: 'error', message: 'Payment failed' })

@@ -19,6 +19,7 @@ import {
 } from 'styles/components/order'
 import PaymentSideSummary from './PaymentSideSummary'
 import { CardElement } from '@stripe/react-stripe-js'
+import { PaymentMethod } from 'constant'
 const initialContactInformation = { name: '', email: '', phone: '' }
 const reducer = (state: any, action: any) => {
 	switch (action.type) {
@@ -151,23 +152,23 @@ const PaymentInformation = () => {
 							</Box>
 							<FormControl>
 								<RadioGroup
-									defaultValue={paymentMethod}
+									defaultValue={PaymentMethod.creditCard}
 									onChange={handleChangePaymentMethod}
 								>
 									<FormControlLabel
-										value='credit-card'
+										value={PaymentMethod.creditCard}
 										control={<Radio color='primary' />}
 										label='Credit Card'
 									/>
 									<FormControlLabel
-										value='pay-after-pickup'
+										value={PaymentMethod.pickAfterPickup}
 										control={<Radio color='primary' />}
 										label='Pay upon at pickup (reserve for 3 days)'
 									/>
 								</RadioGroup>
 							</FormControl>
 						</Box>
-						{paymentMethod === 'credit-card' && (
+						{paymentMethod === PaymentMethod.creditCard && (
 							<Box className='credit-info'>
 								<Box className='header'>
 									<Typography variant='h5'>Credit Card Info</Typography>
