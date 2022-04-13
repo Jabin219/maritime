@@ -16,6 +16,7 @@ import { useStripe, useElements } from '@stripe/react-stripe-js'
 import { ProductContext } from 'context/ProductContextProvider'
 import { Product } from 'models'
 import { SnackContext } from 'context/SnackContextProvider'
+import { PaymentMethod } from 'constant'
 
 interface Props {
 	contactInformation: { name: string; email: string; phone: string }
@@ -89,7 +90,7 @@ const PaymentSideSummary = ({
 			return
 		}
 		if (orderResult.data.status === 'success') {
-			if (paymentMethod === 'credit-card') {
+			if (paymentMethod === PaymentMethod.creditCard) {
 				if (!stripe || !elements) {
 					setProcessing(false)
 					return
@@ -158,7 +159,12 @@ const PaymentSideSummary = ({
 				onClick={() => {
 					handleSubmitOrder()
 				}}
-				disabled={processing || !stripe || submitDisabled ? true : false}
+				disabled={
+					paymentMethod === PaymentMethod.creditCard &&
+					(processing || !stripe || submitDisabled)
+						? true
+						: false
+				}
 			>
 				Place Order
 				{processing && (
