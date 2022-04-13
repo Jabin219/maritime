@@ -8,7 +8,7 @@ export const getAccountId = (token: string) => {
 	return accountId
 }
 
-export const getToken = (accountId: string) => {
+export const setToken = (accountId: string) => {
 	const token = generateToken()
 	myCache.set(token, accountId, 60 * 60 * 24 * 1000)
 	return token

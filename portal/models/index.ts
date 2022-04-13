@@ -1,24 +1,19 @@
 import Account from './admin/account'
 export type Product = {
-	id: string
+	_id: string
 	name: string
 	price: string | number
+	originalPrice: string | number
 	coverImage: string
+	images: Array<string>
 	category: string
-	discount: string
-	newArrival: boolean
 	quantity?: number
 }
 
 export type Category = {
-	id: string
+	_id?: string
 	name: string
-	value: string
-}
-
-export type LoginRequest = {
-	username: string
-	password: string
+	label: string
 }
 
 export { Account }

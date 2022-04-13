@@ -11,7 +11,11 @@ const productSchema = new Schema(
 			type: Number,
 			required: true
 		},
-		description: {
+		originalPrice: {
+			type: Number,
+			required: true
+		},
+		coverImage: {
 			type: String,
 			required: true
 		},
@@ -19,7 +23,20 @@ const productSchema = new Schema(
 			type: String,
 			required: true
 		},
-		inStock: { type: Boolean, required: true }
+		category: {
+			type: String,
+			required: false
+		},
+		status: {
+			type: String,
+			required: true,
+			default: 'inStock'
+		},
+		stock: {
+			type: Number,
+			required: true,
+			default: 10
+		}
 	},
 	{ timestamps: true }
 )

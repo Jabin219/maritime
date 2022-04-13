@@ -91,7 +91,11 @@ function MyApp({ Component, pageProps }: AppProps) {
 				<ProductContextProvider>
 					{!router.pathname.startsWith('/admin') && <Header />}
 					<Box
-						sx={{ maxWidth: '1920px', margin: '0 auto', minHeight: '100vh' }}
+						sx={{
+							maxWidth: '1920px',
+							margin: '0 auto',
+							minHeight: '100vh'
+						}}
 					>
 						<Component {...pageProps} />
 					</Box>

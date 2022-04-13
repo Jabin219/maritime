@@ -1,8 +1,31 @@
 import { Grid, Typography, Box } from '@mui/material'
 import { styled } from '@mui/system'
 
+const ProductListPageContainer = styled(Box)({
+	marginBottom: '200px',
+	position: 'relative',
+	'& .sort-by-select': {
+		minWidth: 200,
+		position: 'absolute',
+		right: '5%',
+		top: '50px'
+	},
+	'& .pagination-container': {
+		'& ul': {
+			justifyContent: 'center',
+			alignItems: 'center',
+			'& button': {
+				fontSize: '20px'
+			},
+			'& .css-133iz6r-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected': {
+				color: '#ffffff'
+			}
+		}
+	}
+})
 const ProductListContainer = styled(Box)({
-	marginTop: '20px'
+	marginTop: '20px',
+	marginBottom: '50px'
 })
 const ProductListGrid = styled(Grid)({
 	marginBottom: '20px',
@@ -31,4 +54,9 @@ const ProductListTitle = styled(Typography)({
 	textAlign: 'center'
 })
 
-export { ProductListGrid, ProductListTitle, ProductListContainer }
+export {
+	ProductListGrid,
+	ProductListTitle,
+	ProductListContainer,
+	ProductListPageContainer
+}

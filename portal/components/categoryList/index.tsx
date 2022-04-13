@@ -9,19 +9,17 @@ import {
 import { useContext, useState } from 'react'
 import { ExpandLess, ExpandMore } from '@mui/icons-material'
 import { ProductContext } from 'context/ProductContextProvider'
+import { Category } from 'models'
 
-interface Props {
-	Categories: any[]
-}
-
-const CategoryList = ({ Categories }: Props) => {
+const CategoryList = () => {
 	const [openCategory, setOpenCategory] = useState(true)
-	const { category, setCategory } = useContext(ProductContext)
+	const { selectedCategory, setSelectedCategory, categories } =
+		useContext(ProductContext)
 	const handleClickOpenCategoryList = () => {
 		setOpenCategory(!openCategory)
 	}
-	const clickChangeCategory = (categoryValue: string) => {
-		setCategory(categoryValue)
+	const clickChangeCategory = (category: Category) => {
+		setSelectedCategory(category)
 	}
 	return (
 		<Box
@@ -48,22 +46,22 @@ const CategoryList = ({ Categories }: Props) => {
 					sx={{ marginTop: '20px' }}
 				>
 					<List component='div' disablePadding>
-						{Categories.map((item, index) => (
+						{categories.map((item: Category, index: number) => (
 							<ListItemButton
 								key={index}
 								disableRipple
 								onClick={() => {
-									clickChangeCategory(item.value)
+									clickChangeCategory(item)
 								}}
 							>
 								<ListItemText
 									sx={
-										category === item.value
+										selectedCategory.name === item.name
 											? { '& span': { fontWeight: 600 } }
 											: {}
 									}
 								>
-									{item.name}
+									{item.label}
 								</ListItemText>
 							</ListItemButton>
 						))}

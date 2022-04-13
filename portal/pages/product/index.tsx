@@ -1,45 +1,36 @@
 import { Box, Button, Grid, Typography } from '@mui/material'
 import { useRouter } from 'next/router'
 import { useContext, useEffect, useState } from 'react'
-import { SampleProducts } from 'constant/products'
 import { Product } from 'models'
 import Image from 'next/image'
-import {
-	ProductButtonContainer,
-	RelatedProductGrid,
-	RelatedProductsTitle
-} from 'styles/pages/product'
-import { fourRandomNumberArray, priceFormatter } from 'utils'
+import { ProductButtonContainer } from 'styles/pages/product'
+import { priceFormatter } from 'utils'
 import { addToCart } from 'utils/cartHandler'
 import { ProductContext } from 'context/ProductContextProvider'
 import { SnackContext } from 'context/SnackContextProvider'
 import CustomLink from 'components/customLink'
+import { getProductById } from 'api/products'
 
 const Product = () => {
 	const router = useRouter()
 	const { productId } = router.query
 	const [showedProduct, setShowedProduct] = useState<Product>()
-	const relatedProducts: Product[] = []
-	const relatedProductsIndex = fourRandomNumberArray
-	relatedProductsIndex.forEach(index => {
-		relatedProducts.push(SampleProducts[index])
-	})
-	const { cart } = useContext(ProductContext)
+	const { cart, setCart } = useContext(ProductContext)
 	const { showSnackbar } = useContext(SnackContext)
 	const handleAddToCart = () => {
 		const thisProduct = {
 			...showedProduct,
 			quantity: 1
 		}
-		addToCart(cart, thisProduct as Product)
+		addToCart(cart, thisProduct as Product, setCart)
 		showSnackbar('add-to-cart', 'success')
 	}
+	const getProduct = async (productId: string) => {
+		const productResult = await getProductById(productId)
+		setShowedProduct(productResult.data.product)
+	}
 	useEffect(() => {
-		setShowedProduct(
-			SampleProducts.find(item => {
-				return item.id === productId
-			})
-		)
+		getProduct(productId as string)
 	}, [productId])
 
 	return (
@@ -70,52 +61,37 @@ const Product = () => {
 					<Grid item xs={5}>
 						<Typography
 							className='product-name'
-							sx={{ fontWeight: 900, fontSize: 40, marginBottom: '40px' }}
+							sx={{
+								fontWeight: 900,
+								fontSize: 40,
+								marginBottom: '40px',
+								lineHeight: '57px'
+							}}
 						>
 							{showedProduct?.name}
 						</Typography>
-						{Number(showedProduct?.discount) === 0 ? (
-							<Typography
-								className='product-price'
-								sx={{
-									fontWeight: 700,
-									fontSize: 40,
-									color: '#FF8800'
-								}}
-							>
-								${showedProduct?.price} CAD
-							</Typography>
-						) : (
-							<>
-								<Typography
-									className='product-price'
-									sx={{
-										fontWeight: 500,
-										fontSize: 40,
-										color: '#ADADAD',
-										textDecoration: 'line-through',
-										marginBottom: '15px'
-									}}
-								>
-									${showedProduct?.price} CAD
-								</Typography>
-								<Typography
-									className='product-price'
-									sx={{
-										fontWeight: 700,
-										fontSize: 40,
-										color: '#FF8800'
-									}}
-								>
-									$
-									{priceFormatter(
-										Number(showedProduct?.price) -
-											Number(showedProduct?.discount)
-									)}{' '}
-									CAD
-								</Typography>
-							</>
-						)}
+						<Typography
+							className='product-price'
+							sx={{
+								fontWeight: 500,
+								fontSize: 40,
+								color: '#ADADAD',
+								textDecoration: 'line-through',
+								marginBottom: '15px'
+							}}
+						>
+							${priceFormatter(Number(showedProduct?.originalPrice))} CAD
+						</Typography>
+						<Typography
+							className='product-price'
+							sx={{
+								fontWeight: 700,
+								fontSize: 40,
+								color: '#FF8800'
+							}}
+						>
+							${priceFormatter(Number(showedProduct?.price))} CAD
+						</Typography>
 						<ProductButtonContainer className='btn-container'>
 							<Button
 								className='add-to-cart'
@@ -139,7 +115,7 @@ const Product = () => {
 					</Grid>
 				</Grid>
 			</Box>
-			<Box className='related-products-container'>
+			{/* <Box className='related-products-container'>
 				<RelatedProductsTitle variant='h6'>
 					You May Also Like
 				</RelatedProductsTitle>
@@ -176,7 +152,7 @@ const Product = () => {
 							))}
 					</Grid>
 				</Box>
-			</Box>
+			</Box> */}
 		</Box>
 	)
 }

@@ -1,7 +1,7 @@
 import { Box, Typography } from '@mui/material'
 import type { NextPage } from 'next'
-import { HomePageCategories, SampleProducts } from 'constant/products'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
+import { ProductContext } from 'context/ProductContextProvider'
 import { getBannerHeight } from 'utils'
 import { FlexBox } from 'components/customStyle'
 import HomeProductGrid from 'components/homeProductGrid'
@@ -10,6 +10,7 @@ import { Category } from 'models'
 const Home: NextPage = () => {
 	const [bannerHeight, setBannerHeight] = useState(600)
 	const [middleBannerHeight, setMiddleBannerHeight] = useState(400)
+	const { showedCategories } = useContext(ProductContext)
 	useEffect(() => {
 		setBannerHeight(getBannerHeight(2.4))
 		setMiddleBannerHeight(getBannerHeight(3.6))
@@ -45,15 +46,9 @@ const Home: NextPage = () => {
 					save more on your households
 				</Typography>
 			</FlexBox>
-			{HomePageCategories.map((item, index) => {
+			{/* {showedCategories.map((item, index) => {
 				let listedProducts = []
-				if (item.value === 'all') {
-					return
-				} else if (item.value === 'sale') {
-					listedProducts = SampleProducts.filter(
-						product => Number(product.discount) > 0
-					)
-				} else if (item.value === 'new-arrivals') {
+				if (item.value === 'new-arrivals') {
 					listedProducts = SampleProducts.filter(product => product.newArrival)
 				} else if (item.value === 'organization' || item.value === 'gifts') {
 					return
@@ -68,7 +63,7 @@ const Home: NextPage = () => {
 							category={item as Category}
 							products={listedProducts.slice(0, 4)}
 						/>
-						{item.value === 'sale' && (
+						{item.value === 'new-arrivals' && (
 							<FlexBox
 								sx={{
 									width: '100%',
@@ -82,7 +77,7 @@ const Home: NextPage = () => {
 						)}
 					</Box>
 				)
-			})}
+			})} */}
 		</Box>
 	)
 }
