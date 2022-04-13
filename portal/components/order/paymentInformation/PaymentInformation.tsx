@@ -16,7 +16,7 @@ import {
 	PaymentInfoContainer,
 	ShippingMethodContainer,
 	ContactFormContainer
-} from 'styles/pages/order'
+} from 'styles/components/order'
 import PaymentSideSummary from './PaymentSideSummary'
 import { CardElement } from '@stripe/react-stripe-js'
 const initialContactInformation = { name: '', email: '', phone: '' }
