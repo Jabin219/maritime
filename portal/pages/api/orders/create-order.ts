@@ -6,6 +6,7 @@ import {
 	orderCalculator,
 	checkProductsStock
 } from 'server/service/orderHandler'
+import { createPaymentIntent } from 'server/service/stripeHandler'
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	const { products, contactInformation, paymentMethod, shippingMethod } =
@@ -33,6 +34,20 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 				pickupNumber,
 				shippingMethod
 			})
+			// const orderAddedResult = await order.save()
+			if (paymentMethod === 'credit-card') {
+				const intent = await createPaymentIntent(total)
+				if (!intent.client_secret) {
+					res.json({ status: 'error', message: 'Payment failed' })
+					return
+				}
+				res.status(200).json({
+					status: 'success',
+					order,
+					intentSecret: intent.client_secret
+				})
+				return
+			}
 			res.status(200).json({
 				status: 'success',
 				order

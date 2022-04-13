@@ -183,5 +183,12 @@ export const PaymentMethodContainer = styled(Box)({
 	},
 	'& .payment-method-container': {
 		marginBottom: '100px'
+	},
+	'& .stripe_card-error': {
+		position: 'absolute',
+		color: '#e02020',
+		fontSize: '16px',
+		lineHeight: '20px',
+		textAlign: 'center'
 	}
 })

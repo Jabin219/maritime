@@ -2,7 +2,7 @@ import { Box } from '@mui/material'
 import { useContext, useState } from 'react'
 import { ProductContext } from 'context/ProductContextProvider'
 import { countCartTotal } from 'utils/cartHandler'
-import StripeElements from 'components/order/paymentInformation/StripeElements'
+import PaymentInfoContainer from 'components/order/paymentInformation'
 import ShoppingCartContainer from 'components/order/shoppingCart/ShoppingCartContainer'
 import OrderContextProvider from 'context/OrderContextProvider'
 import OrderConfirmation from 'components/order/orderConfirmation/OrderConfirmation'
@@ -30,7 +30,7 @@ const Order = () => {
 			case 0:
 				return <ShoppingCartContainer />
 			case 1:
-				return <StripeElements />
+				return <PaymentInfoContainer />
 			case 2:
 				return <OrderConfirmation />
 			default:

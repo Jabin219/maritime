@@ -6,7 +6,7 @@ import {
 	Button,
 	CircularProgress
 } from '@mui/material'
-import { useContext, useState } from 'react'
+import { useContext, useState, useEffect } from 'react'
 import { OrderContext } from 'context/OrderContextProvider'
 import { priceFormatter } from 'utils'
 import { CartSideSummaryContainer } from 'styles/components/order'
@@ -21,12 +21,16 @@ interface Props {
 	contactInformation: { name: string; email: string; phone: string }
 	setContactFormError: (contactFormError: any) => void
 	submitDisabled: Boolean
+	CardElement: any
+	setCardInputError: (errorMessage: string) => void
 }
 
 const PaymentSideSummary = ({
 	contactInformation,
 	setContactFormError,
-	submitDisabled
+	submitDisabled,
+	CardElement,
+	setCardInputError
 }: Props) => {
 	const {
 		order,
@@ -42,6 +46,7 @@ const PaymentSideSummary = ({
 	const [processing, setProcessing] = useState(false)
 	const stripe: any = useStripe()
 	const elements: any = useElements()
+
 	const handleSubmitOrder = async () => {
 		setProcessing(true)
 		if (!contactInformation.name) {
@@ -62,17 +67,11 @@ const PaymentSideSummary = ({
 			setProcessing(false)
 			return
 		}
-		setOrder({
-			...order,
-			contactInformation: contactInformation,
-			shippingMethod: shippingMethod,
-			paymentMethod: paymentMethod
-		})
 		const orderResult: any = await createOrder(
 			contactInformation,
 			shippingMethod,
 			paymentMethod,
-			order.products
+			cart
 		)
 		if (!orderResult) {
 			setProcessing(false)
@@ -90,7 +89,31 @@ const PaymentSideSummary = ({
 			return
 		}
 		if (orderResult.data.status === 'success') {
+			if (paymentMethod === 'credit-card') {
+				if (!stripe || !elements) {
+					setProcessing(false)
+					return
+				}
+				const cardInformation = elements.getElement(CardElement) as any
+				const payload = await stripe.confirmCardPayment(
+					orderResult.data.intentSecret,
+					{
+						payment_method: {
+							card: cardInformation,
+							billing_details: contactInformation
+						}
+					}
+				)
+				if (payload.error) {
+					setCardInputError(`Payment error: ${payload.error.message}`)
+					setProcessing(false)
+					return
+				}
+			}
+			setCardInputError('')
+			setOrder(orderResult.data.order)
 			clearCart()
+			setProcessing(false)
 			next()
 		}
 	}
@@ -135,9 +158,7 @@ const PaymentSideSummary = ({
 				onClick={() => {
 					handleSubmitOrder()
 				}}
-				disabled={
-					processing || !stripe || !elements || submitDisabled ? true : false
-				}
+				disabled={processing || !stripe || submitDisabled ? true : false}
 			>
 				Place Order
 				{processing && (
