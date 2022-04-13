@@ -2,10 +2,10 @@ import { Box } from '@mui/material'
 import { useContext, useState } from 'react'
 import { ProductContext } from 'context/ProductContextProvider'
 import { countCartTotal } from 'utils/cartHandler'
-import StripeElements from 'components/order/StripeElements'
-import ShoppingCartContainer from 'components/order/ShoppingCartContainer'
+import StripeElements from 'components/order/paymentInformation/StripeElements'
+import ShoppingCartContainer from 'components/order/shoppingCart/ShoppingCartContainer'
 import OrderContextProvider from 'context/OrderContextProvider'
-import OrderConfirmation from 'components/order/OrderConfirmation'
+import OrderConfirmation from 'components/order/orderConfirmation/OrderConfirmation'
 
 const Order = () => {
 	const [shippingMethod, setShippingMethod] = useState('pickup')

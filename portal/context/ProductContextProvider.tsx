@@ -13,6 +13,7 @@ const ProductContextProvider = ({ children }: Props) => {
 	const [selectedCategory, setSelectedCategory] = useState<Category>(
 		Categories[0]
 	)
+	const [orderStep, setOrderStep] = useState(0)
 	const [cart, setCart] = useState<Product[]>(cartStorage)
 	const [currentPage, setCurrentPage] = useState(1)
 	const [pageCount, setPageCount] = useState(0)
@@ -58,7 +59,9 @@ const ProductContextProvider = ({ children }: Props) => {
 				cachedProducts,
 				sortMethod,
 				setSortMethod,
-				categories
+				categories,
+				orderStep,
+				setOrderStep
 			}}
 		>
 			{children}
