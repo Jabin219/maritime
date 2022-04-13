@@ -8,11 +8,7 @@ import { Categories } from 'constant'
 import { ProductContext } from 'context/ProductContextProvider'
 
 const CartSideSummary = () => {
-<<<<<<< HEAD:portal/components/order/CartSideSummary.tsx
-	const { setCategory, cart } = useContext(ProductContext)
-=======
 	const { setSelectedCategory, cart } = useContext(ProductContext)
->>>>>>> order-ui-and-server-logic:portal/components/order/shoppingCart/CartSideSummary.tsx
 	const { order, setOrder, next } = useContext(OrderContext)
 	const handleShoppingCartNext = async () => {
 		setOrder({
@@ -71,11 +67,7 @@ const CartSideSummary = () => {
 			<CustomLink href='/product-list'>
 				<Typography
 					onClick={() => {
-<<<<<<< HEAD:portal/components/order/CartSideSummary.tsx
-						setCategory(Categories[0])
-=======
 						setSelectedCategory(Categories[0])
->>>>>>> order-ui-and-server-logic:portal/components/order/shoppingCart/CartSideSummary.tsx
 					}}
 				>
 					Continue Shopping
