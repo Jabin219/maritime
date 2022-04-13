@@ -17,7 +17,7 @@ const AdminLogin = () => {
 	const [password, setPassword] = useState('')
 	const [error, setError] = useState(false)
 	const handleLogin = async (username: string, password: string) => {
-		const loginResult = await sendLoginRequest({ username, password })
+		const loginResult = await sendLoginRequest(username, password)
 		if (loginResult.data.status === 'success') {
 			const tokenString = loginResult.data.token
 			localStorage.setItem('adminToken', tokenString)

@@ -6,7 +6,7 @@ import {
 	Button,
 	CircularProgress
 } from '@mui/material'
-import { useContext, useState } from 'react'
+import { useContext, useState, useEffect } from 'react'
 import { OrderContext } from 'context/OrderContextProvider'
 import { priceFormatter } from 'utils'
 import { CartSideSummaryContainer } from 'styles/components/order'
@@ -18,17 +18,19 @@ import { Product } from 'models'
 import { SnackContext } from 'context/SnackContextProvider'
 
 interface Props {
-	contactInformation: { name: String; email: String; phone: String }
+	contactInformation: { name: string; email: string; phone: string }
 	setContactFormError: (contactFormError: any) => void
 	submitDisabled: Boolean
 	CardElement: any
+	setCardInputError: (errorMessage: string) => void
 }
 
 const PaymentSideSummary = ({
 	contactInformation,
 	setContactFormError,
 	submitDisabled,
-	CardElement
+	CardElement,
+	setCardInputError
 }: Props) => {
 	const {
 		order,
@@ -44,10 +46,12 @@ const PaymentSideSummary = ({
 	const [processing, setProcessing] = useState(false)
 	const stripe: any = useStripe()
 	const elements: any = useElements()
+
 	const handleSubmitOrder = async () => {
 		setProcessing(true)
 		if (!contactInformation.name) {
 			setContactFormError({ ...contactFormError, name: true })
+			setProcessing(false)
 			return
 		}
 		if (
@@ -55,21 +59,27 @@ const PaymentSideSummary = ({
 			!validator.isEmail(contactInformation.email as string)
 		) {
 			setContactFormError({ ...contactFormError, email: true })
+			setProcessing(false)
 			return
 		}
 		if (!contactInformation.phone) {
 			setContactFormError({ ...contactFormError, phone: true })
+			setProcessing(false)
 			return
 		}
-		const createOrderResult: any = await createOrder({
+		const orderResult: any = await createOrder(
 			contactInformation,
 			shippingMethod,
 			paymentMethod,
-			products: order.products
-		})
-		if (createOrderResult.data.status === 'out-of-stock') {
+			cart
+		)
+		if (!orderResult) {
+			setProcessing(false)
+			return
+		}
+		if (orderResult.data.status === 'out-of-stock') {
 			showSnackbar('out-of-stock')
-			createOrderResult.data.products.forEach((productId: string) => {
+			orderResult.data.products.forEach((productId: string) => {
 				cart.find(
 					(cartProduct: Product) => cartProduct._id === productId
 				).outOfStock = true
@@ -78,36 +88,32 @@ const PaymentSideSummary = ({
 			setProcessing(false)
 			return
 		}
-		if (createOrderResult.data.status === 'success') {
-			setOrder({
-				...createOrderResult.data.order
-			})
+		if (orderResult.data.status === 'success') {
 			if (paymentMethod === 'credit-card') {
 				if (!stripe || !elements) {
 					setProcessing(false)
 					return
 				}
+				const cardInformation = elements.getElement(CardElement) as any
 				const payload = await stripe.confirmCardPayment(
-					createOrderResult.data.intentSecret,
+					orderResult.data.intentSecret,
 					{
 						payment_method: {
-							card: elements.getElement(CardElement) as any,
+							card: cardInformation,
 							billing_details: contactInformation
 						}
 					}
 				)
-				if (!payload || payload.error) {
+				if (payload.error) {
+					setCardInputError(`Payment error: ${payload.error.message}`)
 					setProcessing(false)
-				} else {
-					if (
-						payload.paymentIntent &&
-						payload.paymentIntent.status === 'succeeded'
-					) {
-						clearCart()
-					}
-					setProcessing(false)
+					return
 				}
 			}
+			setCardInputError('')
+			setOrder(orderResult.data.order)
+			clearCart()
+			setProcessing(false)
 			next()
 		}
 	}
@@ -152,9 +158,7 @@ const PaymentSideSummary = ({
 				onClick={() => {
 					handleSubmitOrder()
 				}}
-				disabled={
-					processing || !stripe || !elements || submitDisabled ? true : false
-				}
+				disabled={processing || !stripe || submitDisabled ? true : false}
 			>
 				Place Order
 				{processing && (

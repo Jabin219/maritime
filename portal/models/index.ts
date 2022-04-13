@@ -17,6 +17,12 @@ export type Category = {
 	label: string
 }
 
+export type ContactInformation = {
+	name: string
+	email: string
+	phone: string
+}
+
 export type LoginRequest = {
 	username: string
 	password: string

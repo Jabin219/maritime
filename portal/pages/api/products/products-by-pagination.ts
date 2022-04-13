@@ -1,9 +1,10 @@
 import connectDB from '../middleware/mongodb'
 import Product from 'models/mongodb/product'
 import type { NextApiRequest, NextApiResponse } from 'next'
+import { RESPONSE_STATUS } from '../constant'
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-	const { pagination, category, sortMethod } = req.query
+	const { currentPage, category, sortMethod } = req.query
 	let sortCondition: any = { createdAt: 'desc' }
 	let filter: any = {}
 	if (category === 'new-arrivals' || category === 'all-products' || !category) {
@@ -17,21 +18,25 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 		sortCondition = { price: 'desc' }
 	}
 	try {
-		const findAllProductsResult = await Product.find(filter)
+		const allProducts = await Product.find(filter)
 			.limit(20)
-			.skip(20 * (Number(pagination) - 1))
+			.skip(20 * (Number(currentPage) - 1))
 			.sort(sortCondition)
 
-		if (!findAllProductsResult) {
-			res.status(200).json({ status: 'fail', message: 'no products' })
+		if (!allProducts) {
+			res.status(200).json({
+				status: RESPONSE_STATUS.NOT_FOUND,
+				message: 'There are no products for these conditions'
+			})
 		} else {
-			res
-				.status(200)
-				.json({ status: 'success', products: findAllProductsResult })
+			res.status(200).json({
+				status: RESPONSE_STATUS.SUCCESS,
+				products: allProducts
+			})
 		}
 	} catch (err) {
 		console.error(err)
-		res.status(500).json({ status: 'fail', message: err })
+		res.status(500).json({ status: RESPONSE_STATUS.FAIL, message: err })
 	}
 }
 export default connectDB(handler)

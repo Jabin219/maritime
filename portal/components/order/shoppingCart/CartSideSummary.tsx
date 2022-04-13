@@ -8,7 +8,7 @@ import { Categories } from 'constant'
 import { ProductContext } from 'context/ProductContextProvider'
 
 const CartSideSummary = () => {
-	const { setCategory, cart } = useContext(ProductContext)
+	const { setSelectedCategory, cart } = useContext(ProductContext)
 	const { order, setOrder, next } = useContext(OrderContext)
 	const handleShoppingCartNext = async () => {
 		setOrder({
@@ -55,18 +55,21 @@ const CartSideSummary = () => {
 					<Typography className='total'>TBD</Typography>
 				</Grid>
 			</Grid>
-			<Button
-				className='btn-next-step'
-				onClick={() => {
-					handleShoppingCartNext()
-				}}
-			>
-				Next Step
-			</Button>
+			{typeof window !== 'undefined' && (
+				<Button
+					className='btn-next-step'
+					onClick={() => {
+						handleShoppingCartNext()
+					}}
+					disabled={cart.length > 0 ? false : true}
+				>
+					Next Step
+				</Button>
+			)}
 			<CustomLink href='/product-list'>
 				<Typography
 					onClick={() => {
-						setCategory(Categories[0])
+						setSelectedCategory(Categories[0])
 					}}
 				>
 					Continue Shopping
