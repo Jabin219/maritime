@@ -113,7 +113,7 @@ const PaymentSideSummary = ({
 			}
 			setCardInputError('')
 			setOrder(orderResult.data.order)
-			clearCart()
+			// clearCart()
 			setProcessing(false)
 			next()
 		}
@@ -160,8 +160,9 @@ const PaymentSideSummary = ({
 					handleSubmitOrder()
 				}}
 				disabled={
-					paymentMethod === PaymentMethod.creditCard &&
-					(processing || !stripe || submitDisabled)
+					(paymentMethod === PaymentMethod.creditCard &&
+						(!stripe || submitDisabled)) ||
+					processing
 						? true
 						: false
 				}

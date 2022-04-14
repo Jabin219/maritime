@@ -46,7 +46,7 @@ const theme = createTheme({
 			color: '#333333',
 			fontStyle: 'normal',
 			fontSize: 40,
-			fontWeight: 900,
+			fontWeight: 700,
 			lineHeight: '57px',
 			textAlign: 'center'
 		},

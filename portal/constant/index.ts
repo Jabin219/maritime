@@ -170,5 +170,5 @@ export const SampleProducts = [
 
 export enum PaymentMethod {
 	creditCard = 'credit-card',
-	pickAfterPickup = 'pay-after-pickup'
+	payAtPickup = 'pay-at-pickup'
 }

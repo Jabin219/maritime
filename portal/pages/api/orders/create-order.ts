@@ -24,6 +24,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	}
 	const { subtotal, tax, total } = await orderCalculator(products)
 	const pickupNumber = generatePickupNumber()
+	const orderStatus =
+		paymentMethod === PaymentMethod.payAtPickup ? 'reserved' : 'unpaid'
 	if (req.method === 'POST') {
 		try {
 			const order = new Order({
@@ -34,25 +36,26 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 				contactInformation: JSON.stringify(contactInformation),
 				paymentMethod,
 				pickupNumber,
-				shippingMethod
+				shippingMethod,
+				status: orderStatus
 			})
-			// const orderAddedResult = await order.save()
+			const orderAddedResult = await order.save()
 			if (paymentMethod === PaymentMethod.creditCard) {
 				const intent = await createPaymentIntent(total)
 				if (!intent.client_secret) {
-					res.json({ status: 'error', message: 'Payment failed' })
+					res.json({ status: RESPONSE_STATUS.ERROR, message: 'Payment failed' })
 					return
 				}
 				res.status(200).json({
-					status: 'success',
-					order,
+					status: RESPONSE_STATUS.SUCCESS,
+					order: orderAddedResult,
 					intentSecret: intent.client_secret
 				})
 				return
 			}
 			res.status(200).json({
 				status: RESPONSE_STATUS.SUCCESS,
-				order
+				order: orderAddedResult
 			})
 		} catch (err) {
 			console.error(err)
