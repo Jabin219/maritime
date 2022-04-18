@@ -6,7 +6,7 @@ import {
 	orderCalculator,
 	checkProductsStock
 } from 'server/service/orderHandler'
-import { RESPONSE_STATUS } from '../constant'
+import { ResponseStatus } from 'constant'
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	const { products, contactInformation, paymentMethod, shippingMethod } =
@@ -14,7 +14,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	const checkProductsStockResult = await checkProductsStock(products)
 	if (checkProductsStockResult.length > 0) {
 		res.status(200).json({
-			status: 'out-of-stock',
+			status: ResponseStatus.OUR_OF_STOCK,
 			message: 'One or more products in your cart is out of stock.',
 			products: checkProductsStockResult
 		})
@@ -35,16 +35,16 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 				shippingMethod
 			})
 			res.status(200).json({
-				status: RESPONSE_STATUS.SUCCESS,
+				status: ResponseStatus.SUCCESS,
 				order
 			})
 		} catch (err) {
 			console.error(err)
-			res.status(500).json({ status: RESPONSE_STATUS.FAIL, message: err })
+			res.status(500).json({ status: ResponseStatus.FAIL, message: err })
 		}
 	} else {
 		res.status(400).json({
-			status: RESPONSE_STATUS.FAIL,
+			status: ResponseStatus.FAIL,
 			message: 'incorrect request method'
 		})
 	}

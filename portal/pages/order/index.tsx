@@ -6,12 +6,15 @@ import StripeElements from 'components/order/paymentInformation/StripeElements'
 import ShoppingCartContainer from 'components/order/shoppingCart/ShoppingCartContainer'
 import OrderContextProvider from 'context/OrderContextProvider'
 import OrderConfirmation from 'components/order/orderConfirmation/OrderConfirmation'
+import { PaymentMethod } from 'constant'
+import { Order } from 'models'
 
 const Order = () => {
 	const [shippingMethod, setShippingMethod] = useState('pickup')
-	const [paymentMethod, setPaymentMethod] = useState('credit-card')
+	const [paymentMethod, setPaymentMethod] = useState(PaymentMethod.creditCard)
 	const { cart, setCart, orderStep, setOrderStep } = useContext(ProductContext)
-	const [order, setOrder] = useState<any>({
+	const [order, setOrder] = useState<Order>({
+		products: cart,
 		subtotal: countCartTotal(cart)
 	})
 

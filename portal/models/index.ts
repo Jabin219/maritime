@@ -8,6 +8,7 @@ export type Product = {
 	images: Array<string>
 	category: string
 	quantity?: number
+	stock?: number
 	outOfStock?: boolean
 }
 
@@ -15,6 +16,20 @@ export type Category = {
 	_id?: string
 	name: string
 	label: string
+}
+
+export type Order = {
+	_id?: string
+	products: string | Product[]
+	subtotal: number
+	tax?: number
+	total?: number
+	status?: string
+	contactInformation?: string | ContactInformation
+	shippingMethod?: string
+	paymentMethod?: string
+	pickupNumber?: string
+	createdAt?: Date
 }
 
 export type ContactInformation = {

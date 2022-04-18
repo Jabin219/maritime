@@ -14,18 +14,23 @@ import validator from 'validator'
 import { createOrder } from 'api/order'
 import { useStripe, useElements } from '@stripe/react-stripe-js'
 import { ProductContext } from 'context/ProductContextProvider'
-import { Product } from 'models'
+import { Order, Product } from 'models'
 import { SnackContext } from 'context/SnackContextProvider'
+import { ResponseStatus, SnackType } from 'constant'
 
 interface Props {
 	contactInformation: { name: string; email: string; phone: string }
-	setContactFormError: (contactFormError: any) => void
+	setContactNameError: (name: boolean) => void
+	setContactEmailError: (email: boolean) => void
+	setContactPhoneError: (phone: boolean) => void
 	submitDisabled: Boolean
 }
 
 const PaymentSideSummary = ({
 	contactInformation,
-	setContactFormError,
+	setContactNameError,
+	setContactEmailError,
+	setContactPhoneError,
 	submitDisabled
 }: Props) => {
 	const {
@@ -45,7 +50,7 @@ const PaymentSideSummary = ({
 	const handleSubmitOrder = async () => {
 		setProcessing(true)
 		if (!contactInformation.name) {
-			setContactFormError({ ...contactFormError, name: true })
+			setContactNameError(true)
 			setProcessing(false)
 			return
 		}
@@ -53,12 +58,12 @@ const PaymentSideSummary = ({
 			!contactInformation.email ||
 			!validator.isEmail(contactInformation.email as string)
 		) {
-			setContactFormError({ ...contactFormError, email: true })
+			setContactEmailError(true)
 			setProcessing(false)
 			return
 		}
 		if (!contactInformation.phone) {
-			setContactFormError({ ...contactFormError, phone: true })
+			setContactPhoneError(true)
 			setProcessing(false)
 			return
 		}
@@ -68,19 +73,19 @@ const PaymentSideSummary = ({
 			shippingMethod: shippingMethod,
 			paymentMethod: paymentMethod
 		})
-		const orderResult: any = await createOrder(
+		const createdOrderResult: any = await createOrder(
 			contactInformation,
 			shippingMethod,
 			paymentMethod,
 			order.products
 		)
-		if (!orderResult) {
+		if (!createdOrderResult) {
 			setProcessing(false)
 			return
 		}
-		if (orderResult.data.status === 'out-of-stock') {
-			showSnackbar('out-of-stock')
-			orderResult.data.products.forEach((productId: string) => {
+		if (createdOrderResult.data.status === ResponseStatus.OUR_OF_STOCK) {
+			showSnackbar(SnackType.OUR_OF_STOCK)
+			createdOrderResult.data.products.forEach((productId: string) => {
 				cart.find(
 					(cartProduct: Product) => cartProduct._id === productId
 				).outOfStock = true
@@ -89,7 +94,7 @@ const PaymentSideSummary = ({
 			setProcessing(false)
 			return
 		}
-		if (orderResult.data.status === 'success') {
+		if (createdOrderResult.data.status === 'success') {
 			clearCart()
 			next()
 		}
