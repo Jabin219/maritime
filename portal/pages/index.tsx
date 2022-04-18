@@ -1,20 +1,33 @@
 import { Box, Typography } from '@mui/material'
 import type { NextPage } from 'next'
-import { useState, useEffect, useContext } from 'react'
-import { ProductContext } from 'context/ProductContextProvider'
+import { useState, useEffect } from 'react'
 import { getBannerHeight } from 'utils'
 import { FlexBox } from 'components/customStyle'
 import HomeProductGrid from 'components/homeProductGrid'
-import { Category } from 'models'
+import { Category, Product } from 'models'
+import { HomePageCategories } from 'constant'
+import { getHomePageProducts } from 'api/products'
 
 const Home: NextPage = () => {
 	const [bannerHeight, setBannerHeight] = useState(600)
 	const [middleBannerHeight, setMiddleBannerHeight] = useState(400)
-	const { showedCategories } = useContext(ProductContext)
+	const [homePageProducts, setHomePageProducts] = useState<
+		{
+			category: string
+			products: string | Product[]
+		}[]
+	>([])
+	const loadHomePageProducts = async (homePageCategories: string[]) => {
+		const homeProductsResult = await getHomePageProducts(homePageCategories)
+		setHomePageProducts(homeProductsResult.data.products)
+	}
 	useEffect(() => {
 		setBannerHeight(getBannerHeight(2.4))
 		setMiddleBannerHeight(getBannerHeight(3.6))
 	}, [])
+	useEffect(() => {
+		loadHomePageProducts(homePageCategories)
+	}, [homePageCategories])
 	return (
 		<Box className='home-page' sx={{ marginBottom: '100px' }}>
 			<FlexBox
@@ -46,9 +59,22 @@ const Home: NextPage = () => {
 					save more on your households
 				</Typography>
 			</FlexBox>
-			{/* {showedCategories.map((item, index) => {
+			<FlexBox
+				sx={{
+					width: '100%',
+					height: middleBannerHeight,
+					background: 'url(/images/home/home-middle-banner.jpg) no-repeat',
+					backgroundSize: 'cover',
+					backgroundPosition: 'center center'
+				}}
+			></FlexBox>
+
+			{/* {Categories.map((category, index) => {
+				if (!category.showedOnHeader) {
+					return
+				}
 				let listedProducts = []
-				if (item.value === 'new-arrivals') {
+				if (category.name === 'new-arrivals') {
 					listedProducts = SampleProducts.filter(product => product.newArrival)
 				} else if (item.value === 'organization' || item.value === 'gifts') {
 					return
@@ -64,16 +90,7 @@ const Home: NextPage = () => {
 							products={listedProducts.slice(0, 4)}
 						/>
 						{item.value === 'new-arrivals' && (
-							<FlexBox
-								sx={{
-									width: '100%',
-									height: middleBannerHeight,
-									background:
-										'url(/images/home/home-middle-banner.jpg) no-repeat',
-									backgroundSize: 'cover',
-									backgroundPosition: 'center center'
-								}}
-							></FlexBox>
+							
 						)}
 					</Box>
 				)

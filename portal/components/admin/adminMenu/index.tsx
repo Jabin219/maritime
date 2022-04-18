@@ -12,7 +12,7 @@ const AdminMenu = () => {
 		<AdminMenuContainer>
 			<Box className='logo-container'>
 				<Image
-					src='/images/logo/header-logo.png'
+					src='/images/logo/header-logo.jpg'
 					alt='logo'
 					width='90'
 					height='60'

@@ -9,6 +9,14 @@ export const Categories = [
 	{ name: 'kids', label: 'Kids', showedOnHeader: true }
 ]
 
+export const HomePageCategories = [
+	'new-arrivals',
+	'clothing',
+	'home-and-pets',
+	'appliances',
+	'health-and-beauty'
+]
+
 export const SampleProducts = [
 	{
 		id: 'f06e908f-6027-4626-9e9b-5ae14c783455',

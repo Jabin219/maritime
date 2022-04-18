@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { Category } from 'models'
 
 const getProductsByCategory = (
 	currentPage: number,
@@ -19,4 +20,15 @@ const getProductById = (productId: string) =>
 		params: { productId }
 	})
 
-export { getProductsByCategory, getPagesCount, getProductById }
+const getHomePageProducts = (categories: Category[]) => {
+	axios.get('/api/products/home-page-products', {
+		params: { categories }
+	})
+}
+
+export {
+	getProductsByCategory,
+	getPagesCount,
+	getProductById,
+	getHomePageProducts
+}
