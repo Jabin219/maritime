@@ -22,7 +22,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 		return
 	}
 	const { subtotal, tax, total } = await orderCalculator(orderedProducts)
-	console.log({ subtotal, tax, total })
 	const pickupNumber = generatePickupNumber()
 	if (req.method === 'POST') {
 		try {
