@@ -1,6 +1,12 @@
 export const Categories = [
-	{ name: 'all-products', label: 'All Products' },
-	{ name: 'new-arrivals', label: 'New Arrivals' }
+	{ name: 'all-products', label: 'All Products', showedOnHeader: true },
+	{ name: 'new-arrivals', label: 'New Arrivals', showedOnHeader: true },
+	{ name: 'clothing', label: 'Clothing', showedOnHeader: true },
+	{ name: 'home-and-pets', label: 'Home & Pets', showedOnHeader: true },
+	{ name: 'grocery', label: 'Grocery', showedOnHeader: true },
+	{ name: 'appliances', label: 'Appliances', showedOnHeader: true },
+	{ name: 'health-and-beauty', label: 'Health & Beauty', showedOnHeader: true },
+	{ name: 'kids', label: 'Kids', showedOnHeader: true }
 ]
 
 export const SampleProducts = [
@@ -171,4 +177,9 @@ export const SampleProducts = [
 export enum PaymentMethod {
 	creditCard = 'credit-card',
 	payAtPickup = 'pay-at-pickup'
+}
+export enum SortMethod {
+	newArrivals = 'new-arrivals',
+	priceIncrease = 'price-increase',
+	priceDecrease = 'price-decrease'
 }

@@ -9,6 +9,7 @@ import {
 	FormControl
 } from '@mui/material'
 import { useContext, useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
 import CategoryList from 'components/categoryList'
 import { ProductContext } from 'context/ProductContextProvider'
 import Image from 'next/image'
@@ -20,20 +21,26 @@ import {
 	ProductListGrid,
 	ProductListPageContainer
 } from 'styles/pages/product-list'
-import { getProductsByPagination } from 'api/products'
-import { Product } from 'models'
+import { getPagesCount, getProductsByCategory } from 'api/products'
+import { Category, Product } from 'models'
+import { SortMethod, Categories } from 'constant'
 
 const ProductList = () => {
+	const router = useRouter()
+	const categoryName = router.query.categoryName as string
 	const {
-		selectedCategory,
 		currentPage,
 		setCurrentPage,
-		pageCount,
 		cachedProducts,
 		sortMethod,
 		setSortMethod
 	} = useContext(ProductContext)
-	const [listedProducts, setListedProducts] = useState<Product[]>()
+	const [listedProducts, setListedProducts] = useState<Product[]>([])
+	const [pagesCount, setPagesCount] = useState<any>(0)
+	const loadPagesCount = async (category: string) => {
+		const pagesCountResult = await getPagesCount(category)
+		setPagesCount(pagesCountResult.data.pagesCount)
+	}
 	const loadListedProducts = async (
 		currentPage: number,
 		category: string,
@@ -46,7 +53,7 @@ const ProductList = () => {
 			setListedProducts(cachedProductsResult.products)
 			return
 		}
-		const productsLoadedResult = await getProductsByPagination(
+		const productsLoadedResult = await getProductsByCategory(
 			currentPage,
 			category,
 			sortMethod
@@ -61,9 +68,15 @@ const ProductList = () => {
 		setCurrentPage(value)
 		window.scrollTo(0, 0)
 	}
+	const selectedCategory = Categories.find(
+		(category: Category) => category.name === categoryName
+	)
 	useEffect(() => {
-		loadListedProducts(currentPage, selectedCategory.name, sortMethod)
-	}, [selectedCategory, currentPage, sortMethod])
+		loadPagesCount(categoryName)
+	}, [categoryName])
+	useEffect(() => {
+		loadListedProducts(currentPage, categoryName, sortMethod)
+	}, [currentPage, categoryName, sortMethod])
 
 	return (
 		<ProductListPageContainer className='product-list-page'>
@@ -74,7 +87,7 @@ const ProductList = () => {
 				<Grid item xs>
 					<ProductListContainer className='product-list-container'>
 						<ProductListTitle variant='h3'>
-							{selectedCategory.label}
+							{selectedCategory && selectedCategory.label}
 						</ProductListTitle>
 						<FormControl className='sort-by-select'>
 							<InputLabel>Sort by</InputLabel>
@@ -85,15 +98,19 @@ const ProductList = () => {
 									setSortMethod(event.target.value)
 								}}
 							>
-								<MenuItem value='new-arrivals'>New Arrivals</MenuItem>
-								<MenuItem value='price-increase'>Price Increase</MenuItem>
-								<MenuItem value='price-decrease'>Price Decrease</MenuItem>
+								<MenuItem value={SortMethod.newArrivals}>New arrivals</MenuItem>
+								<MenuItem value={SortMethod.priceIncrease}>
+									Price low to high
+								</MenuItem>
+								<MenuItem value={SortMethod.priceDecrease}>
+									Price high to low
+								</MenuItem>
 							</Select>
 						</FormControl>
 						<Grid container>
 							{listedProducts &&
-								listedProducts.map((product, index) => (
-									<ProductListGrid key={index} item xs={3}>
+								listedProducts.map((product: Product) => (
+									<ProductListGrid key={product._id} item xs={3}>
 										<CustomLink href={`/product?productId=${product._id}`}>
 											<Image
 												src={product.coverImage}
@@ -123,10 +140,10 @@ const ProductList = () => {
 								))}
 						</Grid>
 					</ProductListContainer>
-					{selectedCategory.name !== 'new-arrivals' && (
+					{categoryName !== SortMethod.newArrivals && (
 						<Box className='pagination-container'>
 							<Pagination
-								count={pageCount}
+								count={pagesCount}
 								defaultPage={6}
 								color='primary'
 								showFirstButton

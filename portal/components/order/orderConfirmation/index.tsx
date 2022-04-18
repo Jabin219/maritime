@@ -23,7 +23,6 @@ import { Product } from 'models'
 
 const OrderConfirmation = () => {
 	const { order } = useContext(OrderContext)
-	console.log(order)
 	const contactInformation = JSON.parse(order.contactInformation)
 	const products = JSON.parse(order.products)
 	return (

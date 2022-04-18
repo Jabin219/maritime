@@ -6,13 +6,14 @@ import { RESPONSE_STATUS } from '../constant'
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	const { category } = req.query
 	let filter: any = {}
-	if (category === 'new-arrivals' || category === 'all-products' || !category) {
+	if (category === 'new-arrivals' || category === 'all-products') {
 		filter = {}
 	} else {
 		filter = { category }
 	}
 	try {
 		const productsCount = await Product.count(filter)
+		const pagesCount = Math.ceil(productsCount / 20) || 1
 		if (!productsCount) {
 			res
 				.status(200)
@@ -20,7 +21,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 		} else {
 			res.status(200).json({
 				status: RESPONSE_STATUS.SUCCESS,
-				count: productsCount
+				pagesCount
 			})
 		}
 	} catch (err) {
