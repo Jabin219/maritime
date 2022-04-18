@@ -44,7 +44,7 @@ const PaymentSideSummary = ({
 		if (!contactInformation.name) {
 			setContactNameError(true)
 			setProcessing(false)
-			return false
+			return
 		}
 		if (
 			!contactInformation.email ||
@@ -52,12 +52,12 @@ const PaymentSideSummary = ({
 		) {
 			setContactEmailError(true)
 			setProcessing(false)
-			return false
+			return
 		}
 		if (!contactInformation.phone) {
 			setContactPhoneError(true)
 			setProcessing(false)
-			return false
+			return
 		}
 	}
 	const handleSubmitOrder = async () => {
