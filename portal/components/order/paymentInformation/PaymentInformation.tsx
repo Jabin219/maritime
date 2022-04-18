@@ -19,25 +19,24 @@ import {
 } from 'styles/components/order'
 import PaymentSideSummary from './PaymentSideSummary'
 import { CardElement } from '@stripe/react-stripe-js'
+import { PaymentMethod } from 'constant'
 const initialContactInformation = { name: '', email: '', phone: '' }
 const reducer = (state: any, action: any) => {
 	switch (action.type) {
-		case 'change-name':
+		case 'CHANGE_NAME':
 			return { ...state, name: action.value }
-		case 'change-email':
+		case 'CHANGE_EMAIL':
 			return { ...state, email: action.value }
-		case 'change-phone':
+		case 'CHANGE_PHONE':
 			return { ...state, phone: action.value }
 		default:
 			throw new Error()
 	}
 }
 const PaymentInformation = () => {
-	const [contactFormError, setContactFormError] = useState({
-		name: false,
-		email: false,
-		phone: false
-	})
+	const [contactNameError, setContactNameError] = useState(false)
+	const [contactEmailError, setContactEmailError] = useState(false)
+	const [contactPhoneError, setContactPhoneError] = useState(false)
 	const [contactInformation, dispatch] = useReducer(
 		reducer,
 		initialContactInformation
@@ -72,53 +71,49 @@ const PaymentInformation = () => {
 							<TextField
 								label='Name'
 								fullWidth
-								error={contactFormError.name}
+								error={contactNameError}
 								helperText={
-									contactFormError.name ? 'Please enter your full name' : ''
+									contactNameError ? 'Please enter your full name' : ''
 								}
 								required
 								onChange={event => {
 									dispatch({
-										type: 'change-name',
+										type: 'CHANGE_NAME',
 										value: event.target.value
 									})
-									setContactFormError({ ...contactFormError, name: false })
+									setContactNameError(false)
 								}}
 							/>
 							<TextField
 								label='Email'
 								fullWidth
-								error={contactFormError.email}
+								error={contactEmailError}
 								helperText={
-									contactFormError.email
-										? 'Please enter a valid email address'
-										: ''
+									contactEmailError ? 'Please enter a valid email address' : ''
 								}
 								required
 								onChange={event => {
 									dispatch({
-										type: 'change-email',
+										type: 'CHANGE_EMAIL',
 										value: event.target.value
 									})
-									setContactFormError({ ...contactFormError, email: false })
+									setContactEmailError(false)
 								}}
 							/>
 							<TextField
 								label='Phone Number'
 								fullWidth
-								error={contactFormError.phone}
+								error={contactPhoneError}
 								helperText={
-									contactFormError.phone
-										? 'Please enter a valid phone number'
-										: ''
+									contactPhoneError ? 'Please enter a valid phone number' : ''
 								}
 								required
 								onChange={event => {
 									dispatch({
-										type: 'change-phone',
+										type: 'CHANGE_PHONE',
 										value: event.target.value
 									})
-									setContactFormError({ ...contactFormError, phone: false })
+									setContactPhoneError(false)
 								}}
 							/>
 						</Box>
@@ -155,14 +150,14 @@ const PaymentInformation = () => {
 									onChange={handleChangePaymentMethod}
 								>
 									<FormControlLabel
-										value='credit-card'
+										value={PaymentMethod.creditCard}
 										control={<Radio color='primary' />}
 										label='Credit Card'
 									/>
 								</RadioGroup>
 							</FormControl>
 						</Box>
-						{paymentMethod === 'credit-card' && (
+						{paymentMethod === PaymentMethod.creditCard && (
 							<Box className='credit-info'>
 								<Box className='header'>
 									<Typography variant='h5'>Credit Card Info</Typography>
@@ -185,7 +180,9 @@ const PaymentInformation = () => {
 			<Grid item xs>
 				<PaymentSideSummary
 					contactInformation={contactInformation}
-					setContactFormError={setContactFormError}
+					setContactNameError={setContactNameError}
+					setContactEmailError={setContactEmailError}
+					setContactPhoneError={setContactPhoneError}
 					submitDisabled={submitDisabled}
 					CardElement={CardElement}
 					setCardInputError={setCardInputError}

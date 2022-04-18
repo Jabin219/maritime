@@ -1,5 +1,6 @@
 import { Button, Snackbar, Stack } from '@mui/material'
 import MuiAlert from '@mui/material/Alert'
+import { SnackType } from 'constant'
 import { ProductContext } from 'context/ProductContextProvider'
 import { forwardRef, useContext } from 'react'
 
@@ -17,10 +18,10 @@ const CustomSnackBar = ({ open, snackClose, snackType }: Props) => {
 	const { setOrderStep } = useContext(ProductContext)
 	const getSnackbarContent = (snackType: string) => {
 		switch (snackType) {
-			case 'add-to-cart':
+			case SnackType.ADD_TO_CART:
 				return 'One item has been added to your cart!'
 				break
-			case 'out-of-stock':
+			case SnackType.OUT_OF_STOCK:
 				return 'One or more items in your cart is out of stock.'
 				break
 			default:
@@ -30,7 +31,7 @@ const CustomSnackBar = ({ open, snackClose, snackType }: Props) => {
 	}
 	const getSnackSeverity = (snackType: string) => {
 		switch (snackType) {
-			case 'add-to-cart':
+			case SnackType.ADD_TO_CART:
 				return 'success'
 				break
 			default:
@@ -40,7 +41,7 @@ const CustomSnackBar = ({ open, snackClose, snackType }: Props) => {
 	}
 	const getSnackbarAction = (snackType: string) => {
 		switch (snackType) {
-			case 'out-of-stock':
+			case SnackType.OUT_OF_STOCK:
 				return (
 					<Button
 						color='primary'
@@ -60,7 +61,7 @@ const CustomSnackBar = ({ open, snackClose, snackType }: Props) => {
 	}
 	return (
 		<Stack spacing={2}>
-			{snackType === 'out-of-stock' ? (
+			{snackType === SnackType.OUT_OF_STOCK ? (
 				<Snackbar
 					anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
 					open={open}

@@ -5,13 +5,13 @@ const createOrder = (
 	contactInformation: ContactInformation,
 	shippingMethod: string,
 	paymentMethod: string,
-	products: Product[]
+	orderedProducts: { productId: string; quantity: number }[]
 ) =>
 	axios.post('/api/orders/create-order', {
 		contactInformation,
 		shippingMethod,
 		paymentMethod,
-		products
+		orderedProducts
 	})
 
 export { createOrder }
