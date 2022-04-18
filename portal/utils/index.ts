@@ -17,3 +17,6 @@ export const getBannerHeight = (widthHeightRate: number) => {
 	}
 	return 0
 }
+export const taxCalculator = (amount: number) => {
+	return amount * 0.15
+}

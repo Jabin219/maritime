@@ -11,7 +11,7 @@ import ClientOnly from 'components/clientOnly'
 
 const Header = () => {
 	const router = useRouter()
-	const { cart } = useContext(ProductContext)
+	const { cart, setOrderStep } = useContext(ProductContext)
 	return (
 		<AppBar position='static' color='secondary' sx={{ boxShadow: 'none' }}>
 			<Grid
@@ -38,6 +38,7 @@ const Header = () => {
 								sx={{ cursor: 'pointer' }}
 								onClick={() => {
 									router.push('/order')
+									setOrderStep(0)
 								}}
 							/>
 						</Badge>

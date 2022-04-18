@@ -1,4 +1,4 @@
-import { Product } from 'models'
+import { Order, Product } from 'models'
 
 // init cartStorage
 export const cartStorage: Product[] =
@@ -16,7 +16,7 @@ export const addToCart = (
 ) => {
 	const findSameItemIndex: number = cartStorage.findIndex(
 		(cartProduct: Product) => {
-			return product.id === cartProduct.id
+			return product._id === cartProduct._id
 		}
 	)
 	if (findSameItemIndex !== -1) {
@@ -27,11 +27,10 @@ export const addToCart = (
 		cartStorage.push(product)
 	}
 	setCart([...cartStorage])
-	saveCart(cartStorage)
 }
 
-export const countCartTotal = (cartStorage: Product[]) => {
-	const sum = cartStorage.reduce((total: number, cartItem: Product) => {
+export const countCartTotal = (cart: Product[]) => {
+	const sum = cart.reduce((total: number, cartItem: Product) => {
 		return total + Number(cartItem.price) * Number(cartItem.quantity)
 	}, 0)
 	return sum
@@ -41,17 +40,17 @@ export const quantityDecrease = (
 	item: Product,
 	cart: Product[],
 	setCart: (cart: Product[]) => void,
-	order: any,
-	setOrder: (order: any) => void
+	order: Order,
+	setOrder: (order: Order) => void
 ) => {
 	const currentCartProducts: Product[] = [...cart]
 	const findProductIndex = currentCartProducts.findIndex(
-		(product: Product) => product.id === item.id && Number(product.quantity) > 1
+		(product: Product) =>
+			product._id === item._id && Number(product.quantity) > 1
 	)
 	currentCartProducts[findProductIndex] &&
 		(currentCartProducts[findProductIndex] as any).quantity--
 	setCart(currentCartProducts)
-	saveCart(currentCartProducts)
 	setOrder({
 		...order,
 		products: currentCartProducts,
@@ -62,17 +61,16 @@ export const quantityIncrease = (
 	item: Product,
 	cart: Product[],
 	setCart: (cart: Product[]) => void,
-	order: any,
-	setOrder: (order: any) => void
+	order: Order,
+	setOrder: (order: Order) => void
 ) => {
 	const currentCartProducts: Product[] = [...cart]
 	const findProductIndex = currentCartProducts.findIndex(
-		(product: Product) => product.id === item.id
+		(product: Product) => product._id === item._id
 	)
 	currentCartProducts[findProductIndex] &&
 		(currentCartProducts[findProductIndex] as any).quantity++
 	setCart(currentCartProducts)
-	saveCart(currentCartProducts)
 	setOrder({
 		...order,
 		products: currentCartProducts,
@@ -83,14 +81,13 @@ export const itemRemove = (
 	item: Product,
 	cart: Product[],
 	setCart: (cart: Product[]) => void,
-	order: any,
-	setOrder: (order: any) => void
+	order: Order,
+	setOrder: (order: Order) => void
 ) => {
 	const newProductList = cart.filter((product: Product) => {
-		return product.id !== item.id
+		return product._id !== item._id
 	})
 	setCart(newProductList)
-	saveCart(newProductList)
 	setOrder({
 		...order,
 		products: newProductList,

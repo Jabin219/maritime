@@ -1,7 +1,7 @@
 import { getCategories, getProductsCount } from 'api/products'
 import { Category, Product } from 'models'
 import { useState, createContext, useEffect } from 'react'
-import { cartStorage } from '../utils/cartHandler'
+import { cartStorage, saveCart } from '../utils/cartHandler'
 import { Categories } from 'constant'
 
 export const ProductContext = createContext<any>(null)
@@ -13,6 +13,7 @@ const ProductContextProvider = ({ children }: Props) => {
 	const [selectedCategory, setSelectedCategory] = useState<Category>(
 		Categories[0]
 	)
+	const [orderStep, setOrderStep] = useState(0)
 	const [cart, setCart] = useState<Product[]>(cartStorage)
 	const [currentPage, setCurrentPage] = useState(1)
 	const [pageCount, setPageCount] = useState(0)
@@ -41,6 +42,9 @@ const ProductContextProvider = ({ children }: Props) => {
 	useEffect(() => {
 		cachedProducts.splice(0, cachedProducts.length)
 	}, [sortMethod])
+	useEffect(() => {
+		saveCart(cart)
+	}, [cart])
 
 	return (
 		<ProductContext.Provider
@@ -55,7 +59,9 @@ const ProductContextProvider = ({ children }: Props) => {
 				cachedProducts,
 				sortMethod,
 				setSortMethod,
-				categories
+				categories,
+				orderStep,
+				setOrderStep
 			}}
 		>
 			{children}

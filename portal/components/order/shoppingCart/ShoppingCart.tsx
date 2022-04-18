@@ -14,7 +14,7 @@ import { FlexBox } from 'components/customStyle'
 import { ProductContext } from 'context/ProductContextProvider'
 import Image from 'next/image'
 import { Product } from 'models'
-import { ShoppingCartContainer } from 'styles/pages/order'
+import { ShoppingCartContainer } from 'styles/components/order'
 import { Remove, Add, Delete } from '@mui/icons-material'
 import {
 	quantityIncrease,
@@ -76,6 +76,11 @@ const ShoppingCart = () => {
 														</Grid>
 														<Grid className='product-name' item xs>
 															{cartItem.name}
+															{cartItem.outOfStock && (
+																<Typography sx={{ color: '#FF0000' }}>
+																	This item is out of stock
+																</Typography>
+															)}
 															<Delete
 																className='icon-delete'
 																fontSize='medium'

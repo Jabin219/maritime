@@ -1,33 +1,43 @@
-import { Box, Grid } from '@mui/material'
-import React from 'react'
+import { Box } from '@mui/material'
 import { useContext, useState } from 'react'
 import { ProductContext } from 'context/ProductContextProvider'
 import { countCartTotal } from 'utils/cartHandler'
-import OrderSideSummary from 'components/order/OrderSideSummary'
-import PaymentMethod from 'components/order/PaymentMethod'
-import ShippingForm from 'components/order/ShippingForm'
-import ShoppingCart from 'components/order/ShoppingCart'
-
+import StripeElements from 'components/order/paymentInformation/StripeElements'
+import ShoppingCartContainer from 'components/order/shoppingCart/ShoppingCartContainer'
 import OrderContextProvider from 'context/OrderContextProvider'
+import OrderConfirmation from 'components/order/orderConfirmation/OrderConfirmation'
+import { PaymentMethod } from 'constant'
+import { Order } from 'models'
 
 const Order = () => {
-	const [orderStep, setOrderStep] = useState(0)
-	const { cart } = useContext(ProductContext)
-	const [order, setOrder] = useState({
+	const [shippingMethod, setShippingMethod] = useState('pickup')
+	const [paymentMethod, setPaymentMethod] = useState(PaymentMethod.creditCard)
+	const { cart, setCart, orderStep, setOrderStep } = useContext(ProductContext)
+	const [order, setOrder] = useState<Order>({
+		products: cart,
 		subtotal: countCartTotal(cart)
 	})
+
+	const clearCart = () => {
+		setCart([])
+		localStorage.removeItem('cart')
+	}
+	const next = () => {
+		if (orderStep < 2) {
+			setOrderStep(orderStep + 1)
+		}
+	}
+
 	const getStepContent = (step: number) => {
 		switch (step) {
 			case 0:
-				return <ShoppingCart />
+				return <ShoppingCartContainer />
 			case 1:
-				return <ShippingForm />
+				return <StripeElements />
 			case 2:
-				return <PaymentMethod />
-			case 3:
-				return
+				return <OrderConfirmation />
 			default:
-				return <ShoppingCart />
+				return <ShoppingCartContainer />
 		}
 	}
 	return (
@@ -36,20 +46,17 @@ const Order = () => {
 				orderStep,
 				setOrderStep,
 				order,
-				setOrder
+				setOrder,
+				setShippingMethod,
+				setPaymentMethod,
+				shippingMethod,
+				paymentMethod,
+				clearCart,
+				next
 			}}
 		>
 			<Box className='order-process-container' sx={{ margin: '70px 40px' }}>
-				<Grid container spacing={5}>
-					<Grid item xs={orderStep !== 3 ? 8 : 12}>
-						{getStepContent(orderStep)}
-					</Grid>
-					{orderStep !== 3 && (
-						<Grid item xs>
-							<OrderSideSummary />
-						</Grid>
-					)}
-				</Grid>
+				{getStepContent(orderStep)}
 			</Box>
 		</OrderContextProvider>
 	)
