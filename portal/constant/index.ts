@@ -179,10 +179,10 @@ export enum ResponseStatus {
 	NOT_FOUND = 'not-found',
 	ERROR = 'error',
 	UNAUTHORIZED = 'unauthorized',
-	OUR_OF_STOCK = 'out-of-stock'
+	OUT_OF_STOCK = 'out-of-stock'
 }
 
 export enum SnackType {
 	ADD_TO_CART = 'add-to-cart',
-	OUR_OF_STOCK = 'out-of-stock'
+	OUT_OF_STOCK = 'out-of-stock'
 }

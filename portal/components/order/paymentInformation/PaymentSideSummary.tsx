@@ -33,26 +33,18 @@ const PaymentSideSummary = ({
 	setContactPhoneError,
 	submitDisabled
 }: Props) => {
-	const {
-		order,
-		setOrder,
-		contactFormError,
-		shippingMethod,
-		paymentMethod,
-		clearCart,
-		next
-	} = useContext(OrderContext)
+	const { order, setOrder, shippingMethod, paymentMethod, clearCart, next } =
+		useContext(OrderContext)
 	const { showSnackbar } = useContext(SnackContext)
 	const { setOrderStep, cart, setCart } = useContext(ProductContext)
 	const [processing, setProcessing] = useState(false)
 	const stripe: any = useStripe()
 	const elements: any = useElements()
-	const handleSubmitOrder = async () => {
-		setProcessing(true)
+	const contactFormValidator = () => {
 		if (!contactInformation.name) {
 			setContactNameError(true)
 			setProcessing(false)
-			return
+			return false
 		}
 		if (
 			!contactInformation.email ||
@@ -60,31 +52,36 @@ const PaymentSideSummary = ({
 		) {
 			setContactEmailError(true)
 			setProcessing(false)
-			return
+			return false
 		}
 		if (!contactInformation.phone) {
 			setContactPhoneError(true)
 			setProcessing(false)
-			return
+			return false
 		}
-		setOrder({
-			...order,
-			contactInformation: contactInformation,
-			shippingMethod: shippingMethod,
-			paymentMethod: paymentMethod
+	}
+	const handleSubmitOrder = async () => {
+		setProcessing(true)
+		contactFormValidator()
+		const orderedProducts: { productId: string; quantity: number }[] = []
+		order.products.forEach((product: Product) => {
+			orderedProducts.push({
+				productId: product._id,
+				quantity: Number(product.quantity)
+			})
 		})
 		const createdOrderResult: any = await createOrder(
 			contactInformation,
 			shippingMethod,
 			paymentMethod,
-			order.products
+			orderedProducts
 		)
 		if (!createdOrderResult) {
 			setProcessing(false)
 			return
 		}
-		if (createdOrderResult.data.status === ResponseStatus.OUR_OF_STOCK) {
-			showSnackbar(SnackType.OUR_OF_STOCK)
+		if (createdOrderResult.data.status === ResponseStatus.OUT_OF_STOCK) {
+			showSnackbar(SnackType.OUT_OF_STOCK)
 			createdOrderResult.data.products.forEach((productId: string) => {
 				cart.find(
 					(cartProduct: Product) => cartProduct._id === productId
@@ -95,6 +92,12 @@ const PaymentSideSummary = ({
 			return
 		}
 		if (createdOrderResult.data.status === 'success') {
+			setOrder({
+				...order,
+				contactInformation: contactInformation,
+				shippingMethod: shippingMethod,
+				paymentMethod: paymentMethod
+			})
 			clearCart()
 			next()
 		}

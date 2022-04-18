@@ -46,7 +46,7 @@ const orderSchema = new Schema(
 			type: String,
 			required: true
 		},
-		expireDate: {
+		expiredDate: {
 			type: Date,
 			required: false
 		}
