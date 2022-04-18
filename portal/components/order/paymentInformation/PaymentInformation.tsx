@@ -155,7 +155,7 @@ const PaymentInformation = () => {
 								</RadioGroup>
 							</FormControl>
 						</Box>
-						{paymentMethod === 'credit-card' && (
+						{paymentMethod === PaymentMethod.creditCard && (
 							<Box className='credit-info'>
 								<Box className='header'>
 									<Typography variant='h5'>Credit Card Info</Typography>

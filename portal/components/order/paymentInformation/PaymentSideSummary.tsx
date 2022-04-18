@@ -14,7 +14,7 @@ import validator from 'validator'
 import { createOrder } from 'api/order'
 import { useStripe, useElements } from '@stripe/react-stripe-js'
 import { ProductContext } from 'context/ProductContextProvider'
-import { Order, Product } from 'models'
+import { ContactInformation, Product } from 'models'
 import { SnackContext } from 'context/SnackContextProvider'
 import { ResponseStatus, SnackType } from 'constant'
 
@@ -40,66 +40,62 @@ const PaymentSideSummary = ({
 	const [processing, setProcessing] = useState(false)
 	const stripe: any = useStripe()
 	const elements: any = useElements()
-	const contactFormValidator = () => {
+	const contactFormValidator = (contactInformation: ContactInformation) => {
 		if (!contactInformation.name) {
 			setContactNameError(true)
-			setProcessing(false)
-			return
+			return false
 		}
 		if (
 			!contactInformation.email ||
 			!validator.isEmail(contactInformation.email as string)
 		) {
 			setContactEmailError(true)
-			setProcessing(false)
-			return
+			return false
 		}
 		if (!contactInformation.phone) {
 			setContactPhoneError(true)
-			setProcessing(false)
-			return
+			return false
 		}
+		return true
 	}
 	const handleSubmitOrder = async () => {
-		setProcessing(true)
-		contactFormValidator()
-		const orderedProducts: { productId: string; quantity: number }[] = []
-		order.products.forEach((product: Product) => {
-			orderedProducts.push({
-				productId: product._id,
-				quantity: Number(product.quantity)
+		const validatorResult = contactFormValidator(contactInformation)
+		if (validatorResult) {
+			setProcessing(true)
+			const orderedProducts: { productId: string; quantity: number }[] = []
+			order.products.forEach((product: Product) => {
+				orderedProducts.push({
+					productId: product._id,
+					quantity: Number(product.quantity)
+				})
 			})
-		})
-		const createdOrderResult: any = await createOrder(
-			contactInformation,
-			shippingMethod,
-			paymentMethod,
-			orderedProducts
-		)
-		if (!createdOrderResult) {
-			setProcessing(false)
-			return
-		}
-		if (createdOrderResult.data.status === ResponseStatus.OUT_OF_STOCK) {
-			showSnackbar(SnackType.OUT_OF_STOCK)
-			createdOrderResult.data.products.forEach((productId: string) => {
-				cart.find(
-					(cartProduct: Product) => cartProduct._id === productId
-				).outOfStock = true
-			})
-			setCart(cart)
-			setProcessing(false)
-			return
-		}
-		if (createdOrderResult.data.status === 'success') {
-			setOrder({
-				...order,
-				contactInformation: contactInformation,
-				shippingMethod: shippingMethod,
-				paymentMethod: paymentMethod
-			})
-			clearCart()
-			next()
+			const createdOrderResult: any = await createOrder(
+				contactInformation,
+				shippingMethod,
+				paymentMethod,
+				orderedProducts
+			)
+			if (createdOrderResult.data.status === ResponseStatus.OUT_OF_STOCK) {
+				showSnackbar(SnackType.OUT_OF_STOCK)
+				createdOrderResult.data.products.forEach((productId: string) => {
+					cart.find(
+						(cartProduct: Product) => cartProduct._id === productId
+					).outOfStock = true
+				})
+				setCart(cart)
+				setProcessing(false)
+			} else if (createdOrderResult.data.status === ResponseStatus.SUCCESS) {
+				setOrder({
+					...order,
+					contactInformation: contactInformation,
+					shippingMethod: shippingMethod,
+					paymentMethod: paymentMethod
+				})
+				clearCart()
+				next()
+			} else {
+				setProcessing(false)
+			}
 		}
 	}
 	return (
