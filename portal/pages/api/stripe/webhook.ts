@@ -1,15 +1,17 @@
 import ProductModel from 'models/mongodb/product'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import Stripe from 'stripe'
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
 
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
+	apiVersion: '2020-08-27'
+})
 const handler = (req: NextApiRequest, res: NextApiResponse) => {
-	const sig = req.headers['stripe-signature']
+	const sig: any = req.headers['stripe-signature']
 	try {
 		const event: Stripe.Event = stripe.webhooks.constructEvent(
 			req.body,
 			sig,
-			process.env.STRIPE_WEBHOOK_SECRET
+			process.env.STRIPE_WEBHOOK_SECRET as string
 		)
 		switch (event.type) {
 			case 'payment_intent.succeeded':

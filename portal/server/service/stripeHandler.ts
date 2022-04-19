@@ -1,6 +1,8 @@
-import { Order } from 'models'
+import Stripe from 'stripe'
 
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
+	apiVersion: '2020-08-27'
+})
 
 const createPaymentIntent = (
 	totalPrice: number | string,
@@ -8,7 +10,7 @@ const createPaymentIntent = (
 	orderedProducts: string
 ) =>
 	stripe.paymentIntents.create({
-		amount: (Number(totalPrice) * 100).toFixed(0),
+		amount: Number((Number(totalPrice) * 100).toFixed(0)),
 		currency: 'cad',
 		metadata: { orderId, orderedProducts } || {}
 	})
