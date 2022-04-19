@@ -7,10 +7,6 @@ const orderSchema = new Schema(
 			type: String,
 			required: true
 		},
-		holdProducts: {
-			type: String,
-			required: true
-		},
 		subtotal: {
 			type: Number,
 			required: true
@@ -46,7 +42,7 @@ const orderSchema = new Schema(
 			type: String,
 			required: true
 		},
-		expireDate: {
+		expiredDate: {
 			type: Date,
 			required: false
 		}
