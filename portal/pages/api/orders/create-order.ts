@@ -1,11 +1,12 @@
 import connectDB from '../middleware/mongodb'
-import Order from 'models/mongodb/order'
+import OrderModel from 'models/mongodb/order'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import {
 	generatePickupNumber,
 	orderCalculator,
 	checkProductsStock
 } from 'server/service/orderHandler'
+import { createPaymentIntent } from 'server/service/stripeHandler'
 import { ResponseStatus } from 'constant'
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -21,11 +22,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 		return
 	}
 	const { subtotal, tax, total } = await orderCalculator(orderedProducts)
-	console.log({ subtotal, tax, total })
 	const pickupNumber = generatePickupNumber()
 	if (req.method === 'POST') {
 		try {
-			const order = new Order({
+			const order = new OrderModel({
 				products: JSON.stringify(orderedProducts),
 				subtotal,
 				tax,
@@ -35,6 +35,24 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 				pickupNumber,
 				shippingMethod
 			})
+			const orderAddedResult = await order.save()
+			if (paymentMethod === 'credit-card') {
+				const intent = await createPaymentIntent(
+					total,
+					orderAddedResult._id.toString(),
+					JSON.stringify(orderedProducts)
+				)
+				if (!intent.client_secret) {
+					res.json({ status: 'error', message: 'Payment failed' })
+					return
+				}
+				res.status(200).json({
+					status: 'success',
+					order,
+					intentSecret: intent.client_secret
+				})
+				return
+			}
 			res.status(200).json({
 				status: ResponseStatus.SUCCESS,
 				order

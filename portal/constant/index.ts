@@ -184,5 +184,11 @@ export enum ResponseStatus {
 
 export enum SnackType {
 	ADD_TO_CART = 'add-to-cart',
-	OUT_OF_STOCK = 'out-of-stock'
+	OUT_OF_STOCK = 'out-of-stock',
+	PAYMENT_FAILED = 'payment-failed'
+}
+
+export enum SnackSeverity {
+	SUCCESS = 'success',
+	ERROR = 'error'
 }

@@ -16,22 +16,26 @@ import { useStripe, useElements } from '@stripe/react-stripe-js'
 import { ProductContext } from 'context/ProductContextProvider'
 import { ContactInformation, Product } from 'models'
 import { SnackContext } from 'context/SnackContextProvider'
-import { ResponseStatus, SnackType } from 'constant'
-
+import { ResponseStatus, SnackType, PaymentMethod } from 'constant'
 interface Props {
 	contactInformation: { name: string; email: string; phone: string }
 	setContactNameError: (name: boolean) => void
 	setContactEmailError: (email: boolean) => void
 	setContactPhoneError: (phone: boolean) => void
-	submitDisabled: Boolean
+	submitDisabled: boolean
+	CardElement: any
+	cardInputError: string
+	setCardInputError: (errorMessage: string) => void
 }
-
 const PaymentSideSummary = ({
 	contactInformation,
 	setContactNameError,
 	setContactEmailError,
 	setContactPhoneError,
-	submitDisabled
+	submitDisabled,
+	CardElement,
+	cardInputError,
+	setCardInputError
 }: Props) => {
 	const { order, setOrder, shippingMethod, paymentMethod, clearCart, next } =
 		useContext(OrderContext)
@@ -85,6 +89,29 @@ const PaymentSideSummary = ({
 				setCart(cart)
 				setProcessing(false)
 			} else if (createdOrderResult.data.status === ResponseStatus.SUCCESS) {
+				if (paymentMethod === PaymentMethod.creditCard) {
+					if (!stripe || !elements) {
+						setProcessing(false)
+						return
+					}
+					const cardInformation = elements.getElement(CardElement) as any
+					const payload = await stripe.confirmCardPayment(
+						createdOrderResult.data.intentSecret,
+						{
+							payment_method: {
+								card: cardInformation,
+								billing_details: contactInformation
+							}
+						}
+					)
+					if (payload.error) {
+						setCardInputError(`Payment error: ${payload.error.message}`)
+						setProcessing(false)
+						return
+					}
+				}
+				setCardInputError('')
+				setProcessing(false)
 				setOrder({
 					...order,
 					contactInformation: contactInformation,
@@ -94,6 +121,7 @@ const PaymentSideSummary = ({
 				clearCart()
 				next()
 			} else {
+				showSnackbar(SnackType.PAYMENT_FAILED)
 				setProcessing(false)
 			}
 		}
@@ -140,7 +168,8 @@ const PaymentSideSummary = ({
 					handleSubmitOrder()
 				}}
 				disabled={
-					processing || !stripe || !elements || submitDisabled ? true : false
+					paymentMethod === PaymentMethod.creditCard &&
+					(processing || !stripe || submitDisabled || Boolean(cardInputError))
 				}
 			>
 				Place Order
@@ -162,5 +191,4 @@ const PaymentSideSummary = ({
 		</CartSideSummaryContainer>
 	)
 }
-
 export default PaymentSideSummary

@@ -55,15 +55,17 @@ const CartSideSummary = () => {
 					<Typography className='total'>TBD</Typography>
 				</Grid>
 			</Grid>
-			<Button
-				className='btn-next-step'
-				onClick={() => {
-					handleShoppingCartNext()
-				}}
-				disabled={cart.length > 0 ? false : true}
-			>
-				Next Step
-			</Button>
+			{typeof window !== 'undefined' && (
+				<Button
+					className='btn-next-step'
+					onClick={() => {
+						handleShoppingCartNext()
+					}}
+					disabled={cart.length < 1}
+				>
+					Next Step
+				</Button>
+			)}
 			<CustomLink href='/product-list'>
 				<Typography
 					onClick={() => {

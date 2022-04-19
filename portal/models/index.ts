@@ -43,6 +43,4 @@ export type LoginRequest = {
 	password: string
 }
 
-export type SnackSeverity = 'success' | 'error' | ''
-
 export { Account }

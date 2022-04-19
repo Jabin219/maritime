@@ -23,7 +23,7 @@ const Product = () => {
 			quantity: 1
 		}
 		addToCart(cart, thisProduct as Product, setCart)
-		showSnackbar('add-to-cart', 'success')
+		showSnackbar('add-to-cart')
 	}
 	const getProduct = async (productId: string) => {
 		const productResult = await getProductById(productId)

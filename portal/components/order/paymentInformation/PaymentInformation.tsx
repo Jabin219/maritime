@@ -49,11 +49,13 @@ const PaymentInformation = () => {
 	const handleChangePaymentMethod = (event: any) => {
 		setPaymentMethod(event.target.value)
 	}
-	const [submitDisabled, setSubmitDisabled] = useState(false)
-	const [cardInputError, setCardInputError] = useState<string | null>(null)
+	const [submitDisabled, setSubmitDisabled] = useState(true)
+	const [cardInputError, setCardInputError] = useState<string>('')
 	const handleCardChange = (event: any) => {
 		setSubmitDisabled(event.empty)
-		setCardInputError(event.error ? event.error.message : '')
+		setCardInputError(
+			event.error ? `Payment error: ${event.error.message}` : ''
+		)
 	}
 
 	return (
@@ -165,6 +167,11 @@ const PaymentInformation = () => {
 									options={{ hidePostalCode: true }}
 									onChange={handleCardChange}
 								/>
+								{cardInputError && (
+									<Typography className='stripe_card-error' role='alert'>
+										{cardInputError}
+									</Typography>
+								)}
 							</Box>
 						)}
 					</PaymentMethodContainer>
@@ -177,6 +184,9 @@ const PaymentInformation = () => {
 					setContactEmailError={setContactEmailError}
 					setContactPhoneError={setContactPhoneError}
 					submitDisabled={submitDisabled}
+					CardElement={CardElement}
+					cardInputError={cardInputError}
+					setCardInputError={setCardInputError}
 				/>
 			</Grid>
 		</Grid>

@@ -1,5 +1,6 @@
 import { Box } from '@mui/material'
 import { styled } from '@mui/system'
+
 export const CartSideSummaryContainer = styled(Box)({
 	border: '10px solid #EEEEEE',
 	padding: '25px 25px 40px 25px',
@@ -43,48 +44,6 @@ export const CartSideSummaryContainer = styled(Box)({
 		'&:hover': {
 			backgroundColor: '#FF8800'
 		}
-	}
-})
-
-export const ShippingMethodContainer = styled(Box)({
-	border: '10px solid #EEEEEE',
-	paddingBottom: '50px',
-	paddingTop: '32px',
-	marginBottom: '20px',
-	'& .shipping-method-container': {
-		width: '95%',
-		margin: '0 auto'
-	},
-	'& .header': {
-		marginBottom: '30px',
-		'& h5': {
-			marginBottom: '5px'
-		}
-	},
-	'& label': {
-		color: '#404041'
-	}
-})
-
-export const PaymentMethodContainer = styled(Box)({
-	border: '10px solid #EEEEEE',
-	padding: '35px 0 50px 0',
-	marginBottom: '20px',
-	'& .payment-method-container, .credit-info': {
-		width: '95%',
-		margin: '0 auto',
-		'& .header': {
-			marginBottom: '45px',
-			'& h5': {
-				marginBottom: '15px'
-			}
-		},
-		'& label': {
-			color: '#404041'
-		}
-	},
-	'& .payment-method-container': {
-		marginBottom: '100px'
 	}
 })
 
@@ -182,5 +141,54 @@ export const ContactFormContainer = styled(Box)({
 	},
 	'& .MuiTextField-root': {
 		marginBottom: '20px'
+	}
+})
+
+export const ShippingMethodContainer = styled(Box)({
+	border: '10px solid #EEEEEE',
+	paddingBottom: '50px',
+	paddingTop: '32px',
+	marginBottom: '20px',
+	'& .shipping-method-container': {
+		width: '95%',
+		margin: '0 auto'
+	},
+	'& .header': {
+		marginBottom: '30px',
+		'& h5': {
+			marginBottom: '5px'
+		}
+	},
+	'& label': {
+		color: '#404041'
+	}
+})
+
+export const PaymentMethodContainer = styled(Box)({
+	border: '10px solid #EEEEEE',
+	padding: '35px 0 50px 0',
+	marginBottom: '20px',
+	'& .payment-method-container, .credit-info': {
+		width: '95%',
+		margin: '0 auto',
+		'& .header': {
+			marginBottom: '45px',
+			'& h5': {
+				marginBottom: '15px'
+			}
+		},
+		'& label': {
+			color: '#404041'
+		}
+	},
+	'& .payment-method-container': {
+		marginBottom: '100px'
+	},
+	'& .stripe_card-error': {
+		position: 'absolute',
+		color: '#e02020',
+		fontSize: '16px',
+		lineHeight: '20px',
+		textAlign: 'center'
 	}
 })
