@@ -1,6 +1,6 @@
 import { Button, Snackbar, Stack } from '@mui/material'
 import MuiAlert from '@mui/material/Alert'
-import { SnackType } from 'constant'
+import { SnackSeverity, SnackType } from 'constant'
 import { ProductContext } from 'context/ProductContextProvider'
 import { forwardRef, useContext } from 'react'
 
@@ -20,10 +20,10 @@ const CustomSnackBar = ({ open, snackClose, snackType }: Props) => {
 		switch (snackType) {
 			case SnackType.ADD_TO_CART:
 				return 'One item has been added to your cart!'
-				break
 			case SnackType.OUT_OF_STOCK:
 				return 'One or more items in your cart is out of stock.'
-				break
+			case SnackType.PAYMENT_FAILED:
+				return 'Payment failed because of some unknown reasons.'
 			default:
 				break
 		}
@@ -32,8 +32,9 @@ const CustomSnackBar = ({ open, snackClose, snackType }: Props) => {
 	const getSnackSeverity = (snackType: string) => {
 		switch (snackType) {
 			case SnackType.ADD_TO_CART:
-				return 'success'
-				break
+				return SnackSeverity.SUCCESS
+			case SnackType.PAYMENT_FAILED:
+				return SnackSeverity.ERROR
 			default:
 				break
 		}

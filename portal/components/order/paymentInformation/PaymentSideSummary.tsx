@@ -17,17 +17,16 @@ import { ProductContext } from 'context/ProductContextProvider'
 import { ContactInformation, Product } from 'models'
 import { SnackContext } from 'context/SnackContextProvider'
 import { ResponseStatus, SnackType, PaymentMethod } from 'constant'
-
 interface Props {
 	contactInformation: { name: string; email: string; phone: string }
 	setContactNameError: (name: boolean) => void
 	setContactEmailError: (email: boolean) => void
 	setContactPhoneError: (phone: boolean) => void
-	submitDisabled: Boolean
+	submitDisabled: boolean
 	CardElement: any
+	cardInputError: string
 	setCardInputError: (errorMessage: string) => void
 }
-
 const PaymentSideSummary = ({
 	contactInformation,
 	setContactNameError,
@@ -35,6 +34,7 @@ const PaymentSideSummary = ({
 	setContactPhoneError,
 	submitDisabled,
 	CardElement,
+	cardInputError,
 	setCardInputError
 }: Props) => {
 	const { order, setOrder, shippingMethod, paymentMethod, clearCart, next } =
@@ -121,6 +121,7 @@ const PaymentSideSummary = ({
 				clearCart()
 				next()
 			} else {
+				showSnackbar(SnackType.PAYMENT_FAILED)
 				setProcessing(false)
 			}
 		}
@@ -168,7 +169,7 @@ const PaymentSideSummary = ({
 				}}
 				disabled={
 					paymentMethod === PaymentMethod.creditCard &&
-					(processing || !stripe || submitDisabled)
+					(processing || !stripe || submitDisabled || cardInputError)
 						? true
 						: false
 				}
@@ -192,5 +193,4 @@ const PaymentSideSummary = ({
 		</CartSideSummaryContainer>
 	)
 }
-
 export default PaymentSideSummary

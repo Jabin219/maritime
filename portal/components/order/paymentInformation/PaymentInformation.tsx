@@ -185,6 +185,7 @@ const PaymentInformation = () => {
 					setContactPhoneError={setContactPhoneError}
 					submitDisabled={submitDisabled}
 					CardElement={CardElement}
+					cardInputError={cardInputError}
 					setCardInputError={setCardInputError}
 				/>
 			</Grid>

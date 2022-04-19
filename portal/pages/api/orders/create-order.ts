@@ -1,5 +1,5 @@
 import connectDB from '../middleware/mongodb'
-import Order from 'models/mongodb/order'
+import OrderModel from 'models/mongodb/order'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import {
 	generatePickupNumber,
@@ -25,7 +25,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	const pickupNumber = generatePickupNumber()
 	if (req.method === 'POST') {
 		try {
-			const order = new Order({
+			const order = new OrderModel({
 				products: JSON.stringify(orderedProducts),
 				subtotal,
 				tax,
@@ -35,9 +35,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 				pickupNumber,
 				shippingMethod
 			})
-			// const orderAddedResult = await order.save()
+			const orderAddedResult = await order.save()
 			if (paymentMethod === 'credit-card') {
-				const intent = await createPaymentIntent(total)
+				const intent = await createPaymentIntent(
+					total,
+					orderAddedResult._id.toString(),
+					JSON.stringify(orderedProducts)
+				)
 				if (!intent.client_secret) {
 					res.json({ status: 'error', message: 'Payment failed' })
 					return
