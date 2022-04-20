@@ -1,7 +1,6 @@
 import axios from 'axios'
-import { LoginRequestData } from 'models'
 
-const sendLoginRequest = (loginRequestData: LoginRequestData) =>
-	axios.post('/api/admin/login', loginRequestData)
+const sendLoginRequest = (username: string, password: string) =>
+	axios.post('/api/admin/login', { username, password })
 
 export { sendLoginRequest }

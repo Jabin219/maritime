@@ -7,17 +7,17 @@ import { Category } from 'models'
 
 const CategoriesNavBar = () => {
 	const router = useRouter()
-	const { setCategory, showedCategories } = useContext(ProductContext)
+	const { setSelectedCategory, categories } = useContext(ProductContext)
 	return (
-		<Box sx={{ boxShadow: '0px 2px 10px rgba(0, 0, 0, 0.1)' }}>
+		<Box>
 			<Tabs centered value={false}>
-				{showedCategories.map((item: Category, index: number) => (
+				{categories.map((item: Category, index: number) => (
 					<CustomTab
 						key={index}
 						value={item.name}
 						label={item.label}
 						onClick={() => {
-							setCategory(item)
+							setSelectedCategory(item)
 							router.push('/product-list')
 						}}
 					></CustomTab>

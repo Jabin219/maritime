@@ -1,4 +1,4 @@
-import { Product } from 'models'
+import { Order, Product } from 'models'
 
 // init cartStorage
 export const cartStorage: Product[] =
@@ -27,11 +27,10 @@ export const addToCart = (
 		cartStorage.push(product)
 	}
 	setCart([...cartStorage])
-	saveCart(cartStorage)
 }
 
-export const countCartTotal = (cartStorage: Product[]) => {
-	const sum = cartStorage.reduce((total: number, cartItem: Product) => {
+export const countCartTotal = (cart: Product[]) => {
+	const sum = cart.reduce((total: number, cartItem: Product) => {
 		return total + Number(cartItem.price) * Number(cartItem.quantity)
 	}, 0)
 	return sum
@@ -41,8 +40,8 @@ export const quantityDecrease = (
 	item: Product,
 	cart: Product[],
 	setCart: (cart: Product[]) => void,
-	order: any,
-	setOrder: (order: any) => void
+	order: Order,
+	setOrder: (order: Order) => void
 ) => {
 	const currentCartProducts: Product[] = [...cart]
 	const findProductIndex = currentCartProducts.findIndex(
@@ -52,7 +51,6 @@ export const quantityDecrease = (
 	currentCartProducts[findProductIndex] &&
 		(currentCartProducts[findProductIndex] as any).quantity--
 	setCart(currentCartProducts)
-	saveCart(currentCartProducts)
 	setOrder({
 		...order,
 		products: currentCartProducts,
@@ -63,8 +61,8 @@ export const quantityIncrease = (
 	item: Product,
 	cart: Product[],
 	setCart: (cart: Product[]) => void,
-	order: any,
-	setOrder: (order: any) => void
+	order: Order,
+	setOrder: (order: Order) => void
 ) => {
 	const currentCartProducts: Product[] = [...cart]
 	const findProductIndex = currentCartProducts.findIndex(
@@ -73,7 +71,6 @@ export const quantityIncrease = (
 	currentCartProducts[findProductIndex] &&
 		(currentCartProducts[findProductIndex] as any).quantity++
 	setCart(currentCartProducts)
-	saveCart(currentCartProducts)
 	setOrder({
 		...order,
 		products: currentCartProducts,
@@ -84,14 +81,13 @@ export const itemRemove = (
 	item: Product,
 	cart: Product[],
 	setCart: (cart: Product[]) => void,
-	order: any,
-	setOrder: (order: any) => void
+	order: Order,
+	setOrder: (order: Order) => void
 ) => {
 	const newProductList = cart.filter((product: Product) => {
 		return product._id !== item._id
 	})
 	setCart(newProductList)
-	saveCart(newProductList)
 	setOrder({
 		...order,
 		products: newProductList,

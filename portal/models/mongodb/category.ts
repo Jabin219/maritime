@@ -10,6 +10,11 @@ const categorySchema = new Schema(
 		label: {
 			type: String,
 			required: true
+		},
+		showedOnHeader: {
+			type: Boolean,
+			required: true,
+			default: true
 		}
 	},
 	{ timestamps: true }

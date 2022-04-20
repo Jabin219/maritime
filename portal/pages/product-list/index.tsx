@@ -20,50 +20,50 @@ import {
 	ProductListGrid,
 	ProductListPageContainer
 } from 'styles/pages/product-list'
-import { getProducts } from 'api/product'
+import { getProductsByPagination } from 'api/products'
 import { Product } from 'models'
 
 const ProductList = () => {
 	const {
-		category,
-		pagination,
-		setPagination,
-		paginationCount,
-		storedProducts,
+		selectedCategory,
+		currentPage,
+		setCurrentPage,
+		pageCount,
+		cachedProducts,
 		sortMethod,
 		setSortMethod
 	} = useContext(ProductContext)
-	const [showedProducts, setShowedProducts] = useState<Product[]>()
-	const getShowedProducts = async (
-		pagination: number,
+	const [listedProducts, setListedProducts] = useState<Product[]>()
+	const loadListedProducts = async (
+		currentPage: number,
 		category: string,
 		sortMethod: string
 	) => {
-		const findStoredProductsResult = storedProducts.find(
-			(item: any) => item.pagination === pagination
+		const cachedProductsResult = cachedProducts.find(
+			(item: any) => item.currentPage === currentPage
 		)
-		if (findStoredProductsResult) {
-			setShowedProducts(findStoredProductsResult.products)
+		if (cachedProductsResult) {
+			setListedProducts(cachedProductsResult.products)
 			return
 		}
-		const getProductsResult = await getProducts({
-			pagination,
+		const productsLoadedResult = await getProductsByPagination(
+			currentPage,
 			category,
 			sortMethod
-		})
-		setShowedProducts(getProductsResult.data.products)
-		storedProducts.push({
-			pagination,
-			products: getProductsResult.data.products
+		)
+		setListedProducts(productsLoadedResult.data.products)
+		cachedProducts.push({
+			currentPage,
+			products: productsLoadedResult.data.products
 		})
 	}
 	const handleChangePage = (event: any, value: number) => {
-		setPagination(value)
+		setCurrentPage(value)
 		window.scrollTo(0, 0)
 	}
 	useEffect(() => {
-		getShowedProducts(pagination, category.name, sortMethod)
-	}, [category, pagination, sortMethod])
+		loadListedProducts(currentPage, selectedCategory.name, sortMethod)
+	}, [selectedCategory, currentPage, sortMethod])
 
 	return (
 		<ProductListPageContainer className='product-list-page'>
@@ -73,26 +73,26 @@ const ProductList = () => {
 				</Grid>
 				<Grid item xs>
 					<ProductListContainer className='product-list-container'>
-						<ProductListTitle variant='h3'>{category.label}</ProductListTitle>
-						{category.name !== 'new' && (
-							<FormControl className='sort-by-select'>
-								<InputLabel>Sort by</InputLabel>
-								<Select
-									label='Sort by'
-									value={sortMethod}
-									onChange={event => {
-										setSortMethod(event.target.value)
-									}}
-								>
-									<MenuItem value='new-arrivals'>New Arrivals</MenuItem>
-									<MenuItem value='price-increase'>Price Increase</MenuItem>
-									<MenuItem value='price-decrease'>Price Decrease</MenuItem>
-								</Select>
-							</FormControl>
-						)}
+						<ProductListTitle variant='h3'>
+							{selectedCategory.label}
+						</ProductListTitle>
+						<FormControl className='sort-by-select'>
+							<InputLabel>Sort by</InputLabel>
+							<Select
+								label='Sort by'
+								value={sortMethod}
+								onChange={event => {
+									setSortMethod(event.target.value)
+								}}
+							>
+								<MenuItem value='new-arrivals'>New Arrivals</MenuItem>
+								<MenuItem value='price-increase'>Price Increase</MenuItem>
+								<MenuItem value='price-decrease'>Price Decrease</MenuItem>
+							</Select>
+						</FormControl>
 						<Grid container>
-							{showedProducts &&
-								showedProducts.map((product, index) => (
+							{listedProducts &&
+								listedProducts.map((product, index) => (
 									<ProductListGrid key={index} item xs={3}>
 										<CustomLink href={`/product?productId=${product._id}`}>
 											<Image
@@ -123,17 +123,19 @@ const ProductList = () => {
 								))}
 						</Grid>
 					</ProductListContainer>
-					<Box className='pagination-container'>
-						<Pagination
-							count={paginationCount}
-							defaultPage={6}
-							color='primary'
-							showFirstButton
-							showLastButton
-							page={pagination}
-							onChange={handleChangePage}
-						/>
-					</Box>
+					{selectedCategory.name !== 'new-arrivals' && (
+						<Box className='pagination-container'>
+							<Pagination
+								count={pageCount}
+								defaultPage={6}
+								color='primary'
+								showFirstButton
+								showLastButton
+								page={currentPage}
+								onChange={handleChangePage}
+							/>
+						</Box>
+					)}
 				</Grid>
 			</Grid>
 		</ProductListPageContainer>

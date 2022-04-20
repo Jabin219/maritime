@@ -16,9 +16,8 @@ const AdminLogin = () => {
 	const [username, setUsername] = useState('')
 	const [password, setPassword] = useState('')
 	const [error, setError] = useState(false)
-	const helperText = 'Invalid username/password'
 	const handleLogin = async (username: string, password: string) => {
-		const loginResult = await sendLoginRequest({ username, password })
+		const loginResult = await sendLoginRequest(username, password)
 		if (loginResult.data.status === 'success') {
 			const tokenString = loginResult.data.token
 			localStorage.setItem('adminToken', tokenString)
@@ -52,7 +51,7 @@ const AdminLogin = () => {
 								setUsername(event.target.value)
 							}}
 							error={error}
-							helperText={error && helperText}
+							helperText={error && 'Invalid username/password'}
 						/>
 					</Grid>
 					<Grid className='input-container' container>
@@ -66,7 +65,7 @@ const AdminLogin = () => {
 								setPassword(event.target.value)
 							}}
 							error={error}
-							helperText={error && helperText}
+							helperText={error && 'Invalid username/password'}
 						/>
 					</Grid>
 					<Button

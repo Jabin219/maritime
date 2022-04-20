@@ -14,8 +14,6 @@ const AdminMenu = () => {
 				<Image
 					src='/images/logo/header-logo.png'
 					alt='logo'
-					// layout='fill'
-					// objectFit='contain'
 					width='90'
 					height='60'
 				/>

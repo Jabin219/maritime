@@ -1,17 +1,3 @@
-export const getRandomNumber = (min: number, max: number) => {
-	return Math.floor(Math.random() * (max - min)) + min
-}
-const getFourRandomNumberArray = (min: number, max: number) => {
-	const array: number[] = []
-	while (array.length < 4) {
-		const randomNumber = getRandomNumber(min, max)
-		if (!array.find(num => num === randomNumber)) {
-			array.push(randomNumber)
-		}
-	}
-	return array
-}
-export const fourRandomNumberArray = getFourRandomNumberArray(0, 17)
 export const priceFormatter = (price: number) => {
 	const locale = 'en-CA'
 	const options = {
@@ -30,4 +16,7 @@ export const getBannerHeight = (widthHeightRate: number) => {
 		}
 	}
 	return 0
+}
+export const taxCalculator = (amount: number) => {
+	return amount * 0.15
 }
