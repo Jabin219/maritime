@@ -1,5 +1,5 @@
 import { Box } from '@mui/material'
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { ProductContext } from 'context/ProductContextProvider'
 import { countCartTotal } from 'utils/cartHandler'
 import PaymentInfoContainer from 'components/order/paymentInformation'
@@ -40,6 +40,11 @@ const Order = () => {
 				return <ShoppingCartContainer />
 		}
 	}
+
+	useEffect(() => {
+		setOrderStep(0)
+	}, [])
+
 	return (
 		<OrderContextProvider
 			value={{

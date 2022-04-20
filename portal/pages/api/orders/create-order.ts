@@ -8,6 +8,7 @@ import {
 } from 'server/service/orderHandler'
 import { createPaymentIntent } from 'server/service/stripeHandler'
 import { ResponseStatus, PaymentMethod } from 'constant'
+import ProductModel from 'models/mongodb/product'
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	const { orderedProducts, contactInformation, paymentMethod, shippingMethod } =
@@ -52,6 +53,26 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 					intentSecret: intent.client_secret
 				})
 				return
+			} else if (paymentMethod === PaymentMethod.payAtPickup) {
+				orderedProducts.forEach(
+					async (product: { productId: string; quantity: number }) => {
+						const selectedProductResult: any = await ProductModel.findOne({
+							_id: product.productId
+						})
+						selectedProductResult.stock =
+							selectedProductResult.stock - product.quantity
+						await selectedProductResult.save()
+					}
+				)
+				await OrderModel.findOneAndUpdate(
+					{
+						_id: orderAddedResult._id.toString()
+					},
+					{
+						status: 'reserved',
+						expiredDate: new Date().setDate(new Date().getDate() + 4)
+					}
+				)
 			}
 			res.status(200).json({
 				status: ResponseStatus.SUCCESS,

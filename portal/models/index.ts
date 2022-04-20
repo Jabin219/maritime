@@ -30,6 +30,7 @@ export type Order = {
 	paymentMethod?: string
 	pickupNumber?: string
 	createdAt?: Date
+	expiredDate?: Date | undefined
 }
 
 export type ContactInformation = {

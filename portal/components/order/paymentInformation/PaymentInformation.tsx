@@ -146,7 +146,7 @@ const PaymentInformation = () => {
 							</Box>
 							<FormControl>
 								<RadioGroup
-									defaultValue={PaymentMethod.creditCard}
+									defaultValue={paymentMethod}
 									onChange={handleChangePaymentMethod}
 								>
 									<FormControlLabel
@@ -155,7 +155,7 @@ const PaymentInformation = () => {
 										label='Credit Card'
 									/>
 									<FormControlLabel
-										value={PaymentMethod.pickAfterPickup}
+										value={PaymentMethod.payAtPickup}
 										control={<Radio color='primary' />}
 										label='Pay upon at pickup (reserve for 3 days)'
 									/>

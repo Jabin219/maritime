@@ -168,8 +168,9 @@ const PaymentSideSummary = ({
 					handleSubmitOrder()
 				}}
 				disabled={
-					paymentMethod === PaymentMethod.creditCard &&
-					(processing || !stripe || submitDisabled || Boolean(cardInputError))
+					(paymentMethod === PaymentMethod.creditCard &&
+						(!stripe || submitDisabled || Boolean(cardInputError))) ||
+					processing
 				}
 			>
 				Place Order
