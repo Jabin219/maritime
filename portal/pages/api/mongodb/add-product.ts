@@ -1,4 +1,4 @@
-import connectDB from '../middleware/mongodb'
+import connectDB from 'middleware/mongodb'
 import Product from 'models/mongodb/product'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
