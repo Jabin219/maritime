@@ -8,6 +8,7 @@ export type Product = {
 	images: Array<string>
 	category: string
 	quantity?: number
+	discount?: number
 }
 
 export type Category = {

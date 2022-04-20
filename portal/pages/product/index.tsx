@@ -134,7 +134,7 @@ const Product = () => {
 										src={product.coverImage}
 										alt='product-image'
 										onClick={() => {
-											router.push(`/product?productId=${product.id}`)
+											router.push(`/product?productId=${product._id}`)
 										}}
 										width={500}
 										height={500}
@@ -142,7 +142,7 @@ const Product = () => {
 									<Typography
 										className='product-name'
 										onClick={() => {
-											router.push(`/product?productId=${product.id}`)
+											router.push(`/product?productId=${product._id}`)
 										}}
 									>
 										{product.name}

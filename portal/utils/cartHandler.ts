@@ -16,7 +16,7 @@ export const addToCart = (
 ) => {
 	const findSameItemIndex: number = cartStorage.findIndex(
 		(cartProduct: Product) => {
-			return product.id === cartProduct.id
+			return product._id === cartProduct._id
 		}
 	)
 	if (findSameItemIndex !== -1) {
@@ -46,7 +46,8 @@ export const quantityDecrease = (
 ) => {
 	const currentCartProducts: Product[] = [...cart]
 	const findProductIndex = currentCartProducts.findIndex(
-		(product: Product) => product.id === item.id && Number(product.quantity) > 1
+		(product: Product) =>
+			product._id === item._id && Number(product.quantity) > 1
 	)
 	currentCartProducts[findProductIndex] &&
 		(currentCartProducts[findProductIndex] as any).quantity--
@@ -67,7 +68,7 @@ export const quantityIncrease = (
 ) => {
 	const currentCartProducts: Product[] = [...cart]
 	const findProductIndex = currentCartProducts.findIndex(
-		(product: Product) => product.id === item.id
+		(product: Product) => product._id === item._id
 	)
 	currentCartProducts[findProductIndex] &&
 		(currentCartProducts[findProductIndex] as any).quantity++
@@ -87,7 +88,7 @@ export const itemRemove = (
 	setOrder: (order: any) => void
 ) => {
 	const newProductList = cart.filter((product: Product) => {
-		return product.id !== item.id
+		return product._id !== item._id
 	})
 	setCart(newProductList)
 	saveCart(newProductList)

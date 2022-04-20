@@ -32,7 +32,7 @@ const HomeProductGrid = ({ category, products }: Props) => {
 				<Grid container>
 					{products.map((product, index) => (
 						<ProductListGrid key={index} item xs={3}>
-							<CustomLink href={`/product?productId=${product.id}`}>
+							<CustomLink href={`/product?productId=${product._id}`}>
 								<Image
 									src={product.coverImage}
 									alt='product-image'
@@ -40,7 +40,7 @@ const HomeProductGrid = ({ category, products }: Props) => {
 									height={300}
 								/>
 							</CustomLink>
-							<CustomLink href={`/product?productId=${product.id}`}>
+							<CustomLink href={`/product?productId=${product._id}`}>
 								<Typography variant='h6' className='product-name'>
 									{product.name}
 								</Typography>
