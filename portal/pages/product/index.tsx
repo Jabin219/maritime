@@ -15,7 +15,7 @@ const Product = () => {
 	const router = useRouter()
 	const { productId } = router.query
 	const [showedProduct, setShowedProduct] = useState<Product>()
-	const { cart, setCart } = useContext(ProductContext)
+	const { cart, setCart, setOrderStep } = useContext(ProductContext)
 	const { showSnackbar } = useContext(SnackContext)
 	const handleAddToCart = () => {
 		const thisProduct = {
@@ -106,6 +106,7 @@ const Product = () => {
 									className='buy-now'
 									onClick={() => {
 										handleAddToCart()
+										setOrderStep(0)
 									}}
 								>
 									Buy Now

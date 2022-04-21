@@ -41,14 +41,6 @@ const Order = () => {
 		}
 	}
 
-	const resetOrderPage = () => {
-		setOrderStep(0)
-	}
-
-	useEffect(() => {
-		return resetOrderPage()
-	}, [])
-
 	return (
 		<OrderContextProvider
 			value={{
