@@ -1,5 +1,5 @@
 import { Box } from '@mui/material'
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useState } from 'react'
 import { ProductContext } from 'context/ProductContextProvider'
 import { countCartTotal } from 'utils/cartHandler'
 import PaymentInfoContainer from 'components/order/paymentInformation'
@@ -14,7 +14,6 @@ const Order = () => {
 	const [paymentMethod, setPaymentMethod] = useState(PaymentMethod.creditCard)
 	const { cart, setCart, orderStep, setOrderStep } = useContext(ProductContext)
 	const [order, setOrder] = useState<Order>({
-		products: cart,
 		subtotal: countCartTotal(cart)
 	})
 
@@ -35,7 +34,11 @@ const Order = () => {
 			case 1:
 				return <PaymentInfoContainer />
 			case 2:
-				return <OrderConfirmation />
+				if (order.createdAt) {
+					return <OrderConfirmation />
+				} else {
+					setOrderStep(0)
+				}
 			default:
 				return <ShoppingCartContainer />
 		}

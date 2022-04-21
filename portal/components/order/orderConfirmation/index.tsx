@@ -6,6 +6,7 @@ import {
 	Table,
 	TableHead,
 	TableBody,
+	TableRow,
 	TableCell
 } from '@mui/material'
 import { OrderContext } from 'context/OrderContextProvider'
@@ -139,26 +140,30 @@ const OrderConfirmation = () => {
 					<Box className='order-items-container'>
 						<Table>
 							<TableHead>
-								<TableCell>Item</TableCell>
-								<TableCell>Price</TableCell>
-								<TableCell>Qty</TableCell>
-								<TableCell>Subtotal</TableCell>
+								<TableRow>
+									<TableCell>Item</TableCell>
+									<TableCell>Price</TableCell>
+									<TableCell>Qty</TableCell>
+									<TableCell>Subtotal</TableCell>
+								</TableRow>
 							</TableHead>
-							{products.map((product: Product) => (
-								<TableBody key={product._id}>
-									<TableCell>{product.name}</TableCell>
-									<TableCell>
-										${priceFormatter(Number(product.price))}
-									</TableCell>
-									<TableCell>{product.quantity}</TableCell>
-									<TableCell>
-										$
-										{priceFormatter(
-											Number(product.price) * Number(product.quantity)
-										)}
-									</TableCell>
-								</TableBody>
-							))}
+							<TableBody>
+								{products.map((product: Product) => (
+									<TableRow key={product._id}>
+										<TableCell>{product.name}</TableCell>
+										<TableCell>
+											${priceFormatter(Number(product.price))}
+										</TableCell>
+										<TableCell>{product.quantity}</TableCell>
+										<TableCell>
+											$
+											{priceFormatter(
+												Number(product.price) * Number(product.quantity)
+											)}
+										</TableCell>
+									</TableRow>
+								))}
+							</TableBody>
 						</Table>
 						<Box className='price-summary'>
 							<Box className='single-price-summary-container'>
