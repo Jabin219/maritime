@@ -64,13 +64,14 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 						await selectedProductResult.save()
 					}
 				)
+				const dateAfterFourDays = new Date().setDate(new Date().getDate() + 4)
 				await OrderModel.findOneAndUpdate(
 					{
 						_id: orderAddedResult._id.toString()
 					},
 					{
 						status: 'reserved',
-						expiredDate: new Date().setDate(new Date().getDate() + 4)
+						expiredDate: dateAfterFourDays
 					}
 				)
 			}
