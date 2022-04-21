@@ -32,7 +32,11 @@ const Order = () => {
 			case 0:
 				return <ShoppingCartContainer />
 			case 1:
-				return <PaymentInfoContainer />
+				if (order.total) {
+					return <PaymentInfoContainer />
+				} else {
+					setOrderStep(0)
+				}
 			case 2:
 				if (order.createdAt) {
 					return <OrderConfirmation />
