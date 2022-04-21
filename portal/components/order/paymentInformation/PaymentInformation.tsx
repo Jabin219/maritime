@@ -154,6 +154,11 @@ const PaymentInformation = () => {
 										control={<Radio color='primary' />}
 										label='Credit Card'
 									/>
+									<FormControlLabel
+										value={PaymentMethod.payAtPickup}
+										control={<Radio color='primary' />}
+										label='Pay upon at pickup (reserve for 3 days)'
+									/>
 								</RadioGroup>
 							</FormControl>
 						</Box>
