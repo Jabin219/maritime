@@ -24,6 +24,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	}
 	const { subtotal, tax, total } = await orderCalculator(orderedProducts)
 	const pickupNumber = generatePickupNumber()
+	const orderReversedDaysNumber = 4
 	if (req.method === 'POST') {
 		try {
 			const order = new OrderModel({
@@ -64,7 +65,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 						await selectedProductResult.save()
 					}
 				)
-				const expiredDate = new Date().setDate(new Date().getDate() + 4)
+				const expiredDate = new Date().setDate(
+					new Date().getDate() + orderReversedDaysNumber
+				)
 				await OrderModel.findOneAndUpdate(
 					{
 						_id: orderAddedResult._id.toString()
