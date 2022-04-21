@@ -1,4 +1,5 @@
-import Product from 'models/mongodb/product'
+import { Product } from 'models'
+import ProductModel from 'models/mongodb/product'
 import { priceFormatter } from 'utils'
 
 const generatePickupNumber = () => {
@@ -10,44 +11,42 @@ const generatePickupNumber = () => {
 	return result
 }
 
-const checkProductsStock = async (products: any) => {
-	const orderedProductIds: any = []
-	products.forEach((product: any) => {
-		orderedProductIds.push(product._id)
-	})
-	const getProductsResult = await Product.find({
+const checkProductsStock = async (
+	orderedProducts: { productId: string; quantity: number }[]
+) => {
+	const orderedProductIds = orderedProducts.map(product => product.productId)
+	const orderedProductsResult = await ProductModel.find({
 		_id: { $in: orderedProductIds }
 	})
-	const outOfStockProducts: any[] = []
-	getProductsResult.forEach((product: any) => {
-		const findOrderedProductResult = products.find(
-			(orderedProduct: any) => orderedProduct._id === product._id.toString()
-		)
-		if (product.stock < findOrderedProductResult.quantity) {
-			outOfStockProducts.push(product._id.toString())
+	const outOfStockProductIds: string[] = []
+	orderedProductsResult.forEach(product => {
+		if (
+			Number(
+				orderedProducts.find(
+					orderedProduct => orderedProduct.productId === product.id
+				)?.quantity
+			) > product.stock
+		) {
+			outOfStockProductIds.push(product._id)
 		}
 	})
-	return outOfStockProducts
+	return outOfStockProductIds
 }
 
-const orderCalculator = async (products: []) => {
-	const orderedProductIds: any = []
-	products.forEach((product: any) => {
-		orderedProductIds.push(product._id)
-	})
-	const getProductsResult = await Product.find({
+const orderCalculator = async (
+	orderedProducts: { productId: string; quantity: number }[]
+) => {
+	const orderedProductIds = orderedProducts.map(product => product.productId)
+	const loadedProductsResult = await ProductModel.find({
 		_id: { $in: orderedProductIds }
 	})
-	const orderedProducts: any = []
 	let subtotal = 0
-	getProductsResult.forEach((productResult: any) => {
-		products.forEach((product: any) => {
-			if (product._id === productResult._id.toString()) {
-				productResult.quantity = product.quantity
+	loadedProductsResult.forEach((product: Product) => {
+		orderedProducts.forEach(orderedProduct => {
+			if (orderedProduct.productId === product._id.toString()) {
+				subtotal += Number(product.price) * Number(orderedProduct.quantity)
 			}
-			orderedProducts.push(productResult)
 		})
-		subtotal += productResult.price * productResult.quantity
 	})
 	const tax = subtotal * 0.15
 	const total = subtotal + tax

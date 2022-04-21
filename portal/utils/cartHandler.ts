@@ -1,4 +1,4 @@
-import { Product } from 'models'
+import { Order, Product } from 'models'
 
 // init cartStorage
 export const cartStorage: Product[] =
@@ -40,8 +40,8 @@ export const quantityDecrease = (
 	item: Product,
 	cart: Product[],
 	setCart: (cart: Product[]) => void,
-	order: any,
-	setOrder: (order: any) => void
+	order: Order,
+	setOrder: (order: Order) => void
 ) => {
 	const currentCartProducts: Product[] = [...cart]
 	const findProductIndex = currentCartProducts.findIndex(
@@ -61,8 +61,8 @@ export const quantityIncrease = (
 	item: Product,
 	cart: Product[],
 	setCart: (cart: Product[]) => void,
-	order: any,
-	setOrder: (order: any) => void
+	order: Order,
+	setOrder: (order: Order) => void
 ) => {
 	const currentCartProducts: Product[] = [...cart]
 	const findProductIndex = currentCartProducts.findIndex(
@@ -81,8 +81,8 @@ export const itemRemove = (
 	item: Product,
 	cart: Product[],
 	setCart: (cart: Product[]) => void,
-	order: any,
-	setOrder: (order: any) => void
+	order: Order,
+	setOrder: (order: Order) => void
 ) => {
 	const newProductList = cart.filter((product: Product) => {
 		return product._id !== item._id

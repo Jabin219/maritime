@@ -63,7 +63,7 @@ const CartSideSummary = () => {
 					onClick={() => {
 						handleShoppingCartNext()
 					}}
-					disabled={cart.length > 0 ? false : true}
+					disabled={cart.length < 1}
 				>
 					Next Step
 				</Button>
