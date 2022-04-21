@@ -1,12 +1,18 @@
-// Set your secret key. Remember to switch to your live secret key in production!
-// See your keys here: https://dashboard.stripe.com/account/apikeys
+import Stripe from 'stripe'
 
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
+	apiVersion: '2020-08-27'
+})
 
-const createPaymentIntent = (totalPrice: any) =>
+const createPaymentIntent = (
+	totalPrice: number | string,
+	orderId: string,
+	orderedProducts: string
+) =>
 	stripe.paymentIntents.create({
-		amount: (totalPrice * 100).toFixed(0),
-		currency: 'cad'
+		amount: Number((Number(totalPrice) * 100).toFixed(0)),
+		currency: 'cad',
+		metadata: { orderId, orderedProducts } || {}
 	})
 
 export { createPaymentIntent, stripe }

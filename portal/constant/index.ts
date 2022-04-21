@@ -172,3 +172,31 @@ export enum PaymentMethod {
 	creditCard = 'credit-card',
 	payAtPickup = 'pay-at-pickup'
 }
+
+export enum ResponseStatus {
+	SUCCESS = 'success',
+	FAIL = 'fail',
+	NOT_FOUND = 'not-found',
+	ERROR = 'error',
+	UNAUTHORIZED = 'unauthorized',
+	OUT_OF_STOCK = 'out-of-stock'
+}
+
+export enum SnackType {
+	ADD_TO_CART = 'add-to-cart',
+	OUT_OF_STOCK = 'out-of-stock',
+	PAYMENT_FAILED = 'payment-failed'
+}
+
+export enum SnackSeverity {
+	SUCCESS = 'success',
+	ERROR = 'error'
+}
+
+export enum OrderStatus {
+	unpaid = 'unpaid',
+	reserved = 'reserved',
+	paid = 'paid',
+	completed = 'completed',
+	expired = 'expired'
+}
