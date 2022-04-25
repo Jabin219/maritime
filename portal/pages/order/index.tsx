@@ -44,16 +44,10 @@ const Order = () => {
 		>
 			<Box className='order-process-container' sx={{ margin: '70px 40px' }}>
 				{orderStep === 0 && <ShoppingCartContainer />}
-				{orderStep === 1 && order.total ? (
-					<PaymentInfoContainer />
-				) : (
-					<ShoppingCartContainer />
-				)}
-				{orderStep === 2 && order.createdAt ? (
-					<OrderConfirmation />
-				) : (
-					<ShoppingCartContainer />
-				)}
+				{orderStep === 1 &&
+					(order.total ? <PaymentInfoContainer /> : <ShoppingCartContainer />)}
+				{orderStep === 2 &&
+					(order.createdAt ? <OrderConfirmation /> : <ShoppingCartContainer />)}
 			</Box>
 		</OrderContextProvider>
 	)
