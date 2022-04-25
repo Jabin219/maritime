@@ -1,16 +1,16 @@
 import axios from 'axios'
 
-const getProductsByPagination = (
+const getProductsByCategory = (
 	currentPage: number,
 	category: string,
 	sortMethod: string
 ) =>
-	axios.get('/api/products/products-by-pagination', {
+	axios.get('/api/products/products-by-category', {
 		params: { currentPage, category, sortMethod }
 	})
 
-const getProductsCount = (category: string) =>
-	axios.get('/api/products/products-count', {
+const getPagesCount = (category: string) =>
+	axios.get('/api/products/pages-count', {
 		params: { category }
 	})
 
@@ -19,11 +19,14 @@ const getProductById = (productId: string) =>
 		params: { productId }
 	})
 
-const getCategories = () => axios.get('/api/categories')
+const getHomePageProducts = (categories: string) =>
+	axios.get('/api/products/home-page-products', {
+		params: { categories }
+	})
 
 export {
-	getProductsByPagination,
-	getProductsCount,
-	getCategories,
-	getProductById
+	getProductsByCategory,
+	getPagesCount,
+	getProductById,
+	getHomePageProducts
 }

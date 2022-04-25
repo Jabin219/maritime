@@ -10,16 +10,20 @@ import { useContext, useState } from 'react'
 import { ExpandLess, ExpandMore } from '@mui/icons-material'
 import { ProductContext } from 'context/ProductContextProvider'
 import { Category } from 'models'
+import { useRouter } from 'next/router'
+import { Categories } from 'constant'
 
 const CategoryList = () => {
+	const router = useRouter()
+	const categoryName = router.query.categoryName as string
 	const [openCategory, setOpenCategory] = useState(true)
-	const { selectedCategory, setSelectedCategory, categories } =
-		useContext(ProductContext)
+	const { handleChangeCategory } = useContext(ProductContext)
 	const handleClickOpenCategoryList = () => {
 		setOpenCategory(!openCategory)
 	}
 	const clickChangeCategory = (category: Category) => {
-		setSelectedCategory(category)
+		router.push(`/product-list/${category.name}`)
+		handleChangeCategory()
 	}
 	return (
 		<Box
@@ -46,7 +50,7 @@ const CategoryList = () => {
 					sx={{ marginTop: '20px' }}
 				>
 					<List component='div' disablePadding>
-						{categories.map((item: Category, index: number) => (
+						{Categories.map((item: Category, index: number) => (
 							<ListItemButton
 								key={index}
 								disableRipple
@@ -56,7 +60,7 @@ const CategoryList = () => {
 							>
 								<ListItemText
 									sx={
-										selectedCategory.name === item.name
+										categoryName === item.name
 											? { '& span': { fontWeight: 600 } }
 											: {}
 									}

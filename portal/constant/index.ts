@@ -1,7 +1,28 @@
 export const Categories = [
-	{ name: 'all-products', label: 'All Products' },
-	{ name: 'new-arrivals', label: 'New Arrivals' }
+	{ name: 'all-products', label: 'All Products', showedOnHeader: true },
+	{ name: 'new-arrivals', label: 'New Arrivals', showedOnHeader: true },
+	{ name: 'clothing', label: 'Clothing', showedOnHeader: true },
+	{ name: 'home-and-pets', label: 'Home & Pets', showedOnHeader: true },
+	{ name: 'grocery', label: 'Grocery', showedOnHeader: true },
+	{ name: 'appliances', label: 'Appliances', showedOnHeader: true },
+	{ name: 'health-and-beauty', label: 'Health & Beauty', showedOnHeader: true },
+	{ name: 'kids', label: 'Kids', showedOnHeader: true }
 ]
+
+export const HomePageCategories = [
+	{ name: 'new-arrivals', label: 'New Arrivals' },
+	{ name: 'clothing', label: 'Clothing' },
+	{ name: 'home-and-pets', label: 'Home & Pets' },
+	{ name: 'appliances', label: 'Appliances' },
+	{ name: 'health-and-beauty', label: 'Health & Beauty' }
+]
+export enum HomePageCategoriesEnum {
+	newArrivals = 'new-arrivals',
+	clothing = 'clothing',
+	homeAndPets = 'home-and-pets',
+	appliances = 'appliances',
+	healthAndBeauty = 'health-and-beauty'
+}
 
 export const SampleProducts = [
 	{
@@ -171,6 +192,12 @@ export const SampleProducts = [
 export enum PaymentMethod {
 	creditCard = 'credit-card',
 	payAtPickup = 'pay-at-pickup'
+}
+
+export enum SortMethod {
+	newArrivals = 'new-arrivals',
+	priceIncrease = 'price-increase',
+	priceDecrease = 'price-decrease'
 }
 
 export enum ResponseStatus {

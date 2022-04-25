@@ -4,24 +4,28 @@ import { ProductContext } from 'context/ProductContextProvider'
 import { useContext } from 'react'
 import { useRouter } from 'next/router'
 import { Category } from 'models'
+import { Categories } from 'constant'
 
 const CategoriesNavBar = () => {
 	const router = useRouter()
-	const { setSelectedCategory, categories } = useContext(ProductContext)
+	const { handleChangeCategory } = useContext(ProductContext)
 	return (
 		<Box>
 			<Tabs centered value={false}>
-				{categories.map((item: Category, index: number) => (
-					<CustomTab
-						key={index}
-						value={item.name}
-						label={item.label}
-						onClick={() => {
-							setSelectedCategory(item)
-							router.push('/product-list')
-						}}
-					></CustomTab>
-				))}
+				{Categories.map(
+					(category: Category, index: number) =>
+						category.showedOnHeader && (
+							<CustomTab
+								key={index}
+								value={category.name}
+								label={category.label}
+								onClick={() => {
+									handleChangeCategory()
+									router.push(`/product-list/${category.name}`)
+								}}
+							></CustomTab>
+						)
+				)}
 			</Tabs>
 		</Box>
 	)
