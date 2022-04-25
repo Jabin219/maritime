@@ -7,7 +7,7 @@ import {
 	checkProductsStock
 } from 'server/service/orderHandler'
 import { createPaymentIntent } from 'server/service/stripeHandler'
-import { ResponseStatus, PaymentMethod } from 'constant'
+import { ResponseStatus, PaymentMethod, OrderStatus } from 'constant'
 import ProductModel from 'models/mongodb/product'
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -24,6 +24,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	}
 	const { subtotal, tax, total } = await orderCalculator(orderedProducts)
 	const pickupNumber = generatePickupNumber()
+	const orderStatus =
+		paymentMethod === PaymentMethod.payAtPickup
+			? OrderStatus.reserved
+			: OrderStatus.unpaid
 	const orderReversedDaysNumber = 4
 	if (req.method === 'POST') {
 		try {
@@ -35,7 +39,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 				contactInformation: JSON.stringify(contactInformation),
 				paymentMethod,
 				pickupNumber,
-				shippingMethod
+				shippingMethod,
+				status: orderStatus
 			})
 			const orderAddedResult = await order.save()
 			if (paymentMethod === PaymentMethod.creditCard) {
@@ -45,12 +50,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 					JSON.stringify(orderedProducts)
 				)
 				if (!intent.client_secret) {
-					res.json({ status: 'error', message: 'Payment failed' })
+					res.json({ status: ResponseStatus.ERROR, message: 'Payment failed' })
 					return
 				}
 				res.status(200).json({
-					status: 'success',
-					order,
+					status: ResponseStatus.SUCCESS,
+					order: orderAddedResult,
 					intentSecret: intent.client_secret
 				})
 				return
@@ -73,14 +78,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 						_id: orderAddedResult._id.toString()
 					},
 					{
-						status: 'reserved',
 						expiredDate
 					}
 				)
 			}
 			res.status(200).json({
 				status: ResponseStatus.SUCCESS,
-				order
+				order: orderAddedResult
 			})
 		} catch (err) {
 			console.error(err)

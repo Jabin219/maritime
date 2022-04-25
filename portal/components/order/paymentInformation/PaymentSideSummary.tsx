@@ -116,7 +116,9 @@ const PaymentSideSummary = ({
 					...order,
 					contactInformation: contactInformation,
 					shippingMethod: shippingMethod,
-					paymentMethod: paymentMethod
+					paymentMethod: paymentMethod,
+					createdAt: createdOrderResult.data.order.createdAt,
+					pickupNumber: createdOrderResult.data.order.pickupNumber
 				})
 				clearCart()
 				next()

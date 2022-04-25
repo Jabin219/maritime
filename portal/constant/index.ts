@@ -192,3 +192,11 @@ export enum SnackSeverity {
 	SUCCESS = 'success',
 	ERROR = 'error'
 }
+
+export enum OrderStatus {
+	unpaid = 'unpaid',
+	reserved = 'reserved',
+	paid = 'paid',
+	completed = 'completed',
+	expired = 'expired'
+}
