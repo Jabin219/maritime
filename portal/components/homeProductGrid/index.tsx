@@ -60,14 +60,12 @@ const HomeProductGrid = ({ category, products }: Props) => {
 							</ProductListGrid>
 						))}
 				</Grid>
-				<CustomLink href='/product-list'>
-					<ArrowForwardIos sx={{ cursor: 'pointer' }} onClick={() => {}} />
+				<CustomLink href={`/product-list/${category.name}`}>
+					<ArrowForwardIos sx={{ cursor: 'pointer' }} />
 				</CustomLink>
 			</FlexBox>
-			<CustomLink href='/product-list'>
-				<HomeGridButton onClick={() => {}}>
-					View all {category.name}
-				</HomeGridButton>
+			<CustomLink href={`/product-list/${category.name}`}>
+				<HomeGridButton>View all {category.name}</HomeGridButton>
 			</CustomLink>
 		</FlexBox>
 	)
