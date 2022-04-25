@@ -24,9 +24,9 @@ const Footer = () => {
 						/>
 						<Box sx={{ marginTop: '30px', color: '#fff' }}>
 							<FooterTypography sx={{ marginBottom: '10px' }}>
-								Halifax, NS B0B 1T1
+								50 Tacoma Dr, Dartmouth, NS, B2W 3E6
 							</FooterTypography>
-							<FooterTypography>info@maritimehouseholds.ca</FooterTypography>
+							<FooterTypography>maritimehousehold@gmail.com</FooterTypography>
 						</Box>
 					</Box>
 				</Grid>
