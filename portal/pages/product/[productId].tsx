@@ -13,7 +13,7 @@ import { getProductById } from 'api/products'
 
 const Product = () => {
 	const router = useRouter()
-	const { productId } = router.query
+	const productId = router.query.productId as string
 	const [showedProduct, setShowedProduct] = useState<Product>()
 	const { cart, setCart } = useContext(ProductContext)
 	const { showSnackbar } = useContext(SnackContext)
