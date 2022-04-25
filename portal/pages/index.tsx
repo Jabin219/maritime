@@ -4,21 +4,24 @@ import { useState, useEffect } from 'react'
 import { getBannerHeight } from 'utils'
 import { FlexBox } from 'components/customStyle'
 import HomeProductGrid from 'components/homeProductGrid'
-import { Category, Product } from 'models'
-import { HomePageCategories } from 'constant'
+import { Product } from 'models'
+import { HomePageCategories, HomePageCategoriesEnum } from 'constant'
 import { getHomePageProducts } from 'api/products'
 
 const Home: NextPage = () => {
 	const [bannerHeight, setBannerHeight] = useState(600)
 	const [middleBannerHeight, setMiddleBannerHeight] = useState(400)
+	const categoryNames = HomePageCategories.map(category => category.name)
 	const [homePageProducts, setHomePageProducts] = useState<
 		{
-			category: string
-			products: string | Product[]
+			_id: string
+			resultProducts: string | Product[]
 		}[]
 	>([])
-	const loadHomePageProducts = async (homePageCategories: string[]) => {
-		const homeProductsResult = await getHomePageProducts(homePageCategories)
+	const loadHomePageProducts = async (categoryNames: string[]) => {
+		const homeProductsResult = await getHomePageProducts(
+			JSON.stringify(categoryNames)
+		)
 		setHomePageProducts(homeProductsResult.data.products)
 	}
 	useEffect(() => {
@@ -26,8 +29,8 @@ const Home: NextPage = () => {
 		setMiddleBannerHeight(getBannerHeight(3.6))
 	}, [])
 	useEffect(() => {
-		loadHomePageProducts(homePageCategories)
-	}, [homePageCategories])
+		loadHomePageProducts(categoryNames)
+	}, [])
 	return (
 		<Box className='home-page' sx={{ marginBottom: '100px' }}>
 			<FlexBox
@@ -59,42 +62,35 @@ const Home: NextPage = () => {
 					save more on your households
 				</Typography>
 			</FlexBox>
-			<FlexBox
-				sx={{
-					width: '100%',
-					height: middleBannerHeight,
-					background: 'url(/images/home/home-middle-banner.jpg) no-repeat',
-					backgroundSize: 'cover',
-					backgroundPosition: 'center center'
-				}}
-			></FlexBox>
 
-			{/* {Categories.map((category, index) => {
-				if (!category.showedOnHeader) {
-					return
-				}
-				let listedProducts = []
-				if (category.name === 'new-arrivals') {
-					listedProducts = SampleProducts.filter(product => product.newArrival)
-				} else if (item.value === 'organization' || item.value === 'gifts') {
-					return
-				} else {
-					listedProducts = SampleProducts.filter(
-						product => product.category === item.value
+			{homePageProducts &&
+				HomePageCategories.map((category, index) => {
+					const listedProducts = homePageProducts.find(
+						item => item._id === category.name
+					)?.resultProducts as Product[]
+					return (
+						<Box key={index}>
+							{
+								<HomeProductGrid
+									category={category}
+									products={listedProducts}
+								/>
+							}
+							{category.name === HomePageCategoriesEnum.newArrivals && (
+								<FlexBox
+									sx={{
+										width: '100%',
+										height: middleBannerHeight,
+										background:
+											'url(/images/home/home-middle-banner.jpg) no-repeat',
+										backgroundSize: 'cover',
+										backgroundPosition: 'center center'
+									}}
+								></FlexBox>
+							)}
+						</Box>
 					)
-				}
-				return (
-					<Box key={index}>
-						<HomeProductGrid
-							category={item as Category}
-							products={listedProducts.slice(0, 4)}
-						/>
-						{item.value === 'new-arrivals' && (
-							
-						)}
-					</Box>
-				)
-			})} */}
+				})}
 		</Box>
 	)
 }

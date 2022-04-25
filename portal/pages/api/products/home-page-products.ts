@@ -1,41 +1,46 @@
 import connectDB from '../middleware/mongodb'
-import Product from 'models/mongodb/product'
+import ProductModel from 'models/mongodb/product'
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { RESPONSE_STATUS } from '../constant'
+import { ResponseStatus } from 'constant'
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-	const { categories } = req.query
-	let products: any = {}
+	let { categories } = req.query
+	categories = JSON.parse(categories as string) as string[]
 	try {
-		const newArrivalsProducts = await Product.find({
-			stock: { $gt: 0 }
-		})
-			.limit(4)
+		const findCategoryProducts = async (categories: string[]) => {
+			const products = await ProductModel.aggregate([
+				{ $sort: { createdAt: -1 } },
+				{
+					$match: {
+						$and: [{ category: { $in: categories } }, { stock: { $gte: 1 } }]
+					}
+				},
+				{
+					$group: {
+						_id: '$category',
+						products: { $push: '$$ROOT' }
+					}
+				},
+				{
+					$project: {
+						resultProducts: { $slice: ['$products', 4] }
+					}
+				}
+			])
+			return products
+		}
+		const newArrivalsProducts = await ProductModel.find()
 			.sort({ createdAt: 'desc' })
-		const categoryProducts = await Product.find({
-			$and: [{ category: { $in: categories } }, { stock: { $gt: 0 } }]
-		})
 			.limit(4)
-			.sort({ createdAt: 'desc' })
-
-		// categoryProducts.forEach(product => {
-		//     if(product.category==='')
-		// })
-
-		// if (!allProducts) {
-		// 	res.status(200).json({
-		// 		status: RESPONSE_STATUS.NOT_FOUND,
-		// 		message: 'There are no products for these conditions'
-		// 	})
-		// } else {
-		// 	res.status(200).json({
-		// 		status: RESPONSE_STATUS.SUCCESS,
-		// 		products: allProducts
-		// 	})
-		// }
+		const products = await findCategoryProducts(categories)
+		products.push({ _id: 'new-arrivals', resultProducts: newArrivalsProducts })
+		res.status(200).json({
+			status: ResponseStatus.SUCCESS,
+			products
+		})
 	} catch (err) {
 		console.error(err)
-		res.status(500).json({ status: RESPONSE_STATUS.FAIL, message: err })
+		res.status(500).json({ status: ResponseStatus.FAIL, message: err })
 	}
 }
 export default connectDB(handler)

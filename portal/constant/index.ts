@@ -10,12 +10,19 @@ export const Categories = [
 ]
 
 export const HomePageCategories = [
-	'new-arrivals',
-	'clothing',
-	'home-and-pets',
-	'appliances',
-	'health-and-beauty'
+	{ name: 'new-arrivals', label: 'New Arrivals' },
+	{ name: 'clothing', label: 'Clothing' },
+	{ name: 'home-and-pets', label: 'Home & Pets' },
+	{ name: 'appliances', label: 'Appliances' },
+	{ name: 'health-and-beauty', label: 'Health & Beauty' }
 ]
+export enum HomePageCategoriesEnum {
+	newArrivals = 'new-arrivals',
+	clothing = 'clothing',
+	homeAndPets = 'home-and-pets',
+	appliances = 'appliances',
+	healthAndBeauty = 'health-and-beauty'
+}
 
 export const SampleProducts = [
 	{
