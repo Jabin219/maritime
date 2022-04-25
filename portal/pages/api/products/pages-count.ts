@@ -7,9 +7,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	const { category } = req.query
 	let filter: any = {}
 	if (category === 'new-arrivals' || category === 'all-products') {
-		filter = {}
+		filter = { stock: { $gte: 1 } }
 	} else {
-		filter = { category }
+		filter = { $and: [{ category: category }, { stock: { $gte: 1 } }] }
 	}
 	try {
 		const productsCount = await Product.count(filter)

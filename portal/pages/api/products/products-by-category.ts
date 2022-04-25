@@ -8,9 +8,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	let sortCondition: any = { createdAt: 'desc' }
 	let filter: any = {}
 	if (category === 'new-arrivals' || category === 'all-products') {
-		filter = {}
+		filter = { stock: { $gte: 1 } }
 	} else {
-		filter = { category }
+		filter = { $and: [{ category: category }, { stock: { $gte: 1 } }] }
 	}
 	if (sortMethod === 'price-increase') {
 		sortCondition = { price: 'asc' }
