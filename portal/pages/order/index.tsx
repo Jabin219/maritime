@@ -27,27 +27,6 @@ const Order = () => {
 		}
 	}
 
-	const getStepContent = (step: number) => {
-		switch (step) {
-			case 0:
-				return <ShoppingCartContainer />
-			case 1:
-				if (order.total) {
-					return <PaymentInfoContainer />
-				} else {
-					setOrderStep(0)
-				}
-			case 2:
-				if (order.createdAt) {
-					return <OrderConfirmation />
-				} else {
-					setOrderStep(0)
-				}
-			default:
-				return <ShoppingCartContainer />
-		}
-	}
-
 	return (
 		<OrderContextProvider
 			value={{
@@ -64,7 +43,17 @@ const Order = () => {
 			}}
 		>
 			<Box className='order-process-container' sx={{ margin: '70px 40px' }}>
-				{getStepContent(orderStep)}
+				{orderStep === 0 && <ShoppingCartContainer />}
+				{orderStep === 1 && order.total ? (
+					<PaymentInfoContainer />
+				) : (
+					<ShoppingCartContainer />
+				)}
+				{orderStep === 2 && order.createdAt ? (
+					<OrderConfirmation />
+				) : (
+					<ShoppingCartContainer />
+				)}
 			</Box>
 		</OrderContextProvider>
 	)
