@@ -63,34 +63,28 @@ const Home: NextPage = () => {
 				</Typography>
 			</FlexBox>
 
-			{homePageProducts &&
-				HomePageCategories.map((category, index) => {
-					const listedProducts = homePageProducts.find(
-						item => item._id === category.name
-					)?.resultProducts as Product[]
-					return (
-						<Box key={index}>
-							{
-								<HomeProductGrid
-									category={category}
-									products={listedProducts}
-								/>
-							}
-							{category.name === HomePageCategoriesEnum.newArrivals && (
-								<FlexBox
-									sx={{
-										width: '100%',
-										height: middleBannerHeight,
-										background:
-											'url(/images/home/home-middle-banner.jpg) no-repeat',
-										backgroundSize: 'cover',
-										backgroundPosition: 'center center'
-									}}
-								></FlexBox>
-							)}
-						</Box>
-					)
-				})}
+			{HomePageCategories.map((category, index) => {
+				const listedProducts = homePageProducts.find(
+					item => item._id === category.name
+				)?.resultProducts as Product[]
+				return (
+					<Box key={index}>
+						{<HomeProductGrid category={category} products={listedProducts} />}
+						{category.name === HomePageCategoriesEnum.newArrivals && (
+							<FlexBox
+								sx={{
+									width: '100%',
+									height: middleBannerHeight,
+									background:
+										'url(/images/home/home-middle-banner.jpg) no-repeat',
+									backgroundSize: 'cover',
+									backgroundPosition: 'center center'
+								}}
+							></FlexBox>
+						)}
+					</Box>
+				)
+			})}
 		</Box>
 	)
 }

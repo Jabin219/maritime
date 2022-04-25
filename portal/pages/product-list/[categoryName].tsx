@@ -111,7 +111,7 @@ const ProductList = () => {
 							{listedProducts &&
 								listedProducts.map((product: Product) => (
 									<ProductListGrid key={product._id} item xs={3}>
-										<CustomLink href={`/product?productId=${product._id}`}>
+										<CustomLink href={`/product/${product._id}`}>
 											<Image
 												src={product.coverImage}
 												alt='product-image'
@@ -120,7 +120,7 @@ const ProductList = () => {
 												height={300}
 											/>
 										</CustomLink>
-										<CustomLink href={`/product?productId=${product._id}`}>
+										<CustomLink href={`/product/${product._id}`}>
 											<Typography variant='h6' className='product-name'>
 												{product.name}
 											</Typography>
