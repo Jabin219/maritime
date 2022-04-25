@@ -7,12 +7,13 @@ import ShoppingCartContainer from 'components/order/shoppingCart/ShoppingCartCon
 import OrderContextProvider from 'context/OrderContextProvider'
 import OrderConfirmation from 'components/order/orderConfirmation'
 import { PaymentMethod } from 'constant'
+import { Order } from 'models'
 
 const Order = () => {
 	const [shippingMethod, setShippingMethod] = useState('pickup')
 	const [paymentMethod, setPaymentMethod] = useState(PaymentMethod.creditCard)
 	const { cart, setCart, orderStep, setOrderStep } = useContext(ProductContext)
-	const [order, setOrder] = useState<any>({
+	const [order, setOrder] = useState<Order>({
 		subtotal: countCartTotal(cart)
 	})
 
@@ -25,19 +26,10 @@ const Order = () => {
 			setOrderStep(orderStep + 1)
 		}
 	}
-
-	const getStepContent = (step: number) => {
-		switch (step) {
-			case 0:
-				return <ShoppingCartContainer />
-			case 1:
-				return <PaymentInfoContainer />
-			case 2:
-				return <OrderConfirmation />
-			default:
-				return <ShoppingCartContainer />
-		}
+	const resetOrderPage = () => {
+		setOrderStep(0)
 	}
+
 	return (
 		<OrderContextProvider
 			value={{
@@ -54,7 +46,11 @@ const Order = () => {
 			}}
 		>
 			<Box className='order-process-container' sx={{ margin: '70px 40px' }}>
-				{getStepContent(orderStep)}
+				{orderStep === 0 && <ShoppingCartContainer />}
+				{orderStep === 1 &&
+					(order.total ? <PaymentInfoContainer /> : resetOrderPage())}
+				{orderStep === 2 &&
+					(order.createdAt ? <OrderConfirmation /> : resetOrderPage())}
 			</Box>
 		</OrderContextProvider>
 	)
