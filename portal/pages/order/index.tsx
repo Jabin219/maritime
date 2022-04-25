@@ -26,6 +26,9 @@ const Order = () => {
 			setOrderStep(orderStep + 1)
 		}
 	}
+	const resetOrderPage = () => {
+		setOrderStep(0)
+	}
 
 	return (
 		<OrderContextProvider
@@ -45,9 +48,9 @@ const Order = () => {
 			<Box className='order-process-container' sx={{ margin: '70px 40px' }}>
 				{orderStep === 0 && <ShoppingCartContainer />}
 				{orderStep === 1 &&
-					(order.total ? <PaymentInfoContainer /> : <ShoppingCartContainer />)}
+					(order.total ? <PaymentInfoContainer /> : resetOrderPage())}
 				{orderStep === 2 &&
-					(order.createdAt ? <OrderConfirmation /> : <ShoppingCartContainer />)}
+					(order.createdAt ? <OrderConfirmation /> : resetOrderPage())}
 			</Box>
 		</OrderContextProvider>
 	)
