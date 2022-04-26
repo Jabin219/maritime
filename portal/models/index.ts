@@ -20,7 +20,7 @@ export type Category = {
 
 export type Order = {
 	_id?: string
-	products: string | Product[]
+	products?: string | Product[]
 	subtotal: number
 	tax?: number
 	total?: number
@@ -30,6 +30,7 @@ export type Order = {
 	paymentMethod?: string
 	pickupNumber?: string
 	createdAt?: Date
+	expiredDate?: Date
 }
 
 export type ContactInformation = {

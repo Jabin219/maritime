@@ -57,7 +57,6 @@ const PaymentInformation = () => {
 			event.error ? `Payment error: ${event.error.message}` : ''
 		)
 	}
-
 	return (
 		<Grid container spacing={10}>
 			<Grid item xs={8}>
@@ -146,7 +145,7 @@ const PaymentInformation = () => {
 							</Box>
 							<FormControl>
 								<RadioGroup
-									defaultValue={PaymentMethod.creditCard}
+									value={paymentMethod}
 									onChange={handleChangePaymentMethod}
 								>
 									<FormControlLabel

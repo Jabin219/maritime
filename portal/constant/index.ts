@@ -193,7 +193,6 @@ export enum PaymentMethod {
 	creditCard = 'credit-card',
 	payAtPickup = 'pay-at-pickup'
 }
-
 export enum SortMethod {
 	newArrivals = 'new-arrivals',
 	priceIncrease = 'price-increase',
@@ -218,4 +217,12 @@ export enum SnackType {
 export enum SnackSeverity {
 	SUCCESS = 'success',
 	ERROR = 'error'
+}
+
+export enum OrderStatus {
+	unpaid = 'unpaid',
+	reserved = 'reserved',
+	paid = 'paid',
+	completed = 'completed',
+	expired = 'expired'
 }
