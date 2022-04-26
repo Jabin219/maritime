@@ -11,42 +11,41 @@ const generatePickupNumber = () => {
 	return result
 }
 
-const checkProductsStock = async (
+const loadOrderedProducts = async (
 	orderedProducts: { productId: string; quantity: number }[]
 ) => {
-	const orderedProductIds = orderedProducts.map(product => product.productId)
-	const orderedProductsResult = await ProductModel.find({
+	const orderedProductIds = orderedProducts.map(
+		(orderedProduct: { productId: string; quantity: number }) =>
+			orderedProduct.productId
+	)
+	const products = await ProductModel.find({
 		_id: { $in: orderedProductIds }
 	})
+	orderedProducts.forEach(
+		(orderedProduct: { productId: string; quantity: number }) => {
+			products.find(
+				(product: Product) =>
+					product._id.toString() === orderedProduct.productId
+			).quantity = orderedProduct.quantity
+		}
+	)
+	return products
+}
+
+const checkProductsStock = async (products: Product[]) => {
 	const outOfStockProductIds: string[] = []
-	orderedProductsResult.forEach(product => {
-		if (
-			Number(
-				orderedProducts.find(
-					orderedProduct => orderedProduct.productId === product.id
-				)?.quantity
-			) > product.stock
-		) {
+	products.forEach(product => {
+		if (Number(product.quantity) > Number(product.stock)) {
 			outOfStockProductIds.push(product._id)
 		}
 	})
 	return outOfStockProductIds
 }
 
-const orderCalculator = async (
-	orderedProducts: { productId: string; quantity: number }[]
-) => {
-	const orderedProductIds = orderedProducts.map(product => product.productId)
-	const loadedProductsResult = await ProductModel.find({
-		_id: { $in: orderedProductIds }
-	})
+const orderCalculator = async (products: Product[]) => {
 	let subtotal = 0
-	loadedProductsResult.forEach((product: Product) => {
-		orderedProducts.forEach(orderedProduct => {
-			if (orderedProduct.productId === product._id.toString()) {
-				subtotal += Number(product.price) * Number(orderedProduct.quantity)
-			}
-		})
+	products.forEach((product: Product) => {
+		subtotal += Number(product.price) * Number(product.quantity)
 	})
 	const tax = subtotal * 0.15
 	const total = subtotal + tax
@@ -56,4 +55,9 @@ const orderCalculator = async (
 		tax: priceFormatter(tax)
 	}
 }
-export { generatePickupNumber, orderCalculator, checkProductsStock }
+export {
+	generatePickupNumber,
+	orderCalculator,
+	checkProductsStock,
+	loadOrderedProducts
+}

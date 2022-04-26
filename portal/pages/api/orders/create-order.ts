@@ -4,7 +4,8 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import {
 	generatePickupNumber,
 	orderCalculator,
-	checkProductsStock
+	checkProductsStock,
+	loadOrderedProducts
 } from 'server/service/orderHandler'
 import { createPaymentIntent } from 'server/service/stripeHandler'
 import { ResponseStatus, PaymentMethod, OrderStatus } from 'constant'
@@ -13,7 +14,8 @@ import ProductModel from 'models/mongodb/product'
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	const { orderedProducts, contactInformation, paymentMethod, shippingMethod } =
 		req.body
-	const checkProductsStockResult = await checkProductsStock(orderedProducts)
+	const products = await loadOrderedProducts(orderedProducts)
+	const checkProductsStockResult = await checkProductsStock(products)
 	if (checkProductsStockResult.length > 0) {
 		res.status(200).json({
 			status: ResponseStatus.OUT_OF_STOCK,
@@ -22,7 +24,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 		})
 		return
 	}
-	const { subtotal, tax, total } = await orderCalculator(orderedProducts)
+	const { subtotal, tax, total } = await orderCalculator(products)
 	const pickupNumber = generatePickupNumber()
 	const orderStatus =
 		paymentMethod === PaymentMethod.payAtPickup
