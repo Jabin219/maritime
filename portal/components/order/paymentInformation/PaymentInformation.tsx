@@ -57,7 +57,6 @@ const PaymentInformation = () => {
 			event.error ? `Payment error: ${event.error.message}` : ''
 		)
 	}
-
 	return (
 		<Grid container spacing={10}>
 			<Grid item xs={8}>
@@ -146,13 +145,18 @@ const PaymentInformation = () => {
 							</Box>
 							<FormControl>
 								<RadioGroup
-									defaultValue={paymentMethod}
+									value={paymentMethod}
 									onChange={handleChangePaymentMethod}
 								>
 									<FormControlLabel
 										value={PaymentMethod.creditCard}
 										control={<Radio color='primary' />}
 										label='Credit Card'
+									/>
+									<FormControlLabel
+										value={PaymentMethod.payAtPickup}
+										control={<Radio color='primary' />}
+										label='Pay upon at pickup (reserve for 3 days)'
 									/>
 								</RadioGroup>
 							</FormControl>

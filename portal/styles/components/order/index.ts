@@ -1,5 +1,6 @@
 import { Box } from '@mui/material'
 import { styled } from '@mui/system'
+import { FlexBox } from 'components/customStyle'
 
 export const CartSideSummaryContainer = styled(Box)({
 	border: '10px solid #EEEEEE',
@@ -190,5 +191,70 @@ export const PaymentMethodContainer = styled(Box)({
 		fontSize: '16px',
 		lineHeight: '20px',
 		textAlign: 'center'
+	}
+})
+
+export const OrderConfirmationContainer = styled(Box)({
+	margin: '115px auto 400px'
+})
+
+export const OrderConfirmationTopBox = styled(FlexBox)({
+	border: '10px solid #EEEEEE',
+	padding: '65px 450px'
+})
+export const OrderInformationContainer = styled(Box)({
+	border: '10px solid #EEEEEE',
+	marginTop: '55px',
+	'& .pick-up-information': {
+		backgroundColor: '#EEEEEE',
+		'& .MuiGrid-container': {
+			padding: '70px 150px',
+			'& .pick-up-information-subtitle': {
+				color: '#FF8800',
+				textAlign: 'center',
+				fontWeight: 700,
+				marginBottom: '20px'
+			},
+			'& .pick-up-information-detail': {
+				textAlign: 'center',
+				fontWeight: 700
+			}
+		}
+	},
+	'& .order-detail-container': {
+		marginTop: '40px',
+		'& .order-detail': {
+			marginTop: '10px',
+			'& .single-information-container': {
+				marginBottom: '7px',
+				'& label,span': { color: '#404041' },
+				'& label': { fontWeight: 700 }
+			}
+		}
+	},
+	'& .order-items-container': {
+		marginTop: '80px',
+		'& table': {
+			'& th,td': {
+				fontSize: 20,
+				color: '#404041',
+				lineHeight: '28px'
+			},
+			'& th': {
+				fontWeight: 700
+			}
+		},
+		'& .price-summary': {
+			marginTop: '30px',
+			display: 'flex',
+			flexDirection: 'column',
+			alignItems: 'flex-end',
+			'& .single-price-summary-container': {
+				width: '15%',
+				whiteSpace: 'nowrap',
+				'& label': { display: 'inline-block', width: 130, fontWeight: 700 },
+				'& span': { textAlign: 'right' }
+			}
+		}
 	}
 })

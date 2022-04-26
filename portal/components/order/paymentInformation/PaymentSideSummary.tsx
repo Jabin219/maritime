@@ -116,7 +116,9 @@ const PaymentSideSummary = ({
 					...order,
 					contactInformation: contactInformation,
 					shippingMethod: shippingMethod,
-					paymentMethod: paymentMethod
+					paymentMethod: paymentMethod,
+					createdAt: createdOrderResult.data.order.createdAt,
+					pickupNumber: createdOrderResult.data.order.pickupNumber
 				})
 				clearCart()
 				next()
@@ -168,8 +170,9 @@ const PaymentSideSummary = ({
 					handleSubmitOrder()
 				}}
 				disabled={
-					paymentMethod === PaymentMethod.creditCard &&
-					(processing || !stripe || submitDisabled || Boolean(cardInputError))
+					(paymentMethod === PaymentMethod.creditCard &&
+						(!stripe || submitDisabled || Boolean(cardInputError))) ||
+					processing
 				}
 			>
 				Place Order

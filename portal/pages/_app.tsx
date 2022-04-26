@@ -46,7 +46,7 @@ const theme = createTheme({
 			color: '#333333',
 			fontStyle: 'normal',
 			fontSize: 40,
-			fontWeight: 900,
+			fontWeight: 700,
 			lineHeight: '57px',
 			textAlign: 'center'
 		},
@@ -85,7 +85,10 @@ function MyApp({ Component, pageProps }: AppProps) {
 		<ThemeProvider theme={theme}>
 			<Head>
 				<title>Maritime Household</title>
-				<meta name='viewport' content='viewport-fit=cover' />
+				<meta
+					name='viewport'
+					content='width=device-width, initial-scale=1.0'
+				></meta>
 			</Head>
 			<ProductContextProvider>
 				<SnackContextProvider>

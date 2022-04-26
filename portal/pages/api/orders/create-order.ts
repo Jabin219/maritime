@@ -7,7 +7,8 @@ import {
 	checkProductsStock
 } from 'server/service/orderHandler'
 import { createPaymentIntent } from 'server/service/stripeHandler'
-import { ResponseStatus } from 'constant'
+import { ResponseStatus, PaymentMethod, OrderStatus } from 'constant'
+import ProductModel from 'models/mongodb/product'
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	const { orderedProducts, contactInformation, paymentMethod, shippingMethod } =
@@ -23,6 +24,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	}
 	const { subtotal, tax, total } = await orderCalculator(orderedProducts)
 	const pickupNumber = generatePickupNumber()
+	const orderStatus =
+		paymentMethod === PaymentMethod.payAtPickup
+			? OrderStatus.reserved
+			: OrderStatus.unpaid
+	const orderReversedDaysNumber = 4
 	if (req.method === 'POST') {
 		try {
 			const order = new OrderModel({
@@ -33,29 +39,52 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 				contactInformation: JSON.stringify(contactInformation),
 				paymentMethod,
 				pickupNumber,
-				shippingMethod
+				shippingMethod,
+				status: orderStatus
 			})
 			const orderAddedResult = await order.save()
-			if (paymentMethod === 'credit-card') {
+			if (paymentMethod === PaymentMethod.creditCard) {
 				const intent = await createPaymentIntent(
 					total,
 					orderAddedResult._id.toString(),
 					JSON.stringify(orderedProducts)
 				)
 				if (!intent.client_secret) {
-					res.json({ status: 'error', message: 'Payment failed' })
+					res.json({ status: ResponseStatus.ERROR, message: 'Payment failed' })
 					return
 				}
 				res.status(200).json({
-					status: 'success',
-					order,
+					status: ResponseStatus.SUCCESS,
+					order: orderAddedResult,
 					intentSecret: intent.client_secret
 				})
 				return
+			} else if (paymentMethod === PaymentMethod.payAtPickup) {
+				orderedProducts.forEach(
+					async (product: { productId: string; quantity: number }) => {
+						const selectedProductResult: any = await ProductModel.findOne({
+							_id: product.productId
+						})
+						selectedProductResult.stock =
+							selectedProductResult.stock - product.quantity
+						await selectedProductResult.save()
+					}
+				)
+				const expiredDate = new Date().setDate(
+					new Date().getDate() + orderReversedDaysNumber
+				)
+				await OrderModel.findOneAndUpdate(
+					{
+						_id: orderAddedResult._id.toString()
+					},
+					{
+						expiredDate
+					}
+				)
 			}
 			res.status(200).json({
 				status: ResponseStatus.SUCCESS,
-				order
+				order: orderAddedResult
 			})
 		} catch (err) {
 			console.error(err)
