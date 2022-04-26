@@ -6,9 +6,11 @@ import { priceFormatter, taxCalculator } from 'utils'
 import { CartSideSummaryContainer } from 'styles/components/order'
 import { Categories } from 'constant'
 import { ProductContext } from 'context/ProductContextProvider'
+import { useRouter } from 'next/router'
 
 const CartSideSummary = () => {
-	const { setSelectedCategory, cart } = useContext(ProductContext)
+	const router = useRouter()
+	const { cart } = useContext(ProductContext)
 	const { order, setOrder, next } = useContext(OrderContext)
 	const handleShoppingCartNext = async () => {
 		setOrder({
@@ -69,7 +71,7 @@ const CartSideSummary = () => {
 			<CustomLink href='/product-list'>
 				<Typography
 					onClick={() => {
-						setSelectedCategory(Categories[0])
+						router.push(`/product-list/${Categories[0].name}`)
 					}}
 				>
 					Continue Shopping
