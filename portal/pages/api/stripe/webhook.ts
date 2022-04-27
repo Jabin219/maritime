@@ -21,12 +21,15 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
 				console.log(
 					`💰 PaymentIntent status: ${stripeObject.status} for order ${orderId}`
 				)
-			// 这里之后继续开发
-			// const orderedProducts: { productId: string; quantity: number }[] =
-			// 	JSON.parse(stripeObject.metadata.orderedProducts)
-			// orderedProducts.forEach(orderedProduct => {
-			// 	ProductModel.findOne({ _id: orderedProduct.productId })
-			// })
+				const orderedProducts: { productId: string; quantity: number }[] =
+					JSON.parse(stripeObject.metadata.orderedProducts)
+				orderedProducts.forEach(async orderedProduct => {
+					const product = await ProductModel.findOne({
+						_id: orderedProduct.productId
+					})
+					product.stock = product.stock - orderedProduct.quantity
+					await product.save()
+				})
 			default:
 				console.log(`Unhandled event type ${event.type}`)
 		}

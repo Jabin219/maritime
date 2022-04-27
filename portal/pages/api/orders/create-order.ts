@@ -10,8 +10,6 @@ import {
 import { createPaymentIntent } from 'server/service/stripeHandler'
 import { ResponseStatus, PaymentMethod, OrderStatus } from 'constant'
 import ProductModel from 'models/mongodb/product'
-import { sendReservedOrderConfirmation } from 'server/service/emailHandler'
-import { Product } from 'models'
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	const { orderedProducts, contactInformation, paymentMethod, shippingMethod } =
@@ -85,7 +83,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 						expiredDate
 					}
 				)
-				sendReservedOrderConfirmation(orderAddedResult, products)
 			}
 			res.status(200).json({
 				status: ResponseStatus.SUCCESS,
