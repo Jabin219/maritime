@@ -17,7 +17,7 @@ const Footer = () => {
 				<Grid item xs>
 					<Box>
 						<Image
-							src='/images/logo/footer-logo.png'
+							src='/images/logo/footer-logo.jpg'
 							alt='logo'
 							width={231}
 							height={159}

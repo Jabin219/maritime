@@ -9,6 +9,21 @@ export const Categories = [
 	{ name: 'kids', label: 'Kids', showedOnHeader: true }
 ]
 
+export const HomePageCategories = [
+	{ name: 'new-arrivals', label: 'New Arrivals' },
+	{ name: 'clothing', label: 'Clothing' },
+	{ name: 'home-and-pets', label: 'Home & Pets' },
+	{ name: 'appliances', label: 'Appliances' },
+	{ name: 'health-and-beauty', label: 'Health & Beauty' }
+]
+export enum HomePageCategoriesEnum {
+	newArrivals = 'new-arrivals',
+	clothing = 'clothing',
+	homeAndPets = 'home-and-pets',
+	appliances = 'appliances',
+	healthAndBeauty = 'health-and-beauty'
+}
+
 export const SampleProducts = [
 	{
 		id: 'f06e908f-6027-4626-9e9b-5ae14c783455',

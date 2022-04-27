@@ -18,7 +18,6 @@ interface Props {
 }
 
 const HomeProductGrid = ({ category, products }: Props) => {
-	const { setCategory } = useContext(ProductContext)
 	return (
 		<FlexBox
 			className='home-product-grid-container'
@@ -30,64 +29,43 @@ const HomeProductGrid = ({ category, products }: Props) => {
 				sx={{ flexDirection: 'row', width: '80%' }}
 			>
 				<Grid container>
-					{products.map((product, index) => (
-						<ProductListGrid key={index} item xs={3}>
-							<CustomLink href={`/product?productId=${product.id}`}>
-								<Image
-									src={product.coverImage}
-									alt='product-image'
-									width={300}
-									height={300}
-								/>
-							</CustomLink>
-							<CustomLink href={`/product?productId=${product.id}`}>
-								<Typography variant='h6' className='product-name'>
-									{product.name}
-								</Typography>
-							</CustomLink>
-							{Number(product?.discount) === 0 ? (
-								<Typography variant='h6' className='product-price'>
-									${product.price} CAD
-								</Typography>
-							) : (
-								<>
-									<Typography
-										sx={{
-											color: '#ADADAD',
-											textDecoration: 'line-through'
-										}}
-									>
-										${product?.price} CAD
+					{products &&
+						products.map((product, index) => (
+							<ProductListGrid key={index} item xs={3}>
+								<CustomLink href={`/product/${product._id}`}>
+									<Image
+										src={product.coverImage}
+										alt='product-image'
+										width={300}
+										height={300}
+									/>
+								</CustomLink>
+								<CustomLink href={`/product/${product._id}`}>
+									<Typography variant='h6' className='product-name'>
+										{product.name}
 									</Typography>
-									<Typography className='product-price'>
-										$
-										{priceFormatter(
-											Number(product?.price) - Number(product?.discount)
-										)}{' '}
-										CAD
-									</Typography>
-								</>
-							)}
-						</ProductListGrid>
-					))}
+								</CustomLink>
+
+								<Typography
+									sx={{
+										color: '#ADADAD',
+										textDecoration: 'line-through'
+									}}
+								>
+									${priceFormatter(Number(product?.originalPrice))} CAD
+								</Typography>
+								<Typography className='product-price'>
+									${priceFormatter(Number(product?.price))} CAD
+								</Typography>
+							</ProductListGrid>
+						))}
 				</Grid>
-				<CustomLink href='/product-list'>
-					<ArrowForwardIos
-						sx={{ cursor: 'pointer' }}
-						onClick={() => {
-							setCategory(category)
-						}}
-					/>
+				<CustomLink href={`/product-list/${category.name}`}>
+					<ArrowForwardIos sx={{ cursor: 'pointer' }} />
 				</CustomLink>
 			</FlexBox>
-			<CustomLink href='/product-list'>
-				<HomeGridButton
-					onClick={() => {
-						setCategory(category)
-					}}
-				>
-					View all {category.name}
-				</HomeGridButton>
+			<CustomLink href={`/product-list/${category.name}`}>
+				<HomeGridButton>View all {category.name}</HomeGridButton>
 			</CustomLink>
 		</FlexBox>
 	)

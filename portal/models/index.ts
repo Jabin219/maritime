@@ -15,7 +15,7 @@ export type Product = {
 export type Category = {
 	name: string
 	label: string
-	showedOnHeader: boolean
+	showedOnHeader?: boolean
 }
 
 export type Order = {
