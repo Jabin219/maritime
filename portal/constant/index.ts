@@ -193,6 +193,7 @@ export enum PaymentMethod {
 	creditCard = 'credit-card',
 	payAtPickup = 'pay-at-pickup'
 }
+
 export enum SortMethod {
 	newArrivals = 'new-arrivals',
 	priceIncrease = 'price-increase',
