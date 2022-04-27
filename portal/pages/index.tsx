@@ -69,7 +69,7 @@ const Home: NextPage = () => {
 				)?.resultProducts as Product[]
 				return (
 					<Box key={index}>
-						{<HomeProductGrid category={category} products={listedProducts} />}
+						<HomeProductGrid category={category} products={listedProducts} />
 						{category.name === HomePageCategoriesEnum.newArrivals && (
 							<FlexBox
 								sx={{
