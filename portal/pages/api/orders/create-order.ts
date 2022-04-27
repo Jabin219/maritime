@@ -10,6 +10,8 @@ import {
 import { createPaymentIntent } from 'server/service/stripeHandler'
 import { ResponseStatus, PaymentMethod, OrderStatus } from 'constant'
 import ProductModel from 'models/mongodb/product'
+import { sendReservedOrderConfirmation } from 'server/service/emailHandler'
+import { Product } from 'models'
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	const { orderedProducts, contactInformation, paymentMethod, shippingMethod } =
@@ -19,7 +21,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	if (checkProductsStockResult.length > 0) {
 		res.status(200).json({
 			status: ResponseStatus.OUT_OF_STOCK,
-			message: 'One or more products in your cart is out of stock.',
+			message: 'One or more items in your cart are out of stock.',
 			products: checkProductsStockResult
 		})
 		return
@@ -34,7 +36,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	if (req.method === 'POST') {
 		try {
 			const order = new OrderModel({
-				products: JSON.stringify(orderedProducts),
+				products: JSON.stringify(products),
 				subtotal,
 				tax,
 				total,
@@ -83,6 +85,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 						expiredDate
 					}
 				)
+				sendReservedOrderConfirmation(orderAddedResult, products)
 			}
 			res.status(200).json({
 				status: ResponseStatus.SUCCESS,
