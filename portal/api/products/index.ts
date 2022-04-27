@@ -19,4 +19,14 @@ const getProductById = (productId: string) =>
 		params: { productId }
 	})
 
-export { getProductsByCategory, getPagesCount, getProductById }
+const getHomePageProducts = (categories: string) =>
+	axios.get('/api/products/home-page-products', {
+		params: { categories }
+	})
+
+export {
+	getProductsByCategory,
+	getPagesCount,
+	getProductById,
+	getHomePageProducts
+}

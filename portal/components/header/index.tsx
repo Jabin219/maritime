@@ -21,7 +21,7 @@ const Header = () => {
 				<Grid item xs>
 					<CustomLink href='/'>
 						<Image
-							src='/images/logo/header-logo.png'
+							src='/images/logo/header-logo.jpg'
 							alt='logo'
 							width={155}
 							height={95}
