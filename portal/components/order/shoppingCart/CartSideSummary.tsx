@@ -71,7 +71,7 @@ const CartSideSummary = () => {
 			<CustomLink href='/product-list'>
 				<Typography
 					onClick={() => {
-						router.push(`/product-list/${Categories[0].name}`)
+						router.push('/product-list/all-products')
 					}}
 				>
 					Continue Shopping
