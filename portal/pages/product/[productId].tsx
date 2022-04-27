@@ -127,7 +127,7 @@ const Product = () => {
 					<Grid container sx={{ width: '70%', margin: '0 auto' }}>
 						{showedProduct?.recommendedProducts &&
 							showedProduct?.recommendedProducts.map((product, index) => (
-								<RelatedProductGrid key={index} xs={3}>
+								<RelatedProductGrid item key={index} xs={3}>
 									<Image
 										src={product.coverImage}
 										alt='product-image'
