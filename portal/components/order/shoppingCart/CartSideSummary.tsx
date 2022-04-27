@@ -68,14 +68,8 @@ const CartSideSummary = () => {
 					Next Step
 				</Button>
 			)}
-			<CustomLink href='/product-list'>
-				<Typography
-					onClick={() => {
-						router.push('/product-list/all-products')
-					}}
-				>
-					Continue Shopping
-				</Typography>
+			<CustomLink href='/product-list/all-products'>
+				<Typography>Continue Shopping</Typography>
 			</CustomLink>
 		</CartSideSummaryContainer>
 	)
