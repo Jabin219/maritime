@@ -17,7 +17,6 @@ export const SubPageButton = styled(Button)({
 	boxShadow: '0px 4px 10px rgba(151, 80, 0, 0.2)',
 	borderRadius: '40px',
 	margin: '0 auto',
-	marginTop: '50px',
 	'&:hover': {
 		backgroundColor: '#FF8800'
 	}

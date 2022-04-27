@@ -65,7 +65,7 @@ const OrderConfirmation = () => {
 									Store Location
 								</Typography>
 								<Typography variant='h6' className='pick-up-information-detail'>
-									50 Tacoma Dr, Dartmouth
+									50 Tacoma Dr, Dartmouth, NS, B2W 3E6
 								</Typography>
 							</Grid>
 							{order.paymentMethod === PaymentMethod.payAtPickup && (
