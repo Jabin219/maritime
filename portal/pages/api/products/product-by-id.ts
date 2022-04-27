@@ -1,12 +1,27 @@
 import connectDB from '../middleware/mongodb'
-import Product from 'models/mongodb/product'
+import ProductModel from 'models/mongodb/product'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { ResponseStatus } from 'constant'
+import * as mongodb from 'mongodb'
 
+const { ObjectId } = mongodb
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	const { productId } = req.query
 	try {
-		const product = await Product.findOne({ _id: productId })
+		const product = await ProductModel.findOne({ _id: productId })
+		const recommendedProducts = await ProductModel.aggregate([
+			{
+				$match: {
+					$and: [
+						{ _id: { $ne: new ObjectId(String(productId)) } },
+						{ category: String(product._doc.category) },
+						{ stock: { $gte: 1 } }
+					]
+				}
+			},
+			{ $sample: { size: 4 } }
+		])
+		product._doc.recommendedProducts = recommendedProducts
 		if (!product) {
 			res.status(200).json({
 				status: ResponseStatus.NOT_FOUND,
