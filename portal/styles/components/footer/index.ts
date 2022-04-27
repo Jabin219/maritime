@@ -1,5 +1,13 @@
-import { Typography } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import { styled } from '@mui/system'
+
+const FooterContainer = styled(Box)({
+	height: 600,
+	backgroundColor: '#222222',
+	'& .week-day': {
+		width: '30%'
+	}
+})
 
 const FooterTypography = styled(Typography)({
 	fontSize: '20px',
@@ -14,4 +22,4 @@ const FooterListTitle = styled(Typography)({
 	marginBottom: '15px'
 })
 
-export { FooterTypography, FooterListTitle }
+export { FooterTypography, FooterListTitle, FooterContainer }

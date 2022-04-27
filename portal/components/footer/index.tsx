@@ -1,6 +1,10 @@
 import { Box, Grid, List, ListItem } from '@mui/material'
 import Image from 'next/image'
-import { FooterListTitle, FooterTypography } from 'styles/components/footer'
+import {
+	FooterListTitle,
+	FooterTypography,
+	FooterContainer
+} from 'styles/components/footer'
 import {
 	FooterSupportLinks,
 	FooterQuickLinks
@@ -9,7 +13,7 @@ import CustomLink from '../customLink'
 
 const Footer = () => {
 	return (
-		<Box sx={{ height: 600, backgroundColor: '#222222' }}>
+		<FooterContainer>
 			<Grid
 				container
 				sx={{ width: '80%', margin: '0 auto', padding: '110px 0' }}
@@ -29,6 +33,29 @@ const Footer = () => {
 							<FooterTypography>maritimehousehold@gmail.com</FooterTypography>
 						</Box>
 					</Box>
+				</Grid>
+				<Grid item xs>
+					<List sx={{ paddingTop: 0 }}>
+						<ListItem sx={{ paddingTop: 0 }}>
+							<FooterListTitle variant='h3'>Hours</FooterListTitle>
+						</ListItem>
+						<ListItem>
+							<FooterTypography className='week-day'>
+								Mon to Thu
+							</FooterTypography>
+							<FooterTypography>10 am to 6 pm</FooterTypography>
+						</ListItem>
+						<ListItem>
+							<FooterTypography className='week-day'>
+								Fri to Sat
+							</FooterTypography>
+							<FooterTypography>10 am to 8 pm</FooterTypography>
+						</ListItem>
+						<ListItem>
+							<FooterTypography className='week-day'>Sun</FooterTypography>
+							<FooterTypography>12 pm to 6 pm</FooterTypography>
+						</ListItem>
+					</List>
 				</Grid>
 				<Grid item xs>
 					<List sx={{ paddingTop: 0 }}>
@@ -59,7 +86,7 @@ const Footer = () => {
 					</List>
 				</Grid>
 			</Grid>
-		</Box>
+		</FooterContainer>
 	)
 }
 
