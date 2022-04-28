@@ -120,7 +120,7 @@ const PaymentSideSummary = ({
 					createdAt: createdOrderResult.data.order.createdAt,
 					pickupNumber: createdOrderResult.data.order.pickupNumber
 				})
-				// clearCart()
+				clearCart()
 				next()
 			} else {
 				showSnackbar(SnackType.PAYMENT_FAILED)

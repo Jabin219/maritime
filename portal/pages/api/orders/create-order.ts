@@ -6,12 +6,11 @@ import {
 	orderCalculator,
 	checkProductsStock,
 	loadOrderedProducts
-} from 'server/service/orderHandler'
-import { createPaymentIntent } from 'server/service/stripeHandler'
+} from 'pages/api/services/orderHandler'
+import { createPaymentIntent } from '../services/stripeHandler'
 import { ResponseStatus, PaymentMethod, OrderStatus } from 'constant'
 import ProductModel from 'models/mongodb/product'
-import { sendReservedOrderConfirmation } from 'server/service/emailHandler'
-import { Product } from 'models'
+import { sendReservedOrderConfirmation } from '../services/emailHandler'
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	const { orderedProducts, contactInformation, paymentMethod, shippingMethod } =
