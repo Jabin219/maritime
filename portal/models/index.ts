@@ -10,7 +10,7 @@ export type Product = {
 	quantity?: number
 	stock?: number
 	outOfStock?: boolean
-	discount?: number
+	recommendedProducts?: Product[]
 }
 
 export type Category = {

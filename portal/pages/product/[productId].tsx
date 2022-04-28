@@ -3,7 +3,11 @@ import { useRouter } from 'next/router'
 import { useContext, useEffect, useState } from 'react'
 import { Product } from 'models'
 import Image from 'next/image'
-import { ProductButtonContainer } from 'styles/pages/product'
+import {
+	RelatedProductGrid,
+	ProductButtonContainer,
+	RelatedProductsTitle
+} from 'styles/pages/product'
 import { priceFormatter } from 'utils'
 import { addToCart } from 'utils/cartHandler'
 import { ProductContext } from 'context/ProductContextProvider'
@@ -25,12 +29,12 @@ const Product = () => {
 		addToCart(cart, thisProduct as Product, setCart)
 		showSnackbar('add-to-cart')
 	}
-	const getProduct = async (productId: string) => {
+	const loadProduct = async (productId: string) => {
 		const productResult = await getProductById(productId)
 		setShowedProduct(productResult.data.product)
 	}
 	useEffect(() => {
-		getProduct(productId as string)
+		productId && loadProduct(productId as string)
 	}, [productId])
 
 	return (
@@ -115,20 +119,20 @@ const Product = () => {
 					</Grid>
 				</Grid>
 			</Box>
-			{/* <Box className='related-products-container'>
+			<Box className='related-products-container'>
 				<RelatedProductsTitle variant='h6'>
 					You May Also Like
 				</RelatedProductsTitle>
 				<Box>
 					<Grid container sx={{ width: '70%', margin: '0 auto' }}>
-						{relatedProducts &&
-							relatedProducts.map((product, index) => (
-								<RelatedProductGrid key={index} xs={3}>
+						{showedProduct?.recommendedProducts &&
+							showedProduct?.recommendedProducts.map((product, index) => (
+								<RelatedProductGrid item key={index} xs={3}>
 									<Image
 										src={product.coverImage}
 										alt='product-image'
 										onClick={() => {
-											router.push(`/product?productId=${product._id}`)
+											router.push(`/product/${product._id}`)
 										}}
 										width={500}
 										height={500}
@@ -136,23 +140,27 @@ const Product = () => {
 									<Typography
 										className='product-name'
 										onClick={() => {
-											router.push(`/product?productId=${product._id}`)
+											router.push(`/product/${product._id}`)
 										}}
 									>
 										{product.name}
 									</Typography>
+									<Typography
+										sx={{
+											color: '#ADADAD',
+											textDecoration: 'line-through'
+										}}
+									>
+										${priceFormatter(Number(product.originalPrice))} CAD
+									</Typography>
 									<Typography className='product-price'>
-										$
-										{priceFormatter(
-											Number(product.price) - Number(product.discount)
-										)}{' '}
-										CAD
+										${priceFormatter(Number(product.price))} CAD
 									</Typography>
 								</RelatedProductGrid>
 							))}
 					</Grid>
 				</Box>
-			</Box> */}
+			</Box>
 		</Box>
 	)
 }
