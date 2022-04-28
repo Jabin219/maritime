@@ -1,5 +1,5 @@
 import connectDB from '../middleware/mongodb'
-import Product from 'models/mongodb/product'
+import ProductModel from 'models/mongodb/product'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { ResponseStatus } from 'constant'
 
@@ -12,7 +12,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 		filter = { $and: [{ category: category }, { stock: { $gte: 1 } }] }
 	}
 	try {
-		const productsCount = await Product.count(filter)
+		const productsCount = await ProductModel.count(filter)
 		const pagesCount = Math.ceil(productsCount / 20) || 1
 		if (!productsCount) {
 			res
