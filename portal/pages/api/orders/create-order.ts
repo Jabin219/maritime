@@ -84,7 +84,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 						expiredDate
 					}
 				)
-				sendReservedOrderConfirmation(orderAddedResult, products)
 			}
 			res.status(200).json({
 				status: ResponseStatus.SUCCESS,
