@@ -1,5 +1,5 @@
 import connectDB from '../middleware/mongodb'
-import Product from 'models/mongodb/product'
+import ProductModel from 'models/mongodb/product'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { ResponseStatus } from 'constant'
 
@@ -8,9 +8,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	let sortCondition: any = { createdAt: 'desc' }
 	let filter: any = {}
 	if (category === 'new-arrivals' || category === 'all-products') {
-		filter = {}
+		filter = { stock: { $gte: 1 } }
 	} else {
-		filter = { category }
+		filter = { $and: [{ category: category }, { stock: { $gte: 1 } }] }
 	}
 	if (sortMethod === 'price-increase') {
 		sortCondition = { price: 'asc' }
@@ -18,7 +18,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 		sortCondition = { price: 'desc' }
 	}
 	try {
-		const allProducts = await Product.find(filter)
+		const allProducts = await ProductModel.find(filter)
 			.limit(20)
 			.skip(20 * (Number(currentPage) - 1))
 			.sort(sortCondition)

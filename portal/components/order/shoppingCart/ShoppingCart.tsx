@@ -46,7 +46,9 @@ const ShoppingCart = () => {
 							</FlexBox>
 							<Typography>
 								Your cart is currently empty. &nbsp;
-								<CustomLink href='/product-list'>Go Shopping</CustomLink>
+								<CustomLink href='/product-list/all-products'>
+									Go Shopping
+								</CustomLink>
 							</Typography>
 						</FlexBox>
 					) : (
