@@ -2,9 +2,8 @@ import connectDB from '../middleware/mongodb'
 import ProductModel from 'models/mongodb/product'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { ResponseStatus } from 'constant'
-import * as mongodb from 'mongodb'
+import { ObjectId } from 'mongodb'
 
-const { ObjectId } = mongodb
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	const { productId } = req.query
 	try {
