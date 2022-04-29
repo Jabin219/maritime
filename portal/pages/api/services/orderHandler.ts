@@ -21,20 +21,24 @@ const loadOrderedProducts = async (
 	const products = await ProductModel.find({
 		_id: { $in: orderedProductIds }
 	})
-	const productsWithQuantity = [] as Product[]
-	orderedProducts.forEach(
-		(orderedProduct: { productId: string; quantity: number }) => {
-			const product = {
-				...products.find(
-					(product: Product) =>
-						product._id.toString() === orderedProduct.productId
-				)._doc,
-				quantity: orderedProduct.quantity
+	if (products) {
+		const productsWithQuantity = [] as Product[]
+		orderedProducts.forEach(
+			(orderedProduct: { productId: string; quantity: number }) => {
+				const product = {
+					...products.find(
+						(product: Product) =>
+							product._id.toString() === orderedProduct.productId
+					)._doc,
+					quantity: orderedProduct.quantity
+				}
+				productsWithQuantity.push(product)
 			}
-			productsWithQuantity.push(product)
-		}
-	)
-	return productsWithQuantity
+		)
+		return productsWithQuantity
+	} else {
+		return {}
+	}
 }
 
 const checkProductsStock = async (products: Product[]) => {

@@ -50,6 +50,6 @@ const orderSchema = new Schema(
 	{ timestamps: true }
 )
 
-const Order = mongoose.models.Order || mongoose.model('Order', orderSchema)
+const OrderModel = mongoose.models.Order || mongoose.model('Order', orderSchema)
 
-export default Order
+export default OrderModel

@@ -6,8 +6,8 @@ import {
 	orderCalculator,
 	checkProductsStock,
 	loadOrderedProducts
-} from 'server/service/orderHandler'
-import { createPaymentIntent } from 'server/service/stripeHandler'
+} from 'pages/api/services/orderHandler'
+import { createPaymentIntent } from '../services/stripeHandler'
 import { ResponseStatus, PaymentMethod, OrderStatus } from 'constant'
 import ProductModel from 'models/mongodb/product'
 
