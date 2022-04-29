@@ -33,6 +33,7 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
 					await product.save()
 				})
 				OrderModel.findByIdAndUpdate(orderId, { status: OrderStatus.paid })
+				break
 			default:
 				console.log(`Unhandled event type ${event.type}`)
 		}
