@@ -1,23 +1,10 @@
-import { Box } from '@mui/material'
+import { FlexBox } from 'components/FlexBox'
 import { styled } from '@mui/system'
-export const ProductButtonContainer = styled(Box)({
-	marginTop: '140px',
-	'& button': {
-		fontFamily: 'Source Sans Pro',
-		fontSize: 20,
-		fontWeight: 600,
-		padding: '10px 130px',
-		whiteSpace: 'nowrap',
-		borderRadius: '12px',
-		width: '90%'
-	},
-	'& .add-to-cart': {
-		backgroundColor: '#FF8800',
-		color: '#ffffff',
-		marginBottom: '30px'
-	},
-	'& .buy-now': {
-		backgroundColor: '#EEEEEE',
-		color: '#333333'
-	}
+export const HomePageButton = styled(FlexBox)({
+	width: '70%',
+	height: 161,
+	backgroundColor: '#F5F5F5',
+	margin: '0 auto',
+	borderRadius: '10px',
+	cursor: 'pointer'
 })
