@@ -1,5 +1,5 @@
 export enum FooterTabValue {
 	home = 'home',
-	orders = 'orders',
+	orders = 'search-orders',
 	addNewProduct = 'add-new-product'
 }

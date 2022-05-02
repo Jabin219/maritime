@@ -6,13 +6,53 @@ import { Home, Search, Upload } from '@mui/icons-material'
 
 const FooterTabs = () => {
 	const [tabValue, setTabValue] = useState(FooterTabValue.home)
+	const handleChangePath = (event: any, newValue: any) => {
+		setTabValue(newValue)
+	}
 	return (
 		<FooterTabsContainer>
-			<Tabs centered>
-				<Tab icon={<Home />} label='Home' value={FooterTabValue.home} />
-				<Tab icon={<Search />} label='Orders' value={FooterTabValue.orders} />
+			<Tabs
+				centered
+				value={tabValue}
+				onChange={handleChangePath}
+				indicatorColor='secondary'
+			>
 				<Tab
-					icon={<Upload />}
+					icon={
+						<Home
+							sx={
+								tabValue === 'home'
+									? { color: '#016CBB' }
+									: { color: '#ADADAD' }
+							}
+						/>
+					}
+					label='Home'
+					value={FooterTabValue.home}
+				/>
+				<Tab
+					icon={
+						<Search
+							sx={
+								tabValue === 'search-orders'
+									? { color: '#016CBB' }
+									: { color: '#ADADAD' }
+							}
+						/>
+					}
+					label='Orders'
+					value={FooterTabValue.orders}
+				/>
+				<Tab
+					icon={
+						<Upload
+							sx={
+								tabValue === 'add-new-product'
+									? { color: '#016CBB' }
+									: { color: '#ADADAD' }
+							}
+						/>
+					}
 					label='Add New'
 					value={FooterTabValue.addNewProduct}
 				/>
