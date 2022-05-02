@@ -1,5 +1,5 @@
-import connectDB from '../middleware/mongodb'
-import Product from 'models/mongodb/product'
+import connectDB from 'middleware/mongodb'
+import ProductModel from 'models/mongodb/product'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { ResponseStatus } from 'constant'
 
@@ -18,7 +18,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 		sortCondition = { price: 'desc' }
 	}
 	try {
-		const allProducts = await Product.find(filter)
+		const allProducts = await ProductModel.find(filter)
 			.limit(20)
 			.skip(20 * (Number(currentPage) - 1))
 			.sort(sortCondition)

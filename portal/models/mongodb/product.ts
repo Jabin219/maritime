@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+
 const Schema = mongoose.Schema
 
 const productSchema = new Schema(
@@ -40,7 +41,6 @@ const productSchema = new Schema(
 	},
 	{ timestamps: true }
 )
-
 const ProductModel =
 	mongoose.models.Product || mongoose.model('Product', productSchema)
 
