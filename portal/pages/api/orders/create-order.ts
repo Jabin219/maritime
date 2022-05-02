@@ -1,4 +1,4 @@
-import connectDB from '../../../middleware/mongodb'
+import connectDB from 'middleware/mongodb'
 import OrderModel from 'models/mongodb/order'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import {
@@ -7,7 +7,7 @@ import {
 	checkProductsStock,
 	loadOrderedProducts
 } from 'services/orderHandler'
-import { createPaymentIntent } from '../../../services/stripeHandler'
+import { createPaymentIntent } from 'services/stripeHandler'
 import { ResponseStatus, PaymentMethod, OrderStatus } from 'constant'
 import ProductModel from 'models/mongodb/product'
 

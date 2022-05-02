@@ -37,7 +37,7 @@ const loadOrderedProducts = async (
 		)
 		return productsWithQuantity
 	} else {
-		return {}
+		return []
 	}
 }
 
