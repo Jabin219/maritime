@@ -3,11 +3,14 @@ import { FooterTabValue } from 'constants/index'
 import React, { useState } from 'react'
 import { FooterTabsContainer } from './style'
 import { Home, Search, Upload } from '@mui/icons-material'
+import { useNavigate } from 'react-router-dom'
 
 const FooterTabs = () => {
+	const navigate = useNavigate()
 	const [tabValue, setTabValue] = useState(FooterTabValue.home)
 	const handleChangePath = (event: any, newValue: any) => {
 		setTabValue(newValue)
+		navigate(`/${newValue === 'home' ? '' : newValue}`)
 	}
 	return (
 		<FooterTabsContainer>
