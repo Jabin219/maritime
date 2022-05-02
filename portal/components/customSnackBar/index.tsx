@@ -21,7 +21,7 @@ const CustomSnackBar = ({ open, snackClose, snackType }: Props) => {
 			case SnackType.ADD_TO_CART:
 				return 'One item has been added to your cart!'
 			case SnackType.OUT_OF_STOCK:
-				return 'One or more items in your cart is out of stock.'
+				return 'One or more items in your cart are out of stock.'
 			case SnackType.PAYMENT_FAILED:
 				return 'Payment failed because of some unknown reasons.'
 			default:
