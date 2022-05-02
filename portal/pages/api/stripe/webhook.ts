@@ -1,6 +1,8 @@
 import ProductModel from 'models/mongodb/product'
+import OrderModel from 'models/mongodb/order'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import Stripe from 'stripe'
+import { OrderStatus } from 'constant'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
 	apiVersion: '2020-08-27'
@@ -21,12 +23,17 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
 				console.log(
 					`💰 PaymentIntent status: ${stripeObject.status} for order ${orderId}`
 				)
-			// 这里之后继续开发
-			// const orderedProducts: { productId: string; quantity: number }[] =
-			// 	JSON.parse(stripeObject.metadata.orderedProducts)
-			// orderedProducts.forEach(orderedProduct => {
-			// 	ProductModel.findOne({ _id: orderedProduct.productId })
-			// })
+				const orderedProducts: { productId: string; quantity: number }[] =
+					JSON.parse(stripeObject.metadata.orderedProducts)
+				orderedProducts.forEach(async orderedProduct => {
+					const product = await ProductModel.findOne({
+						_id: orderedProduct.productId
+					})
+					product.stock = product.stock - orderedProduct.quantity
+					await product.save()
+				})
+				OrderModel.findByIdAndUpdate(orderId, { status: OrderStatus.paid })
+				break
 			default:
 				console.log(`Unhandled event type ${event.type}`)
 		}

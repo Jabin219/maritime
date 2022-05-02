@@ -1,9 +1,10 @@
-import connectDB from '../middleware/mongodb'
+import connectDB from 'middleware/mongodb'
 import Product from 'models/mongodb/product'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-	const { name, price, originalPrice, coverImage, images, category } = req.body
+	const { name, price, originalPrice, coverImage, images, category, stock } =
+		req.body
 	if (req.method === 'POST') {
 		try {
 			const product = new Product({
@@ -12,7 +13,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 				originalPrice,
 				coverImage,
 				images,
-				category
+				category,
+				stock
 			})
 			const productAddedResult = await product.save()
 			res.send(productAddedResult)
