@@ -10,8 +10,7 @@ export const FooterTabsContainer = styled(Box)({
 		fontSize: '10px',
 		color: '#ADADAD',
 		'& .MuiSvgIcon-root': {
-			fontSize: '30px',
-			color: '#ADADAD'
+			fontSize: '30px'
 		}
 	}
 })

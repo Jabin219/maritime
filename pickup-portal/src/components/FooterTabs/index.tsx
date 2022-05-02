@@ -23,41 +23,38 @@ const FooterTabs = () => {
 				<Tab
 					icon={
 						<Home
-							sx={
-								tabValue === 'home'
-									? { color: '#016CBB' }
-									: { color: '#ADADAD' }
-							}
+							sx={{ color: `${tabValue === 'home' ? '#016CBB' : '#ADADAD'}` }}
 						/>
 					}
 					label='Home'
 					value={FooterTabValue.home}
+					disableRipple
 				/>
 				<Tab
 					icon={
 						<Search
-							sx={
-								tabValue === 'search-orders'
-									? { color: '#016CBB' }
-									: { color: '#ADADAD' }
-							}
+							sx={{
+								color: `${tabValue === 'search-orders' ? '#016CBB' : '#ADADAD'}`
+							}}
 						/>
 					}
 					label='Orders'
 					value={FooterTabValue.orders}
+					disableRipple
 				/>
 				<Tab
 					icon={
 						<Upload
-							sx={
-								tabValue === 'add-new-product'
-									? { color: '#016CBB' }
-									: { color: '#ADADAD' }
-							}
+							sx={{
+								color: `${
+									tabValue === 'add-new-product' ? '#016CBB' : '#ADADAD'
+								}`
+							}}
 						/>
 					}
 					label='Add New'
 					value={FooterTabValue.addNewProduct}
+					disableRipple
 				/>
 			</Tabs>
 		</FooterTabsContainer>
