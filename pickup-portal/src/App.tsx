@@ -1,15 +1,15 @@
 import OrderSearch from 'pages/OrderSearch'
+import FooterTabs from 'components/FooterTabs'
 import React from 'react'
 import { Routes, Route } from 'react-router-dom'
 import Home from 'pages/Home'
-import FooterTabs from 'components/FooterTabs'
 
 function App() {
 	return (
 		<>
 			<Routes>
 				<Route path='/' element={<Home />} />
-				<Route path='/order-search' element={<OrderSearch />} />
+				<Route path='/search-orders' element={<OrderSearch />} />
 			</Routes>
 			<FooterTabs />
 		</>
