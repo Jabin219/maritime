@@ -3,10 +3,11 @@ import { FooterTabValue } from 'constants/index'
 import React, { useState } from 'react'
 import { FooterTabsContainer } from './style'
 import { Home, Search, Upload } from '@mui/icons-material'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 
 const FooterTabs = () => {
 	const navigate = useNavigate()
+	const location = useLocation()
 	const [tabValue, setTabValue] = useState(FooterTabValue.home)
 	const handleChangePath = (event: any, newValue: any) => {
 		setTabValue(newValue)
@@ -23,7 +24,9 @@ const FooterTabs = () => {
 				<Tab
 					icon={
 						<Home
-							sx={{ color: `${tabValue === 'home' ? '#016CBB' : '#ADADAD'}` }}
+							sx={{
+								color: `${location.pathname === '/' ? '#016CBB' : '#ADADAD'}`
+							}}
 						/>
 					}
 					label='Home'
@@ -34,7 +37,9 @@ const FooterTabs = () => {
 					icon={
 						<Search
 							sx={{
-								color: `${tabValue === 'search-orders' ? '#016CBB' : '#ADADAD'}`
+								color: `${
+									location.pathname === '/order-search' ? '#016CBB' : '#ADADAD'
+								}`
 							}}
 						/>
 					}
@@ -47,7 +52,9 @@ const FooterTabs = () => {
 						<Upload
 							sx={{
 								color: `${
-									tabValue === 'add-new-product' ? '#016CBB' : '#ADADAD'
+									location.pathname === '/add-new-product'
+										? '#016CBB'
+										: '#ADADAD'
 								}`
 							}}
 						/>
