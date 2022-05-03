@@ -38,7 +38,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 				subtotal,
 				tax,
 				total,
-				contactInformation: JSON.stringify(contactInformation),
+				contactInformation: contactInformation,
 				paymentMethod,
 				pickupNumber,
 				shippingMethod,
