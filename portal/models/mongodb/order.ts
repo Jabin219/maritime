@@ -1,6 +1,11 @@
 import mongoose from 'mongoose'
 const Schema = mongoose.Schema
 
+const contactInformationSchema = new Schema({
+	name: String,
+	email: String,
+	phone: String
+})
 const orderSchema = new Schema(
 	{
 		products: {
@@ -20,7 +25,7 @@ const orderSchema = new Schema(
 			required: true
 		},
 		contactInformation: {
-			type: String,
+			type: contactInformationSchema,
 			required: true
 		},
 		paymentMethod: {
