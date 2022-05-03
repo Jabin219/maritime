@@ -37,7 +37,9 @@ const FooterTabs = () => {
 					icon={
 						<Search
 							sx={{
-								color: `${tabValue === 'order-search' ? '#016CBB' : '#ADADAD'}`
+								color: `${
+									location.pathname === '/order-search' ? '#016CBB' : '#ADADAD'
+								}`
 							}}
 						/>
 					}
@@ -50,7 +52,9 @@ const FooterTabs = () => {
 						<Upload
 							sx={{
 								color: `${
-									tabValue === 'add-new-product' ? '#016CBB' : '#ADADAD'
+									location.pathname === '/add-new-product'
+										? '#016CBB'
+										: '#ADADAD'
 								}`
 							}}
 						/>
