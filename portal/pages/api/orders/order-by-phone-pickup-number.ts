@@ -7,13 +7,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	const { searchedString } = req.query
 	try {
 		const orders = await OrderModel.find({
-			'contactInformation.phone': searchedString
-			// $or: [
-			// 	{ pickupNumber: searchedString },
-			// 	{ 'contactInformation.phone': searchedString }
-			// ]
+			$or: [
+				{ pickupNumber: searchedString },
+				{ 'contactInformation.phone': searchedString }
+			]
 		})
-		console.log(orders)
 		if (!orders) {
 			res.status(200).json({
 				status: ResponseStatus.NOT_FOUND,

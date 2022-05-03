@@ -3,8 +3,8 @@ const Schema = mongoose.Schema
 
 const contactInformationSchema = new Schema({
 	name: String,
-	email: String,
-	phone: String
+	phone: String,
+	email: String
 })
 const orderSchema = new Schema(
 	{
