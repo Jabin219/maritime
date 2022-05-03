@@ -1,10 +1,13 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Box, Typography } from '@mui/material'
 import { Search, Upload } from '@mui/icons-material'
 import { HomePageButton } from './style'
 import { Link } from 'react-router-dom'
+import { TextContext } from 'contexts/TextContext'
 
 const Home = () => {
+	const { setHeaderTitle } = useContext(TextContext)
+	setHeaderTitle('Home')
 	return (
 		<Box sx={{ height: 2000 }}>
 			<Box
@@ -18,7 +21,7 @@ const Home = () => {
 			</Box>
 			<Link to='/order-search'>
 				<HomePageButton
-					className='order-search'
+					className='search-orders'
 					sx={{
 						marginBottom: '30px'
 					}}
