@@ -58,7 +58,7 @@ const OrderStatusButton = ({ content, orderStatus }: Props) => {
 				}
 				break
 			default:
-				break
+				return {}
 		}
 	}
 

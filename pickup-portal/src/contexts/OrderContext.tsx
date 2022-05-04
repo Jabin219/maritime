@@ -30,7 +30,7 @@ const OrderContextProvider = ({ children }: Props) => {
 				return 'Completed'
 				break
 			default:
-				break
+				return ''
 		}
 	}
 
