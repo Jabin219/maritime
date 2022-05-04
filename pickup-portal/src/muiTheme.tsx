@@ -14,8 +14,8 @@ const theme = createTheme({
 		body1: {
 			fontFamily: 'Source Sans Pro',
 			color: '#333333',
-			fontSize: 20,
-			lineHeight: '28px',
+			fontSize: 16,
+			lineHeight: '20px',
 			fontStyle: 'normal'
 		},
 		body2: {

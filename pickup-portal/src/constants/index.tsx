@@ -3,3 +3,10 @@ export enum FooterTabValue {
 	orders = 'order-search',
 	addNewProduct = 'add-new-product'
 }
+export enum OrderStatus {
+	unpaid = 'unpaid',
+	reserved = 'reserved',
+	paid = 'paid',
+	completed = 'completed',
+	expired = 'expired'
+}

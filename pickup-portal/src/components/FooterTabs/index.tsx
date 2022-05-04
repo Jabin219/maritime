@@ -13,11 +13,23 @@ const FooterTabs = () => {
 		setTabValue(newValue)
 		navigate(`/${newValue === 'home' ? '' : newValue}`)
 	}
+	const getTabValue = () => {
+		if (location.pathname === '/') {
+			return FooterTabValue.home
+		}
+		if (location.pathname.includes('order')) {
+			return FooterTabValue.orders
+		}
+		if (location.pathname.includes('product')) {
+			return FooterTabValue.addNewProduct
+		}
+		return FooterTabValue.home
+	}
 	return (
 		<FooterTabsContainer>
 			<Tabs
 				centered
-				value={tabValue}
+				value={getTabValue()}
 				onChange={handleChangePath}
 				indicatorColor='secondary'
 			>
@@ -38,7 +50,7 @@ const FooterTabs = () => {
 						<Search
 							sx={{
 								color: `${
-									location.pathname === '/order-search' ? '#016CBB' : '#ADADAD'
+									location.pathname.includes('order') ? '#016CBB' : '#ADADAD'
 								}`
 							}}
 						/>
@@ -52,9 +64,7 @@ const FooterTabs = () => {
 						<Upload
 							sx={{
 								color: `${
-									location.pathname === '/add-new-product'
-										? '#016CBB'
-										: '#ADADAD'
+									location.pathname.includes('product') ? '#016CBB' : '#ADADAD'
 								}`
 							}}
 						/>

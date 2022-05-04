@@ -4,17 +4,20 @@ import { OrderContext } from 'contexts/OrderContext'
 import { TextContext } from 'contexts/TextContext'
 import React, { useContext, useState } from 'react'
 import { OrderSearchContainer } from './style'
+import { useNavigate } from 'react-router-dom'
 
 const OrderSearch = () => {
+	const navigate = useNavigate()
 	const { setHeaderTitle } = useContext(TextContext)
 	setHeaderTitle('Order Search')
 	const [searchedString, setSearchedString] = useState('')
 	const { setOrders } = useContext(OrderContext)
 	const handleSearchOrder = async (searchedString: string) => {
-		const ordersResult = await (
-			getOrderByPhoneOrPickupNumber(searchedString) as any
-		).data
-		setOrders(ordersResult.orders)
+		const ordersResult = await (getOrderByPhoneOrPickupNumber(
+			searchedString
+		) as any)
+		setOrders(ordersResult.data.orders)
+		navigate(`/order-search-result`)
 	}
 	return (
 		<OrderSearchContainer>
