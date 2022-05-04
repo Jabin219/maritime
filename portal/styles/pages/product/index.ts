@@ -14,11 +14,17 @@ export const ProductButtonContainer = styled(Box)({
 	'& .add-to-cart': {
 		backgroundColor: '#FF8800',
 		color: '#ffffff',
-		marginBottom: '30px'
+		marginBottom: '30px',
+		'&:hover': {
+			backgroundColor: '#FF8800'
+		}
 	},
 	'& .buy-now': {
 		backgroundColor: '#EEEEEE',
-		color: '#333333'
+		color: '#333333',
+		'&:hover': {
+			backgroundColor: '#EEEEEE'
+		}
 	}
 })
 export const RelatedProductsTitle = styled(Typography)({

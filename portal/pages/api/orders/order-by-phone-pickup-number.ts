@@ -11,7 +11,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 				{ pickupNumber: searchedString },
 				{ 'contactInformation.phone': searchedString }
 			]
-		})
+		}).sort({ createdAt: 'desc' })
 		if (!orders) {
 			res.status(200).json({
 				status: ResponseStatus.NOT_FOUND,
