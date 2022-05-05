@@ -1,6 +1,8 @@
 import ProductModel from 'models/mongodb/product'
+import OrderModel from 'models/mongodb/order'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import Stripe from 'stripe'
+import { OrderStatus } from 'constant'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
 	apiVersion: '2020-08-27'
@@ -30,6 +32,8 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
 					product.stock = product.stock - orderedProduct.quantity
 					await product.save()
 				})
+				OrderModel.findByIdAndUpdate(orderId, { status: OrderStatus.paid })
+				break
 			default:
 				console.log(`Unhandled event type ${event.type}`)
 		}
