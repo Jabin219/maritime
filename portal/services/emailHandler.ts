@@ -5,7 +5,7 @@ import { OrderStatus } from 'constant'
 
 MailService.setApiKey(process.env.SENDGRID_API_KEY as string)
 
-export const sendOrderConfirmation = (order: Order) => {
+const sendOrderConfirmation = (order: Order) => {
 	const contactInformation: ContactInformation =
 		order.contactInformation as ContactInformation
 	const date = format(order.createdAt as any, 'yyyy/MM/dd')
@@ -35,3 +35,5 @@ export const sendOrderConfirmation = (order: Order) => {
 		}
 	})()
 }
+
+export { sendOrderConfirmation }
