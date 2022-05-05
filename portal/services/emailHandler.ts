@@ -1,5 +1,5 @@
 import MailService from '@sendgrid/mail'
-import { ContactInformation, Order, Product } from 'models'
+import { ContactContent, ContactInformation, Order, Product } from 'models'
 import { format } from 'date-fns'
 import { OrderStatus } from 'constant'
 
@@ -12,6 +12,7 @@ const sendOrderConfirmation = (order: Order) => {
 	const products = JSON.parse(order.products as string)
 	const msg = {
 		to: contactInformation.email,
+		// 需改成客户邮箱
 		from: 'dev@zmley.com',
 		templateId:
 			order.status === OrderStatus.reserved
@@ -36,4 +37,27 @@ const sendOrderConfirmation = (order: Order) => {
 	})()
 }
 
-export { sendOrderConfirmation }
+const sendContactEmail = (contactContent: ContactContent) => {
+	const msg = {
+		// 需改成客户邮箱
+		to: 'jabin219@gmail.com',
+		// 需改成客户邮箱
+		from: 'dev@zmley.com',
+		templateId: process.env.SENDGRID_CONTACT_TEMPLATE_ID as string,
+		dynamicTemplateData: {
+			contactContent
+		}
+	}
+	;(async () => {
+		try {
+			await MailService.send(msg)
+		} catch (error) {
+			console.error(error)
+			if ((error as any).response) {
+				console.error((error as any).response.body)
+			}
+		}
+	})()
+}
+
+export { sendOrderConfirmation, sendContactEmail }
