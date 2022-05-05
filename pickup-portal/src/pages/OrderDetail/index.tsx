@@ -14,7 +14,8 @@ const OrderDetail = () => {
 		findSelectedOrder,
 		selectedOrder,
 		getOrderStatusButtonContent,
-		orderProducts
+		orderProducts,
+		buttonDisabled
 	} = useContext(OrderContext)
 	const { setHeaderTitle } = useContext(TextContext)
 	setHeaderTitle('Order Detail')
@@ -90,6 +91,11 @@ const OrderDetail = () => {
 									</Grid>
 									<Grid item xs={6}>
 										<Typography>{product.name}</Typography>
+										{product.outOfStock && (
+											<Typography sx={{ color: '#FF0000' }}>
+												Out of stock
+											</Typography>
+										)}
 									</Grid>
 									<Grid item xs={3}>
 										<Typography className='product-price'>
@@ -130,7 +136,11 @@ const OrderDetail = () => {
 						</Grid>
 					</Grid>
 				</Box>
-				<Button variant='contained' className='btn-pickup'>
+				<Button
+					variant='contained'
+					className='btn-pickup'
+					disabled={buttonDisabled}
+				>
 					Pick Up Order
 				</Button>
 			</OrderDetailContainer>

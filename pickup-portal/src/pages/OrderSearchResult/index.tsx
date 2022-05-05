@@ -1,7 +1,7 @@
 import { Box, Typography, CardContent, Grid } from '@mui/material'
 import { FlexBox } from 'components/FlexBox'
 import { OrderContext } from 'contexts/OrderContext'
-import { Order } from 'models'
+import { Order, Product } from 'models'
 import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { format, parseISO } from 'date-fns'
@@ -9,12 +9,24 @@ import { OrderCard } from './style'
 import { TextContext } from 'contexts/TextContext'
 import { useNavigate } from 'react-router-dom'
 import OrderStatusButton from 'components/OrderStatusButton'
+import { OrderStatus } from 'constants/index'
+import { checkOrderStock } from 'axios/order'
 
 const OrderSearchResult = () => {
 	const navigate = useNavigate()
-	const { orders, getOrderStatusButtonContent } = useContext(OrderContext)
+	const { orders, getOrderStatusButtonContent, setButtonDisabled } =
+		useContext(OrderContext)
 	const { setHeaderTitle } = useContext(TextContext)
 	setHeaderTitle('Search Result')
+	const checkStock = async (order: Order) => {
+		const stockResult = (await checkOrderStock(order._id as string)).data
+		stockResult.products.forEach((product: Product) => {
+			if (product.outOfStock) {
+				setButtonDisabled(true)
+			}
+		})
+		order.products = JSON.stringify(stockResult.products)
+	}
 	return (
 		<Box
 			sx={{ backgroundColor: '#f5f5f5', paddingTop: '5px', minHeight: '100vh' }}
@@ -25,6 +37,10 @@ const OrderSearchResult = () => {
 						<OrderCard
 							key={order._id}
 							onClick={() => {
+								setButtonDisabled(false)
+								if (order.status === OrderStatus.expired) {
+									checkStock(order)
+								}
 								navigate(`/order-detail/${order._id}`)
 							}}
 						>

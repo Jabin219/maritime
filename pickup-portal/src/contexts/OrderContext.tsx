@@ -10,6 +10,7 @@ const OrderContextProvider = ({ children }: Props) => {
 	const [orders, setOrders] = useState<Order[]>()
 	const [selectedOrder, setSelectedOrder] = useState<Order>()
 	const [orderProducts, setOrderProducts] = useState<Product[]>()
+	const [buttonDisabled, setButtonDisabled] = useState(false)
 	const findSelectedOrder = (orderId: string) => {
 		const order = orders?.find((order: Order) => order._id === orderId)
 		setSelectedOrder(order)
@@ -42,7 +43,9 @@ const OrderContextProvider = ({ children }: Props) => {
 				findSelectedOrder,
 				selectedOrder,
 				getOrderStatusButtonContent,
-				orderProducts
+				orderProducts,
+				buttonDisabled,
+				setButtonDisabled
 			}}
 		>
 			{children}

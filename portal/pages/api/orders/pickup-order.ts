@@ -1,0 +1,40 @@
+import connectDB from 'middleware/mongodb'
+import OrderModel from 'models/mongodb/order'
+import type { NextApiRequest, NextApiResponse } from 'next'
+import { OrderStatus, ResponseStatus } from 'constant'
+import { Product } from 'models'
+import ProductModel from 'models/mongodb/product'
+
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+	const { orderId } = req.body
+	try {
+		const order = await OrderModel.findOne({
+			_id: orderId
+		})
+		if (!order) {
+			res.status(200).json({
+				status: ResponseStatus.NOT_FOUND,
+				message: 'No order for this id.'
+			})
+		} else {
+			if (order.status === OrderStatus.expired) {
+				const orderedProducts = JSON.parse(order.products)
+				orderedProducts.forEach(async (product: Product) => {
+					const selectedProductResult: any = await ProductModel.findOne({
+						_id: product._id
+					})
+					selectedProductResult.stock =
+						selectedProductResult.stock - Number(product.quantity)
+					await selectedProductResult.save()
+				})
+			}
+			order.status = OrderStatus.completed
+			await order.save()
+			res.status(200).json({ status: ResponseStatus.SUCCESS, order })
+		}
+	} catch (err) {
+		console.error(err)
+		res.status(500).json({ status: ResponseStatus.FAIL, message: err })
+	}
+}
+export default connectDB(handler)
