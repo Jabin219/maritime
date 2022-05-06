@@ -14,13 +14,10 @@ const contactReducer = (state: any, action: any) => {
 	switch (action.type) {
 		case 'CHANGE_NAME':
 			return { ...state, name: action.value }
-			break
 		case 'CHANGE_EMAIL':
 			return { ...state, email: action.value }
-			break
 		case 'CHANGE_MESSAGE':
 			return { ...state, message: action.value }
-			break
 		default:
 			throw new Error()
 	}
@@ -31,7 +28,6 @@ const Contact = () => {
 		contactReducer,
 		initialContactContent
 	)
-	const [error, setError] = useState(false)
 	const { showSnackbar } = useContext(SnackContext)
 	const handleSendContactEmail = async (contactContent: ContactContent) => {
 		if (
@@ -39,11 +35,9 @@ const Contact = () => {
 			!contactContent.email ||
 			!contactContent.message
 		) {
-			setError(true)
 			return false
 		}
 		if (!validator.isEmail(contactContent.email as string)) {
-			setError(true)
 			return false
 		}
 		const result = (await sendContactEmail(contactContent)).data
@@ -81,7 +75,7 @@ const Contact = () => {
 							fullWidth
 							required
 							size='small'
-							error={!contactContent.name && error}
+							error={!contactContent.name}
 							onChange={event => {
 								dispatch({
 									type: 'CHANGE_NAME',
@@ -97,9 +91,8 @@ const Contact = () => {
 							required
 							size='small'
 							error={
-								(!contactContent.email ||
-									!validator.isEmail(contactContent.email as string)) &&
-								error
+								!contactContent.email ||
+								!validator.isEmail(contactContent.email as string)
 							}
 							onChange={event => {
 								dispatch({
@@ -116,7 +109,7 @@ const Contact = () => {
 							required
 							multiline
 							rows={8}
-							error={!contactContent.message && error}
+							error={!contactContent.message}
 							onChange={event => {
 								dispatch({
 									type: 'CHANGE_MESSAGE',

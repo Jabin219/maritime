@@ -51,10 +51,10 @@ const sendContactEmail = (contactContent: ContactContent) => {
 	;(async () => {
 		try {
 			await MailService.send(msg)
-		} catch (error) {
+		} catch (error: any) {
 			console.error(error)
-			if ((error as any).response) {
-				console.error((error as any).response.body)
+			if (error.response) {
+				console.error(error.response.body)
 			}
 		}
 	})()
