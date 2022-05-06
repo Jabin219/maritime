@@ -46,10 +46,6 @@ const orderSchema = new Schema(
 		pickupNumber: {
 			type: String,
 			required: true
-		},
-		expiredDate: {
-			type: Date,
-			required: false
 		}
 	},
 	{ timestamps: true }
