@@ -7,6 +7,7 @@ import { format, parseISO } from 'date-fns'
 import { OrderDetailContainer } from './style'
 import OrderStatusButton from 'components/OrderStatusButton'
 import { Product } from 'models'
+import { OrderStatus } from 'constants/index'
 
 const OrderDetail = () => {
 	const { orderId } = useParams()
@@ -136,13 +137,15 @@ const OrderDetail = () => {
 						</Grid>
 					</Grid>
 				</Box>
-				<Button
-					variant='contained'
-					className='btn-pickup'
-					disabled={buttonDisabled}
-				>
-					Pick Up Order
-				</Button>
+				{selectedOrder.status !== OrderStatus.completed && (
+					<Button
+						variant='contained'
+						className='btn-pickup'
+						disabled={buttonDisabled}
+					>
+						Pick Up Order
+					</Button>
+				)}
 			</OrderDetailContainer>
 		)
 	)
