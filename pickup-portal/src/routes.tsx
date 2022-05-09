@@ -4,6 +4,7 @@ import OrderSearch from 'pages/OrderSearch'
 import Home from 'pages/Home'
 import OrderSearchResult from 'pages/OrderSearchResult'
 import OrderDetail from 'pages/OrderDetail'
+import AddProduct from 'pages/AddProduct'
 
 const AppRoutes = () => {
 	return (
@@ -12,6 +13,7 @@ const AppRoutes = () => {
 			<Route path='/order-search' element={<OrderSearch />} />
 			<Route path='/order-search-result' element={<OrderSearchResult />} />
 			<Route path='/order-detail/:orderId' element={<OrderDetail />} />
+			<Route path='/add-new-product' element={<AddProduct />} />
 		</Routes>
 	)
 }
