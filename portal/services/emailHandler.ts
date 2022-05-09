@@ -1,11 +1,11 @@
 import MailService from '@sendgrid/mail'
-import { ContactContent, ContactInformation, Order, Product } from 'models'
+import { ContactContent, ContactInformation, Order } from 'models'
 import { format } from 'date-fns'
 import { OrderStatus } from 'constant'
 
 MailService.setApiKey(process.env.SENDGRID_API_KEY as string)
 
-const sendOrderConfirmation = (order: Order) => {
+const sendOrderConfirmation = async (order: Order) => {
 	const contactInformation: ContactInformation =
 		order.contactInformation as ContactInformation
 	const date = format(order.createdAt as any, 'yyyy/MM/dd')
@@ -25,19 +25,17 @@ const sendOrderConfirmation = (order: Order) => {
 			date
 		}
 	}
-	;(async () => {
-		try {
-			await MailService.send(msg)
-		} catch (error) {
-			console.error(error)
-			if ((error as any).response) {
-				console.error((error as any).response.body)
-			}
+	try {
+		await MailService.send(msg)
+	} catch (error) {
+		console.error(error)
+		if ((error as any).response) {
+			console.error((error as any).response.body)
 		}
-	})()
+	}
 }
 
-const sendContactEmail = (contactContent: ContactContent) => {
+const sendContactEmail = async (contactContent: ContactContent) => {
 	const msg = {
 		// 需改成客户邮箱
 		to: 'jabin219@gmail.com',
@@ -48,16 +46,14 @@ const sendContactEmail = (contactContent: ContactContent) => {
 			contactContent
 		}
 	}
-	;(async () => {
-		try {
-			await MailService.send(msg)
-		} catch (error: any) {
-			console.error(error)
-			if (error.response) {
-				console.error(error.response.body)
-			}
+	try {
+		await MailService.send(msg)
+	} catch (error: any) {
+		console.error(error)
+		if (error.response) {
+			console.error(error.response.body)
 		}
-	})()
+	}
 }
 
 export { sendOrderConfirmation, sendContactEmail }
