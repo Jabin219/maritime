@@ -13,8 +13,9 @@ import React, { useContext, useReducer, useState } from 'react'
 import { AddProductContainer, UploadImage } from './style'
 import { Add } from '@mui/icons-material'
 import ReactImageUploading, { ImageListType } from 'react-images-uploading'
-import { Categories } from 'constants/index'
+import { Categories, ResponseStatus } from 'constants/index'
 import { addNewProduct } from 'axios/product'
+import { useNavigate } from 'react-router-dom'
 const initialProductInformation = {
 	images: [],
 	name: '',
@@ -42,6 +43,7 @@ const reducer = (state: any, action: any) => {
 	}
 }
 const AddProduct = () => {
+	const navigate = useNavigate()
 	const { setHeaderTitle } = useContext(TextContext)
 	setHeaderTitle('Add New Product')
 	const [productInformation, dispatch] = useReducer(
@@ -58,6 +60,9 @@ const AddProduct = () => {
 	}
 	const handleSubmit = async (productInformation: any) => {
 		const result = await addNewProduct(productInformation)
+		if (result.data.status === ResponseStatus.SUCCESS) {
+			navigate('/add-product-complete')
+		}
 	}
 	return (
 		<AddProductContainer>
