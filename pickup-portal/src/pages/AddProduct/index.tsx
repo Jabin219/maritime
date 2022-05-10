@@ -58,7 +58,6 @@ const AddProduct = () => {
 	}
 	const handleSubmit = async (productInformation: any) => {
 		const result = await addNewProduct(productInformation)
-		console.log(result)
 	}
 	return (
 		<AddProductContainer>
@@ -197,7 +196,6 @@ const AddProduct = () => {
 				disabled={!checked}
 				className='submit-btn'
 				onClick={() => {
-					console.log('hello')
 					handleSubmit(productInformation)
 				}}
 			>
