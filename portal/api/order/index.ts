@@ -1,8 +1,6 @@
 import axios from 'axios'
 import { ContactInformation } from 'models'
 
-axios.defaults.baseURL = process.env.REACT_APP_SERVER_BASE_URL
-
 const createOrder = (
 	contactInformation: ContactInformation,
 	shippingMethod: string,
