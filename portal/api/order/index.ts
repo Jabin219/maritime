@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Product, ContactInformation } from 'models'
+import { ContactInformation } from 'models'
 
 const createOrder = (
 	contactInformation: ContactInformation,

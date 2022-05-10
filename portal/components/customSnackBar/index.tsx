@@ -21,24 +21,30 @@ const CustomSnackBar = ({ open, snackClose, snackType }: Props) => {
 			case SnackType.ADD_TO_CART:
 				return 'One item has been added to your cart!'
 			case SnackType.OUT_OF_STOCK:
-				return 'One or more items in your cart is out of stock.'
+				return 'One or more items in your cart are out of stock.'
 			case SnackType.PAYMENT_FAILED:
 				return 'Payment failed because of some unknown reasons.'
+			case SnackType.CONTACT_EMAIL_SENT:
+				return 'Your message has been sent.'
+			case SnackType.UNKNOWN_ERROR:
+				return 'Unknown error happened.'
 			default:
-				break
+				return ''
 		}
-		return ''
 	}
 	const getSnackSeverity = (snackType: string) => {
 		switch (snackType) {
 			case SnackType.ADD_TO_CART:
 				return SnackSeverity.SUCCESS
+			case SnackType.CONTACT_EMAIL_SENT:
+				return SnackSeverity.SUCCESS
 			case SnackType.PAYMENT_FAILED:
 				return SnackSeverity.ERROR
+			case SnackType.UNKNOWN_ERROR:
+				return SnackSeverity.ERROR
 			default:
-				break
+				return SnackSeverity.SUCCESS
 		}
-		return ''
 	}
 	const getSnackbarAction = (snackType: string) => {
 		switch (snackType) {
@@ -54,11 +60,9 @@ const CustomSnackBar = ({ open, snackClose, snackType }: Props) => {
 						Back to cart
 					</Button>
 				)
-				break
 			default:
 				break
 		}
-		return ''
 	}
 	return (
 		<Stack spacing={2}>

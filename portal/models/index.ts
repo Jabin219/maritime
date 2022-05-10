@@ -10,6 +10,7 @@ export type Product = {
 	quantity?: number
 	stock?: number
 	outOfStock?: boolean
+	recommendedProducts?: Product[]
 }
 
 export type Category = {
@@ -42,6 +43,12 @@ export type ContactInformation = {
 export type LoginRequest = {
 	username: string
 	password: string
+}
+
+export type ContactContent = {
+	name: string
+	email: string
+	message: string
 }
 
 export { Account }
