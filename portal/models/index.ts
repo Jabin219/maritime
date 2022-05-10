@@ -45,4 +45,10 @@ export type LoginRequest = {
 	password: string
 }
 
+export type ContactContent = {
+	name: string
+	email: string
+	message: string
+}
+
 export { Account }
