@@ -6,7 +6,8 @@ import {
 	Button,
 	MenuItem,
 	FormControlLabel,
-	Checkbox
+	Checkbox,
+	CircularProgress
 } from '@mui/material'
 import { TextContext } from 'contexts/TextContext'
 import React, { useContext, useReducer, useState } from 'react'
@@ -51,6 +52,7 @@ const AddProduct = () => {
 		initialProductInformation
 	)
 	const [checked, setChecked] = useState(false)
+	const [processing, setProcessing] = useState(false)
 	const handleUploadImage = (
 		imageList: ImageListType,
 		addUpdateIndex: number[] | undefined
@@ -59,9 +61,13 @@ const AddProduct = () => {
 		dispatch({ type: 'CHANGE_PRODUCT_IMAGES', value: imageList as never[] })
 	}
 	const handleSubmit = async (productInformation: any) => {
+		setProcessing(true)
 		const result = await addNewProduct(productInformation)
 		if (result.data.status === ResponseStatus.SUCCESS) {
+			setProcessing(false)
 			navigate('/add-product-complete')
+		} else {
+			setProcessing(false)
 		}
 	}
 	return (
@@ -205,6 +211,12 @@ const AddProduct = () => {
 				}}
 			>
 				Add New Product
+				{processing && (
+					<CircularProgress
+						style={{ position: 'absolute', color: '#fff' }}
+						size={24}
+					/>
+				)}
 			</Button>
 		</AddProductContainer>
 	)
