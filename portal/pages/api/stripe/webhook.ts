@@ -3,11 +3,13 @@ import OrderModel from 'models/mongodb/order'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import Stripe from 'stripe'
 import { OrderStatus } from 'constant'
+import { sendOrderConfirmation } from 'services/emailHandler'
+import { Product } from 'models'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
 	apiVersion: '2020-08-27'
 })
-const handler = (req: NextApiRequest, res: NextApiResponse) => {
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	const sig: any = req.headers['stripe-signature']
 	try {
 		const event: Stripe.Event = stripe.webhooks.constructEvent(
@@ -23,16 +25,19 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
 				console.log(
 					`💰 PaymentIntent status: ${stripeObject.status} for order ${orderId}`
 				)
-				const orderedProducts: { productId: string; quantity: number }[] =
-					JSON.parse(stripeObject.metadata.orderedProducts)
+				const orderResult = await OrderModel.findOne({ _id: orderId })
+				const orderedProducts: Product[] = JSON.parse(orderResult.products)
 				orderedProducts.forEach(async orderedProduct => {
-					const product = await ProductModel.findOne({
-						_id: orderedProduct.productId
+					const productResult = await ProductModel.findOne({
+						_id: orderedProduct._id
 					})
-					product.stock = product.stock - orderedProduct.quantity
-					await product.save()
+					productResult.stock =
+						productResult.stock - Number(orderedProduct.quantity)
+					await productResult.save()
 				})
-				OrderModel.findByIdAndUpdate(orderId, { status: OrderStatus.paid })
+				orderResult.status = OrderStatus.paid
+				await orderResult.save()
+				sendOrderConfirmation(orderResult)
 				break
 			default:
 				console.log(`Unhandled event type ${event.type}`)

@@ -10,6 +10,7 @@ import {
 import { createPaymentIntent } from 'services/stripeHandler'
 import { ResponseStatus, PaymentMethod, OrderStatus } from 'constant'
 import ProductModel from 'models/mongodb/product'
+import { sendOrderConfirmation } from 'services/emailHandler'
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	const { orderedProducts, contactInformation, paymentMethod, shippingMethod } =
@@ -30,7 +31,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 		paymentMethod === PaymentMethod.payAtPickup
 			? OrderStatus.reserved
 			: OrderStatus.unpaid
-	const orderReversedDaysNumber = 4
 	if (req.method === 'POST') {
 		try {
 			const order = new OrderModel({
@@ -72,10 +72,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 						await selectedProductResult.save()
 					}
 				)
+				const orderReversedDays = 4
 				const expiredDate = new Date().setDate(
-					new Date().getDate() + orderReversedDaysNumber
+					new Date().getDate() + orderReversedDays
 				)
-				await OrderModel.findOneAndUpdate(
+				const reservedOrder = await OrderModel.findOneAndUpdate(
 					{
 						_id: orderAddedResult._id.toString()
 					},
@@ -83,6 +84,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 						expiredDate
 					}
 				)
+				sendOrderConfirmation(reservedOrder)
 			}
 			res.status(200).json({
 				status: ResponseStatus.SUCCESS,
