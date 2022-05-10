@@ -38,14 +38,3 @@ const loginHandler = async (req: NextApiRequest, res: NextApiResponse) => {
 	}
 }
 export default connectDB(loginHandler)
-
-/**
- *
- * @param arg0
- * for deploy test,
- * import { getToken } from 'services/token' is not found,
- * here is just a dummy function, could be deleted later
- */
-function getToken(arg0: any) {
-	throw new Error('Function not implemented.')
-}
