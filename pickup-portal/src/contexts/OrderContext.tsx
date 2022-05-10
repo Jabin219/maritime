@@ -20,18 +20,14 @@ const OrderContextProvider = ({ children }: Props) => {
 		switch (orderStatus) {
 			case OrderStatus.reserved:
 				return 'Unpaid'
-				break
 			case OrderStatus.paid:
 				return 'Paid'
-				break
 			case OrderStatus.expired:
 				return 'Expired'
-				break
 			case OrderStatus.completed:
 				return 'Completed'
-				break
 			default:
-				return ''
+				return 'Unpaid'
 		}
 	}
 
