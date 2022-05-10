@@ -1,6 +1,11 @@
 import mongoose from 'mongoose'
 const Schema = mongoose.Schema
 
+const contactInformationSchema = new Schema({
+	name: String,
+	phone: String,
+	email: String
+})
 const orderSchema = new Schema(
 	{
 		products: {
@@ -20,7 +25,7 @@ const orderSchema = new Schema(
 			required: true
 		},
 		contactInformation: {
-			type: String,
+			type: contactInformationSchema,
 			required: true
 		},
 		paymentMethod: {
@@ -50,6 +55,6 @@ const orderSchema = new Schema(
 	{ timestamps: true }
 )
 
-const Order = mongoose.models.Order || mongoose.model('Order', orderSchema)
+const OrderModel = mongoose.models.Order || mongoose.model('Order', orderSchema)
 
-export default Order
+export default OrderModel

@@ -1,9 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import passwordHash from 'password-hash'
 import { Account } from 'models'
-import connectDB from '../middleware/mongodb'
+import connectDB from 'middleware/mongodb'
 import { corsHandler } from '../whoami'
-import { setToken } from '../services/token'
+import { setToken } from 'services/token'
 import { ResponseStatus } from 'constant'
 
 const loginHandler = async (req: NextApiRequest, res: NextApiResponse) => {

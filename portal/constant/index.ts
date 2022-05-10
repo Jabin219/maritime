@@ -212,7 +212,9 @@ export enum ResponseStatus {
 export enum SnackType {
 	ADD_TO_CART = 'add-to-cart',
 	OUT_OF_STOCK = 'out-of-stock',
-	PAYMENT_FAILED = 'payment-failed'
+	PAYMENT_FAILED = 'payment-failed',
+	CONTACT_EMAIL_SENT = 'contact-email-sent',
+	UNKNOWN_ERROR = 'unknown-error'
 }
 
 export enum SnackSeverity {
