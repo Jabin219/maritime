@@ -2,8 +2,10 @@ import connectDB from 'middleware/mongodb'
 import OrderModel from 'models/mongodb/order'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { ResponseStatus } from 'constant'
+import { corsHandler } from 'services/corsHandler'
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+	await corsHandler(req, res)
 	const { searchedString } = req.query
 	try {
 		const orders = await OrderModel.find({

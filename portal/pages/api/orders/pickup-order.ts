@@ -4,8 +4,10 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { OrderStatus, ResponseStatus } from 'constant'
 import { Product } from 'models'
 import ProductModel from 'models/mongodb/product'
+import { corsHandler } from 'services/corsHandler'
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+	await corsHandler(req, res)
 	const { orderId } = req.body
 	try {
 		const order = await OrderModel.findOne({

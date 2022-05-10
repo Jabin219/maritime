@@ -17,3 +17,7 @@ code {
 a {
     text-decoration: none;
 }
+
+button {
+    text-transform: none !important;
+}

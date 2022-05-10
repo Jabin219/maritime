@@ -44,7 +44,6 @@ export const OrderDetailContainer = styled(Box)({
 	},
 	'& .btn-pickup': {
 		display: 'block',
-		textTransform: 'none',
 		padding: '11px 100px',
 		margin: '0 auto',
 		borderRadius: '8px',

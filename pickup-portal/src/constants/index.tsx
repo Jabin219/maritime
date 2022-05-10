@@ -10,3 +10,11 @@ export enum OrderStatus {
 	completed = 'completed',
 	expired = 'expired'
 }
+export enum ResponseStatus {
+	SUCCESS = 'success',
+	FAIL = 'fail',
+	NOT_FOUND = 'not-found',
+	ERROR = 'error',
+	UNAUTHORIZED = 'unauthorized',
+	OUT_OF_STOCK = 'out-of-stock'
+}

@@ -14,8 +14,7 @@ const StatusButton = styled(Button)({
 	fontSize: 12,
 	fontWeight: 600,
 	lineHeight: '20px',
-	padding: '4px 16px',
-	textTransform: 'none'
+	padding: '4px 16px'
 })
 
 const OrderStatusButton = ({ content, orderStatus }: Props) => {
