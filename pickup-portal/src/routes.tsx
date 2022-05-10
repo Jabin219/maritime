@@ -6,6 +6,7 @@ import OrderSearchResult from 'pages/OrderSearchResult'
 import OrderDetail from 'pages/OrderDetail'
 import AddProduct from 'pages/AddProduct'
 import AddProductComplete from 'pages/AddProductComplete'
+import OrderPickupComplete from 'pages/OrderPickupComplete'
 
 const AppRoutes = () => {
 	return (
@@ -16,6 +17,7 @@ const AppRoutes = () => {
 			<Route path='/order-detail/:orderId' element={<OrderDetail />} />
 			<Route path='/add-new-product' element={<AddProduct />} />
 			<Route path='/add-product-complete' element={<AddProductComplete />} />
+			<Route path='/order-pickup-complete' element={<OrderPickupComplete />} />
 		</Routes>
 	)
 }

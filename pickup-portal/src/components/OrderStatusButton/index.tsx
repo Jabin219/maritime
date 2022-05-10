@@ -14,8 +14,7 @@ const StatusButton = styled(Button)({
 	fontSize: 12,
 	fontWeight: 600,
 	lineHeight: '20px',
-	padding: '4px 16px',
-	textTransform: 'none'
+	padding: '4px 16px'
 })
 
 const OrderStatusButton = ({ content, orderStatus }: Props) => {
@@ -29,7 +28,6 @@ const OrderStatusButton = ({ content, orderStatus }: Props) => {
 						backgroundColor: '#FFDFC1'
 					}
 				}
-				break
 			case OrderStatus.paid:
 				return {
 					color: '#249F5D',
@@ -38,7 +36,6 @@ const OrderStatusButton = ({ content, orderStatus }: Props) => {
 						backgroundColor: '#DCFBEA'
 					}
 				}
-				break
 			case OrderStatus.expired:
 				return {
 					color: '#C4C4C4',
@@ -47,7 +44,6 @@ const OrderStatusButton = ({ content, orderStatus }: Props) => {
 						backgroundColor: '#F7F7F9'
 					}
 				}
-				break
 			case OrderStatus.completed:
 				return {
 					color: '#6F727A',
@@ -56,9 +52,14 @@ const OrderStatusButton = ({ content, orderStatus }: Props) => {
 						backgroundColor: '#F7F7F9'
 					}
 				}
-				break
 			default:
-				return {}
+				return {
+					color: '#C4C4C4',
+					backgroundColor: '#F7F7F9',
+					'&:hover': {
+						backgroundColor: '#F7F7F9'
+					}
+				}
 		}
 	}
 

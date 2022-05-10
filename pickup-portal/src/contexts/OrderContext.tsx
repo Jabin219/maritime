@@ -1,3 +1,4 @@
+import { getOrderByPhoneOrPickupNumber } from 'axios/order'
 import { OrderStatus } from 'constants/index'
 import { Order, Product } from 'models'
 import { useState, createContext } from 'react'
@@ -8,6 +9,7 @@ interface Props {
 }
 const OrderContextProvider = ({ children }: Props) => {
 	const [orders, setOrders] = useState<Order[]>()
+	const [searchedString, setSearchedString] = useState('')
 	const [selectedOrder, setSelectedOrder] = useState<Order>()
 	const [orderProducts, setOrderProducts] = useState<Product[]>()
 	const [buttonDisabled, setButtonDisabled] = useState(false)
@@ -16,22 +18,24 @@ const OrderContextProvider = ({ children }: Props) => {
 		setSelectedOrder(order)
 		setOrderProducts(JSON.parse(order?.products as string))
 	}
+	const handleSearchOrders = async (searchedString: string) => {
+		const ordersResult = await (getOrderByPhoneOrPickupNumber(
+			searchedString
+		) as any)
+		setOrders(ordersResult.data.orders)
+	}
 	const getOrderStatusButtonContent = (orderStatus: string) => {
 		switch (orderStatus) {
 			case OrderStatus.reserved:
 				return 'Unpaid'
-				break
 			case OrderStatus.paid:
 				return 'Paid'
-				break
 			case OrderStatus.expired:
 				return 'Expired'
-				break
 			case OrderStatus.completed:
 				return 'Completed'
-				break
 			default:
-				return ''
+				return 'Unpaid'
 		}
 	}
 
@@ -45,7 +49,10 @@ const OrderContextProvider = ({ children }: Props) => {
 				getOrderStatusButtonContent,
 				orderProducts,
 				buttonDisabled,
-				setButtonDisabled
+				setButtonDisabled,
+				searchedString,
+				setSearchedString,
+				handleSearchOrders
 			}}
 		>
 			{children}

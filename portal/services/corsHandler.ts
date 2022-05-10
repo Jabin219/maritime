@@ -11,4 +11,5 @@ const corsHandler = async (req: NextApiRequest, res: NextApiResponse) => {
 		optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 	})
 }
+
 export { corsHandler }

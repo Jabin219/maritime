@@ -5,7 +5,7 @@ import { ResponseStatus } from 'constant'
 import { corsHandler } from 'services/corsHandler'
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-	corsHandler(req, res)
+	await corsHandler(req, res)
 	const { searchedString } = req.query
 	try {
 		const orders = await OrderModel.find({
