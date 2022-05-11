@@ -87,7 +87,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 				<title>Maritime Household</title>
 				<meta
 					name='viewport'
-					content='width=device-width, initial-scale=1.0'
+					content='content="width=device-width, initial-scale=0, maximum-scale=0, user-scalable=0, shrink-to-fit=0'
 				></meta>
 			</Head>
 			<ProductContextProvider>

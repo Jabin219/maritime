@@ -1,5 +1,21 @@
 import { Box, Grid, Typography } from '@mui/material'
 import { styled } from '@mui/system'
+export const ProductDetailContainer = styled(Box)({
+	'& .mini-img-group': {
+		height: 150,
+		width: 500,
+		marginTop: '20px',
+		overflow: 'auto',
+		whiteSpace: 'nowrap',
+		'& .mini-img-container': {
+			display: 'inline-block',
+			width: 100,
+			height: 100,
+			cursor: 'pointer',
+			marginRight: '10px'
+		}
+	}
+})
 export const ProductButtonContainer = styled(Box)({
 	marginTop: '140px',
 	'& button': {
