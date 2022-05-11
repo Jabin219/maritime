@@ -64,6 +64,7 @@ const orderCalculator = async (products: Product[]) => {
 		tax: priceFormatter(tax)
 	}
 }
+
 export {
 	generatePickupNumber,
 	orderCalculator,

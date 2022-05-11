@@ -72,19 +72,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 						await selectedProductResult.save()
 					}
 				)
-				const orderReversedDays = 4
-				const expiredDate = new Date().setDate(
-					new Date().getDate() + orderReversedDays
-				)
-				const reservedOrder = await OrderModel.findOneAndUpdate(
-					{
-						_id: orderAddedResult._id.toString()
-					},
-					{
-						expiredDate
-					}
-				)
-				sendOrderConfirmation(reservedOrder)
+				sendOrderConfirmation(orderAddedResult)
 			}
 			res.status(200).json({
 				status: ResponseStatus.SUCCESS,

@@ -1,7 +1,6 @@
 import axios from 'axios'
 import { sendLoginRequest } from './login'
 
-axios.defaults.baseURL = process.env.REACT_APP_SERVER_BASE_URL
 if (typeof window !== 'undefined') {
 	axios.defaults.headers = {
 		authorization: localStorage.getItem('token')
