@@ -9,7 +9,7 @@ const Home = () => {
 	const { setHeaderTitle } = useContext(TextContext)
 	setHeaderTitle('Home')
 	return (
-		<Box sx={{ height: 2000 }}>
+		<Box>
 			<Box
 				className='logo-container'
 				sx={{
