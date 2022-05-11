@@ -2,6 +2,7 @@ import { Box } from '@mui/material'
 import { styled } from '@mui/system'
 export const FooterTabsContainer = styled(Box)({
 	position: 'fixed',
+	backgroundColor: '#ffffff',
 	bottom: 0,
 	width: '100%',
 	maxWidth: 1000,

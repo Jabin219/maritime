@@ -1,6 +1,6 @@
 import { Tabs, Tab } from '@mui/material'
 import { FooterTabValue } from 'constants/index'
-import React, { useState } from 'react'
+import React from 'react'
 import { FooterTabsContainer } from './style'
 import { Home, Search, Upload } from '@mui/icons-material'
 import { useNavigate, useLocation } from 'react-router-dom'
@@ -8,16 +8,26 @@ import { useNavigate, useLocation } from 'react-router-dom'
 const FooterTabs = () => {
 	const navigate = useNavigate()
 	const location = useLocation()
-	const [tabValue, setTabValue] = useState(FooterTabValue.home)
 	const handleChangePath = (event: any, newValue: any) => {
-		setTabValue(newValue)
 		navigate(`/${newValue === 'home' ? '' : newValue}`)
+	}
+	const getTabValue = () => {
+		if (location.pathname === '/') {
+			return FooterTabValue.home
+		}
+		if (location.pathname.includes('order')) {
+			return FooterTabValue.orders
+		}
+		if (location.pathname.includes('product')) {
+			return FooterTabValue.addNewProduct
+		}
+		return FooterTabValue.home
 	}
 	return (
 		<FooterTabsContainer>
 			<Tabs
 				centered
-				value={tabValue}
+				value={getTabValue()}
 				onChange={handleChangePath}
 				indicatorColor='secondary'
 			>
@@ -38,7 +48,7 @@ const FooterTabs = () => {
 						<Search
 							sx={{
 								color: `${
-									location.pathname === '/order-search' ? '#016CBB' : '#ADADAD'
+									location.pathname.includes('order') ? '#016CBB' : '#ADADAD'
 								}`
 							}}
 						/>
@@ -52,9 +62,7 @@ const FooterTabs = () => {
 						<Upload
 							sx={{
 								color: `${
-									location.pathname === '/add-new-product'
-										? '#016CBB'
-										: '#ADADAD'
+									location.pathname.includes('product') ? '#016CBB' : '#ADADAD'
 								}`
 							}}
 						/>

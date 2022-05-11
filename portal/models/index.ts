@@ -26,7 +26,7 @@ export type Order = {
 	tax?: number
 	total?: number
 	status?: string
-	contactInformation?: string | ContactInformation
+	contactInformation?: ContactInformation
 	shippingMethod?: string
 	paymentMethod?: string
 	pickupNumber?: string

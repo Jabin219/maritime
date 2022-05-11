@@ -4,9 +4,6 @@ export const OrderSearchContainer = styled(Box)({
 	width: '80%',
 	margin: '0 auto',
 	paddingTop: '100px',
-	'& p': {
-		fontSize: 14
-	},
 	'& button': {
 		display: 'block',
 		fontSize: 14,
