@@ -11,12 +11,11 @@ import {
 } from '@mui/material'
 import { TextContext } from 'contexts/TextContext'
 import React, { useContext, useReducer, useState } from 'react'
-import { AddProductContainer, UploadImage } from './style'
-import { Add } from '@mui/icons-material'
-import ReactImageUploading, { ImageListType } from 'react-images-uploading'
+import { AddProductContainer } from './style'
 import { Categories, ResponseStatus } from 'constants/index'
 import { addNewProduct } from 'axios/product'
 import { useNavigate } from 'react-router-dom'
+import ImageUploading from 'components/ImageUploading'
 const initialProductInformation = {
 	images: [],
 	name: '',
@@ -53,13 +52,6 @@ const AddProduct = () => {
 	)
 	const [checked, setChecked] = useState(false)
 	const [processing, setProcessing] = useState(false)
-	const handleUploadImage = (
-		imageList: ImageListType,
-		addUpdateIndex: number[] | undefined
-	) => {
-		// data for submit
-		dispatch({ type: 'CHANGE_PRODUCT_IMAGES', value: imageList as never[] })
-	}
 	const handleSubmit = async (productInformation: any) => {
 		setProcessing(true)
 		const result = await addNewProduct(productInformation)
@@ -75,48 +67,10 @@ const AddProduct = () => {
 			<Box className='upload-image-container'>
 				<Typography>Upload Images</Typography>
 				<Grid container>
-					<ReactImageUploading
-						multiple
-						value={productInformation.images}
-						onChange={handleUploadImage}
-						dataURLKey='data_url'
-					>
-						{({ imageList, onImageUpload, onImageRemove, dragProps }) => {
-							return (
-								// write your building UI
-								<>
-									{imageList.length > 0 &&
-										imageList.map((image, index) => {
-											return (
-												<Grid item xs={6} key={index} className='image-item'>
-													<Box className='uploaded-image-container'>
-														<img
-															src={image.data_url}
-															alt='product'
-															width='120'
-															className='uploaded-image'
-														/>
-													</Box>
-													<Box className='image-item-btn'>
-														<Button
-															variant='contained'
-															onClick={() => onImageRemove(index)}
-														>
-															Remove
-														</Button>
-													</Box>
-												</Grid>
-											)
-										})}
-									<Grid item xs={6}>
-										<UploadImage onClick={onImageUpload} {...dragProps}>
-											<Add />
-										</UploadImage>
-									</Grid>
-								</>
-							)
-						}}
-					</ReactImageUploading>
+					<ImageUploading
+						dispatch={dispatch}
+						productInformation={productInformation}
+					/>
 				</Grid>
 			</Box>
 			<Box className='product-name'>
