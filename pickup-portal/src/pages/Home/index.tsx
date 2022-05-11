@@ -32,11 +32,14 @@ const Home = () => {
 					<Typography variant='h5'>Order Search</Typography>
 				</HomePageButton>
 			</Link>
-
-			<HomePageButton className='upload-new-product'>
-				<Upload sx={{ color: '#333333', fontSize: 26, marginBottom: '10px' }} />
-				<Typography variant='h5'>Upload New Product</Typography>
-			</HomePageButton>
+			<Link to='/add-new-product'>
+				<HomePageButton className='add-new-product'>
+					<Upload
+						sx={{ color: '#333333', fontSize: 26, marginBottom: '10px' }}
+					/>
+					<Typography variant='h5'>Add New Product</Typography>
+				</HomePageButton>
+			</Link>
 		</Box>
 	)
 }

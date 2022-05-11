@@ -18,3 +18,12 @@ export enum ResponseStatus {
 	UNAUTHORIZED = 'unauthorized',
 	OUT_OF_STOCK = 'out-of-stock'
 }
+
+export const Categories = [
+	{ name: 'clothing', label: 'Clothing', showedOnHeader: true },
+	{ name: 'home-and-pets', label: 'Home & Pets', showedOnHeader: true },
+	{ name: 'grocery', label: 'Grocery', showedOnHeader: true },
+	{ name: 'appliances', label: 'Appliances', showedOnHeader: true },
+	{ name: 'health-and-beauty', label: 'Health & Beauty', showedOnHeader: true },
+	{ name: 'kids', label: 'Kids', showedOnHeader: true }
+]
