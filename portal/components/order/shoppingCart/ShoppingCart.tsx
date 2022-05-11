@@ -80,7 +80,7 @@ const ShoppingCart = () => {
 															{cartItem.name}
 															{cartItem.outOfStock && (
 																<Typography sx={{ color: '#FF0000' }}>
-																	This item is out of stock
+																	Out of stock
 																</Typography>
 															)}
 															<Delete

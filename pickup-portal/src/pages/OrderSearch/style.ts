@@ -8,7 +8,6 @@ export const OrderSearchContainer = styled(Box)({
 		display: 'block',
 		fontSize: 14,
 		fontWeight: 700,
-		textTransform: 'none',
 		borderRadius: '8px',
 		padding: '10px 120px',
 		margin: '50px auto'

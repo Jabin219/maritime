@@ -6,4 +6,11 @@ const getOrderByPhoneOrPickupNumber = (searchedString: string) =>
 		params: { searchedString }
 	})
 
-export { getOrderByPhoneOrPickupNumber }
+const checkOrderStock = (orderId: string) =>
+	axios.get('/api/orders/check-order-stock', {
+		params: { orderId }
+	})
+const pickupOrder = (orderId: string) =>
+	axios.post('/api/orders/pickup-order', { orderId })
+
+export { getOrderByPhoneOrPickupNumber, pickupOrder, checkOrderStock }

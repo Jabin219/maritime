@@ -14,8 +14,7 @@ const StatusButton = styled(Button)({
 	fontSize: 12,
 	fontWeight: 600,
 	lineHeight: '20px',
-	padding: '4px 16px',
-	textTransform: 'none'
+	padding: '4px 16px'
 })
 
 const OrderStatusButton = ({ content, orderStatus }: Props) => {
@@ -54,7 +53,13 @@ const OrderStatusButton = ({ content, orderStatus }: Props) => {
 					}
 				}
 			default:
-				return {}
+				return {
+					color: '#C4C4C4',
+					backgroundColor: '#F7F7F9',
+					'&:hover': {
+						backgroundColor: '#F7F7F9'
+					}
+				}
 		}
 	}
 

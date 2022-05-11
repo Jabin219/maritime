@@ -1,23 +1,55 @@
-import { Box, Grid, Divider, Typography, Button } from '@mui/material'
+import {
+	DialogContentText,
+	Box,
+	Grid,
+	Divider,
+	Typography,
+	Button,
+	Dialog,
+	DialogContent,
+	DialogActions
+} from '@mui/material'
 import { OrderContext } from 'contexts/OrderContext'
 import { TextContext } from 'contexts/TextContext'
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { format, parseISO } from 'date-fns'
 import { OrderDetailContainer } from './style'
 import OrderStatusButton from 'components/OrderStatusButton'
 import { Product } from 'models'
+import { OrderStatus, ResponseStatus } from 'constants/index'
+import { pickupOrder } from 'axios/order'
+import { useNavigate } from 'react-router-dom'
 
 const OrderDetail = () => {
+	const navigate = useNavigate()
 	const { orderId } = useParams()
 	const {
 		findSelectedOrder,
 		selectedOrder,
 		getOrderStatusButtonContent,
-		orderProducts
+		orderProducts,
+		buttonDisabled
 	} = useContext(OrderContext)
 	const { setHeaderTitle } = useContext(TextContext)
 	setHeaderTitle('Order Detail')
+	const [dialogOpen, setDialogOpen] = useState(false)
+	const confirmPickup = async (orderId: string) => {
+		const result = await pickupOrder(orderId)
+		if (result.data.status === ResponseStatus.SUCCESS) {
+			navigate('/order-pickup-complete')
+		}
+	}
+	const handleClickPickupButton = () => {
+		if (selectedOrder.status === OrderStatus.paid) {
+			confirmPickup(orderId as string)
+		} else {
+			setDialogOpen(true)
+		}
+	}
+	const handleDialogClose = () => {
+		setDialogOpen(false)
+	}
 	useEffect(() => {
 		findSelectedOrder(orderId)
 	}, [orderId])
@@ -90,6 +122,11 @@ const OrderDetail = () => {
 									</Grid>
 									<Grid item xs={6}>
 										<Typography>{product.name}</Typography>
+										{product.outOfStock && (
+											<Typography sx={{ color: '#FF0000' }}>
+												Out of stock
+											</Typography>
+										)}
 									</Grid>
 									<Grid item xs={3}>
 										<Typography className='product-price'>
@@ -130,9 +167,36 @@ const OrderDetail = () => {
 						</Grid>
 					</Grid>
 				</Box>
-				<Button variant='contained' className='btn-pickup'>
-					Pick Up Order
-				</Button>
+				{selectedOrder.status !== OrderStatus.completed && (
+					<Button
+						variant='contained'
+						className='btn-pickup'
+						disabled={buttonDisabled}
+						onClick={handleClickPickupButton}
+					>
+						Pick Up Order
+					</Button>
+				)}
+				<Dialog open={dialogOpen} onClose={handleDialogClose}>
+					<DialogContent>
+						<DialogContentText sx={{ fontWeight: 700, color: '#333' }}>
+							Are you sure the payment has been received and the products have
+							been picked up?
+						</DialogContentText>
+					</DialogContent>
+					<DialogActions>
+						<Button onClick={handleDialogClose}>Cancel</Button>
+						<Button
+							variant='contained'
+							onClick={() => {
+								confirmPickup(orderId as string)
+								handleDialogClose()
+							}}
+						>
+							Confirm
+						</Button>
+					</DialogActions>
+				</Dialog>
 			</OrderDetailContainer>
 		)
 	)
