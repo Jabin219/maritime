@@ -16,7 +16,6 @@ const Order = () => {
 	const [order, setOrder] = useState<Order>({
 		subtotal: countCartTotal(cart)
 	})
-
 	const clearCart = () => {
 		setCart([])
 		localStorage.removeItem('cart')

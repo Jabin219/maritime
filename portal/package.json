@@ -15,7 +15,7 @@
 		"@mui/material": "^5.5.1",
 		"@sendgrid/mail": "^7.6.2",
 		"@stripe/react-stripe-js": "^1.7.2",
-		"@stripe/stripe-js": "^1.26.0",
+		"@stripe/stripe-js": "^1.29.0",
 		"@types/aws-sdk": "^2.7.0",
 		"aws-sdk": "^2.1130.0",
 		"axios": "^0.26.1",
