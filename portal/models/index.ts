@@ -5,7 +5,7 @@ export type Product = {
 	price: string | number
 	originalPrice: string | number
 	coverImage: string
-	images: Array<string>
+	images: Array<string> | string
 	category: string
 	quantity?: number
 	stock?: number
