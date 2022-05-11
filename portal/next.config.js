@@ -1,29 +1,22 @@
 /** @type {import('next').NextConfig} */
+
 const nextConfig = {
 	reactStrictMode: true,
 	images: {
 		domains: ['maritime-household-media.s3.ca-central-1.amazonaws.com']
 	},
-	async headers() {
-		return [
-			{
-				// matching all API routes
-				source: '/api/:path*',
-				headers: [
-					{ key: 'Access-Control-Allow-Credentials', value: 'true' },
-					{ key: 'Access-Control-Allow-Origin', value: '*' },
-					{
-						key: 'Access-Control-Allow-Methods',
-						value: 'GET,OPTIONS,PATCH,DELETE,POST,PUT'
-					},
-					{
-						key: 'Access-Control-Allow-Headers',
-						value:
-							'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
-					}
-				]
-			}
-		]
+	env: {
+		NEXT_PUBLIC_SERVER_BASE_URL: process.env.NEXT_PUBLIC_SERVER_BASE_URL,
+		MONGODB_URL: process.env.MONGODB_URL,
+		NEXT_PUBLIC_STRIPE_PUBLIC_KEY: process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY,
+		STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
+		STRIPE_WEBHOOK_SECRET: process.env.STRIPE_WEBHOOK_SECRET,
+		SENDGRID_API_KEY: process.env.SENDGRID_API_KEY,
+		SENDGRID_RESERVED_ORDER_TEMPLATE_ID:
+			process.env.SENDGRID_RESERVED_ORDER_TEMPLATE_ID,
+		SENDGRID_PAID_ORDER_TEMPLATE_ID:
+			process.env.SENDGRID_PAID_ORDER_TEMPLATE_ID,
+		SENDGRID_CONTACT_TEMPLATE_ID: process.env.SENDGRID_CONTACT_TEMPLATE_ID
 	}
 }
 

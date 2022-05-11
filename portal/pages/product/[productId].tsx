@@ -6,7 +6,8 @@ import Image from 'next/image'
 import {
 	RelatedProductGrid,
 	ProductButtonContainer,
-	RelatedProductsTitle
+	RelatedProductsTitle,
+	ProductDetailContainer
 } from 'styles/pages/product'
 import { priceFormatter } from 'utils'
 import { addToCart } from 'utils/cartHandler'
@@ -19,6 +20,7 @@ const Product = () => {
 	const router = useRouter()
 	const productId = router.query.productId as string
 	const [showedProduct, setShowedProduct] = useState<Product>()
+	const [largeImage, setLargeImage] = useState<string>('')
 	const { cart, setCart } = useContext(ProductContext)
 	const { showSnackbar } = useContext(SnackContext)
 	const handleAddToCart = () => {
@@ -31,14 +33,18 @@ const Product = () => {
 	}
 	const loadProduct = async (productId: string) => {
 		const productResult = await getProductById(productId)
-		setShowedProduct(productResult.data.product)
+		setShowedProduct({
+			...productResult.data.product,
+			images: JSON.parse(productResult.data.product.images)
+		})
+		setLargeImage(JSON.parse(productResult.data.product.images)[0])
 	}
 	useEffect(() => {
 		productId && loadProduct(productId as string)
 	}, [productId])
 
 	return (
-		<Box className='product-detail-page'>
+		<ProductDetailContainer>
 			<Box
 				className='product-detail-container'
 				sx={{ margin: '105px auto', width: '60%' }}
@@ -54,12 +60,35 @@ const Product = () => {
 						}}
 					>
 						{showedProduct && (
-							<Image
-								src={showedProduct.coverImage}
-								alt='product-image'
-								width={500}
-								height={500}
-							/>
+							<>
+								<Image
+									src={largeImage || showedProduct?.images[0]}
+									alt='product-image'
+									width={500}
+									height={500}
+								/>
+								<Box className='mini-img-group'>
+									{(showedProduct?.images as string[]).map((image: string) => (
+										<Box
+											key={image}
+											className='mini-img-container'
+											sx={{
+												border: largeImage === image ? '3px solid #ff8800' : ''
+											}}
+											onClick={() => {
+												setLargeImage(image)
+											}}
+										>
+											<Image
+												src={image}
+												alt='product-image-gallery'
+												width={100}
+												height={100}
+											/>
+										</Box>
+									))}
+								</Box>
+							</>
 						)}
 					</Grid>
 					<Grid item xs={5}>
@@ -164,7 +193,7 @@ const Product = () => {
 					</Grid>
 				</Box>
 			</Box>
-		</Box>
+		</ProductDetailContainer>
 	)
 }
 
