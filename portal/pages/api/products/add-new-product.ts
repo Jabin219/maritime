@@ -12,9 +12,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 		req.body.productInformation
 	const imageBase64Urls = images.map((image: any) => image.data_url)
 	AWS.config.update({
-		accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-		secretAccessKey: process.env.AWS_ACCESS_SECRET,
-		region: process.env.AWS_REGION
+		accessKeyId: process.env.S3_ACCESS_KEY_ID,
+		secretAccessKey: process.env.S3_ACCESS_SECRET,
+		region: process.env.S3_REGION
 	})
 	const s3 = new AWS.S3()
 	const imageUrls: string[] = []
@@ -26,7 +26,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 		// Getting the file type, ie: jpeg, png or gif
 		const fileType = imageBase64Url.split(';')[0].split('/')[1]
 		const params = {
-			Bucket: process.env.AWS_BUCKET as string,
+			Bucket: process.env.S3_BUCKET as string,
 			Key: `${uuidv4()}.${fileType}`, // type is not required
 			Body: base64Data,
 			ACL: 'public-read',
