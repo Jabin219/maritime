@@ -4,6 +4,7 @@ export const FooterTabsContainer = styled(Box)({
 	position: 'fixed',
 	bottom: 0,
 	width: '100%',
+	maxWidth: 1000,
 	boxShadow: '0px -2px 12px rgba(0, 0, 0, 0.1)',
 	'& button': {
 		textTransform: 'none',
