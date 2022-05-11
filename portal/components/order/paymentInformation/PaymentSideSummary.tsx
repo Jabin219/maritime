@@ -147,7 +147,7 @@ const PaymentSideSummary = ({
 					<Typography variant='h6'>Tax</Typography>
 				</Grid>
 				<Grid className='rightFloat value' item xs={5}>
-					<Typography>{order.tax}</Typography>
+					<Typography>{priceFormatter(order.tax)}</Typography>
 				</Grid>
 				<Divider style={{ width: '100%' }} />
 				<Grid item xs={7} className='label' style={{ marginTop: 20 }}>
@@ -161,7 +161,9 @@ const PaymentSideSummary = ({
 					item
 					style={{ marginTop: 20 }}
 				>
-					<Typography className='total'>{order.total}</Typography>
+					<Typography className='total'>
+						{priceFormatter(order.total)}
+					</Typography>
 				</Grid>
 			</Grid>
 			<Button

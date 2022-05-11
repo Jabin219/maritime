@@ -15,8 +15,8 @@ const CartSideSummary = () => {
 	const handleShoppingCartNext = async () => {
 		setOrder({
 			...order,
-			tax: priceFormatter(taxCalculator(order.subtotal)),
-			total: priceFormatter(order.subtotal + taxCalculator(order.subtotal)),
+			tax: taxCalculator(order.subtotal),
+			total: order.subtotal + taxCalculator(order.subtotal),
 			products: cart
 		})
 		next()
