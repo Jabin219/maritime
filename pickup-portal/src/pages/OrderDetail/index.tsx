@@ -40,7 +40,7 @@ const OrderDetail = () => {
 			navigate('/order-pickup-complete')
 		}
 	}
-	const handleClickPickupButton = async () => {
+	const handleClickPickupButton = () => {
 		if (selectedOrder.status === OrderStatus.paid) {
 			confirmPickup(orderId as string)
 		} else {
