@@ -104,7 +104,7 @@ const ShoppingCart = () => {
 														${priceFormatter(Number(cartItem.price))}
 													</Typography>
 												</TableCell>
-												<TableCell className='product-quantity'>
+												<TableCell className='product-quantity-container'>
 													<Grid
 														container
 														className='product-quantity-detail'
@@ -112,7 +112,7 @@ const ShoppingCart = () => {
 													>
 														<Grid
 															item
-															xs={5}
+															xs={4.5}
 															sx={{
 																display: 'flex',
 																alignItems: 'center',
@@ -123,9 +123,7 @@ const ShoppingCart = () => {
 																className='btn-decrease'
 																disableRipple
 																disabled={
-																	cartItem.quantity && cartItem.quantity < 2
-																		? true
-																		: false
+																	Number(cartItem.quantity) <= 1 ? true : false
 																}
 																onClick={() => {
 																	quantityDecrease(
@@ -161,7 +159,7 @@ const ShoppingCart = () => {
 														</Grid>
 														<Grid
 															item
-															xs={5}
+															xs={4.5}
 															sx={{
 																display: 'flex',
 																alignItems: 'center',
@@ -171,6 +169,9 @@ const ShoppingCart = () => {
 															<IconButton
 																className='btn-increase'
 																disableRipple
+																disabled={
+																	Number(cartItem.quantity) >= 99 ? true : false
+																}
 																onClick={() => {
 																	quantityIncrease(
 																		cartItem,
