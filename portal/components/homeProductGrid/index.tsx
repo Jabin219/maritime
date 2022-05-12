@@ -23,7 +23,7 @@ const HomeProductGrid = ({ category, products }: Props) => {
 			className='home-product-grid-container'
 			sx={{ marginBottom: '50px' }}
 		>
-			<ProductListTitle variant='h3'>{category.name}</ProductListTitle>
+			<ProductListTitle variant='h3'>{category.label}</ProductListTitle>
 			<FlexBox
 				className='products-container'
 				sx={{ flexDirection: 'row', width: '80%' }}
@@ -45,7 +45,6 @@ const HomeProductGrid = ({ category, products }: Props) => {
 										{product.name}
 									</Typography>
 								</CustomLink>
-
 								<Typography
 									sx={{
 										color: '#ADADAD',
