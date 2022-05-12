@@ -23,7 +23,10 @@ const CategoriesNavBar = () => {
 									color:
 										router.asPath === `/product-list/${category.name}`
 											? '#FF8800'
-											: '#333333'
+											: '#333333',
+									fontFamily: 'Source Sans Pro',
+									fontWeight: 600,
+									fontSize: 18
 								}}
 								onClick={() => {
 									handleChangeCategory()
