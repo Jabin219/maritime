@@ -1,7 +1,7 @@
 import MailService from '@sendgrid/mail'
 import { ContactContent, ContactInformation, Order } from 'models'
 import { format } from 'date-fns'
-import { OrderStatus } from 'constant'
+import { OrderStatus, PaymentMethod } from 'constant'
 
 MailService.setApiKey(process.env.SENDGRID_API_KEY as string)
 
@@ -10,6 +10,10 @@ const sendOrderConfirmation = async (order: Order) => {
 		order.contactInformation as ContactInformation
 	const date = format(order.createdAt as any, 'yyyy/MM/dd')
 	const products = JSON.parse(order.products as string)
+	const paymentMethod =
+		order.paymentMethod === PaymentMethod.creditCard
+			? 'Credit card'
+			: 'Pay on pickup'
 	const msg = {
 		to: contactInformation.email,
 		// 需改成客户邮箱
@@ -22,7 +26,8 @@ const sendOrderConfirmation = async (order: Order) => {
 			order,
 			contactInformation: order.contactInformation,
 			products,
-			date
+			date,
+			paymentMethod
 		}
 	}
 	try {
