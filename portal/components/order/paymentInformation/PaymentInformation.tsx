@@ -12,15 +12,19 @@ import {
 import { OrderContext } from 'context/OrderContextProvider'
 import { useContext, useReducer, useState } from 'react'
 import {
-	PaymentMethodContainer,
 	PaymentInfoContainer,
 	ShippingMethodContainer,
 	ContactFormContainer
 } from 'styles/components/order'
 import PaymentSideSummary from './PaymentSideSummary'
 import { CardElement } from '@stripe/react-stripe-js'
-import { PaymentMethod } from 'constant'
-const initialContactInformation = { name: '', email: '', phone: '' }
+import { getContactInformation } from './paymentHandler'
+import PaymentMethodComponent from './PaymentMethod'
+const initialContactInformation = {
+	name: '',
+	email: '',
+	phone: ''
+}
 const reducer = (state: any, action: any) => {
 	switch (action.type) {
 		case 'CHANGE_NAME':
@@ -39,7 +43,7 @@ const PaymentInformation = () => {
 	const [contactPhoneError, setContactPhoneError] = useState(false)
 	const [contactInformation, dispatch] = useReducer(
 		reducer,
-		initialContactInformation
+		getContactInformation() || initialContactInformation
 	)
 	const { setShippingMethod, setPaymentMethod, shippingMethod, paymentMethod } =
 		useContext(OrderContext)
@@ -75,6 +79,7 @@ const PaymentInformation = () => {
 									contactNameError ? 'Please enter your full name' : ''
 								}
 								required
+								value={contactInformation.name}
 								onChange={event => {
 									dispatch({
 										type: 'CHANGE_NAME',
@@ -91,6 +96,7 @@ const PaymentInformation = () => {
 									contactEmailError ? 'Please enter a valid email address' : ''
 								}
 								required
+								value={contactInformation.email}
 								onChange={event => {
 									dispatch({
 										type: 'CHANGE_EMAIL',
@@ -107,6 +113,7 @@ const PaymentInformation = () => {
 									contactPhoneError ? 'Please enter a valid phone number' : ''
 								}
 								required
+								value={contactInformation.phone}
 								onChange={event => {
 									dispatch({
 										type: 'CHANGE_PHONE',
@@ -137,48 +144,13 @@ const PaymentInformation = () => {
 							</FormControl>
 						</Box>
 					</ShippingMethodContainer>
-					<PaymentMethodContainer>
-						<Box className='payment-method-container'>
-							<Box className='header'>
-								<Typography variant='h5'>Payment Method</Typography>
-								<Divider />
-							</Box>
-							<FormControl>
-								<RadioGroup
-									value={paymentMethod}
-									onChange={handleChangePaymentMethod}
-								>
-									<FormControlLabel
-										value={PaymentMethod.creditCard}
-										control={<Radio color='primary' />}
-										label='Credit Card'
-									/>
-									<FormControlLabel
-										value={PaymentMethod.payAtPickup}
-										control={<Radio color='primary' />}
-										label='Pay upon at pickup (reserve for 3 days)'
-									/>
-								</RadioGroup>
-							</FormControl>
-						</Box>
-						{paymentMethod === PaymentMethod.creditCard && (
-							<Box className='credit-info'>
-								<Box className='header'>
-									<Typography variant='h5'>Credit Card Info</Typography>
-									<Divider />
-								</Box>
-								<CardElement
-									options={{ hidePostalCode: true }}
-									onChange={handleCardChange}
-								/>
-								{cardInputError && (
-									<Typography className='stripe_card-error' role='alert'>
-										{cardInputError}
-									</Typography>
-								)}
-							</Box>
-						)}
-					</PaymentMethodContainer>
+					<PaymentMethodComponent
+						paymentMethod={paymentMethod}
+						handleChangePaymentMethod={handleChangePaymentMethod}
+						CardElement={CardElement}
+						handleCardChange={handleCardChange}
+						cardInputError={cardInputError}
+					/>
 				</PaymentInfoContainer>
 			</Grid>
 			<Grid item xs>
