@@ -1,5 +1,5 @@
 import { getOrderByPhoneOrPickupNumber } from 'axios/order'
-import { OrderStatus } from 'constants/index'
+import { OrderStatus, ResponseStatus } from 'constants/index'
 import { Order } from 'models'
 import { useState, createContext } from 'react'
 
@@ -17,10 +17,12 @@ const OrderContextProvider = ({ children }: Props) => {
 		setSelectedOrder(order)
 	}
 	const handleSearchOrders = async (searchedString: string) => {
-		const ordersResult = await (getOrderByPhoneOrPickupNumber(
-			searchedString
-		) as any)
-		setOrders(ordersResult.data.orders)
+		const ordersResult = await getOrderByPhoneOrPickupNumber(searchedString)
+		if (ordersResult.data.status === ResponseStatus.SUCCESS) {
+			setOrders(ordersResult.data.orders)
+			return ResponseStatus.SUCCESS
+		}
+		return ResponseStatus.ERROR
 	}
 	const getOrderStatusButtonContent = (orderStatus: string) => {
 		switch (orderStatus) {
