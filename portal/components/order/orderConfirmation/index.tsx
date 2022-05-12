@@ -68,7 +68,7 @@ const OrderConfirmation = () => {
 									50 Tacoma Dr, Dartmouth, NS, B2W 3E6
 								</Typography>
 							</Grid>
-							{order.paymentMethod === PaymentMethod.payAtPickup && (
+							{order.paymentMethod === PaymentMethod.payOnPickup && (
 								<Grid item xs>
 									<Typography
 										variant='h6'
@@ -127,8 +127,8 @@ const OrderConfirmation = () => {
 									<Box className='single-information-container'>
 										<Typography component='label'>Payment Method: </Typography>
 										<Typography component='span'>
-											{order.paymentMethod === PaymentMethod.payAtPickup &&
-												'Pay At Pickup'}
+											{order.paymentMethod === PaymentMethod.payOnPickup &&
+												'Pay On Pickup'}
 											{order.paymentMethod === PaymentMethod.creditCard &&
 												'Credit Card'}
 										</Typography>

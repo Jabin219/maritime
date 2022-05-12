@@ -44,9 +44,9 @@ const PaymentMethodComponent = ({
 							label='Credit Card'
 						/>
 						<FormControlLabel
-							value={PaymentMethod.payAtPickup}
+							value={PaymentMethod.payOnPickup}
 							control={<Radio color='primary' />}
-							label='Pay upon at pickup (reserve for 3 days)'
+							label='Pay on pickup (3 days reservation)'
 						/>
 					</RadioGroup>
 				</FormControl>
