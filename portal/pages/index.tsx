@@ -32,7 +32,7 @@ const Home: NextPage = () => {
 		loadHomePageProducts(categoryNames)
 	}, [])
 	return (
-		<Box className='home-page' sx={{ marginBottom: '100px' }}>
+		<Box className='home-page'>
 			<FlexBox
 				className='home-page-banner'
 				sx={{

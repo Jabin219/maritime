@@ -2,8 +2,8 @@ import { Grid, Typography, Box } from '@mui/material'
 import { styled } from '@mui/system'
 
 const ProductListPageContainer = styled(Box)({
-	marginBottom: '200px',
 	position: 'relative',
+	minHeight: '100vh',
 	'& .sort-by-select': {
 		minWidth: 200,
 		position: 'absolute',

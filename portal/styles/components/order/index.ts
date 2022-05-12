@@ -209,7 +209,11 @@ export const OrderConfirmationContainer = styled(Box)({
 
 export const OrderConfirmationTopBox = styled(FlexBox)({
 	border: '10px solid #EEEEEE',
-	padding: '65px 450px'
+	padding: '65px 400px',
+	'& h2': {
+		whiteSpace: 'nowrap'
+	},
+	'& p': { textAlign: 'center' }
 })
 export const OrderInformationContainer = styled(Box)({
 	border: '10px solid #EEEEEE',

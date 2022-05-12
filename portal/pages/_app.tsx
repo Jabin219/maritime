@@ -97,7 +97,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 						sx={{
 							maxWidth: '1920px',
 							margin: '0 auto',
-							minHeight: '100vh'
+							paddingBottom: '150px'
 						}}
 					>
 						<Component {...pageProps} />

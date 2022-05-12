@@ -44,12 +44,12 @@ const Product = () => {
 	}, [productId])
 
 	return (
-		<>
+		<Box sx={{ minHeight: '100vh' }}>
 			{showedProduct && (
 				<ProductDetailContainer>
 					<Box
 						className='product-detail-container'
-						sx={{ margin: '105px auto', width: '60%' }}
+						sx={{ margin: '0 auto', marginTop: '100px', width: '60%' }}
 					>
 						<Grid container spacing={10}>
 							<Grid
@@ -200,7 +200,7 @@ const Product = () => {
 					</Box>
 				</ProductDetailContainer>
 			)}
-		</>
+		</Box>
 	)
 }
 
