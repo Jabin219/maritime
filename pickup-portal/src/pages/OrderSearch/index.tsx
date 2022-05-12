@@ -9,7 +9,8 @@ const OrderSearch = () => {
 	const navigate = useNavigate()
 	const { setHeaderTitle } = useContext(TextContext)
 	setHeaderTitle('Order Search')
-	const { setSearchedString } = useContext(OrderContext)
+	const { setSearchedString, handleSearchOrders, searchedString } =
+		useContext(OrderContext)
 	return (
 		<OrderSearchContainer>
 			<Typography>search by pickup number or phone number</Typography>
@@ -23,6 +24,7 @@ const OrderSearch = () => {
 			<Button
 				variant='contained'
 				onClick={() => {
+					handleSearchOrders(searchedString)
 					navigate(`/order-search-result`)
 				}}
 			>
