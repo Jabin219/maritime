@@ -122,7 +122,7 @@ const OrderConfirmation = () => {
 								<Grid item xs>
 									<Box className='single-information-container'>
 										<Typography component='label'>Shipping Method: </Typography>
-										<Typography component='span'>Pick up</Typography>
+										<Typography component='span'>In-store pickup</Typography>
 									</Box>
 									<Box className='single-information-container'>
 										<Typography component='label'>Payment Method: </Typography>
