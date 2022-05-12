@@ -1,6 +1,6 @@
 import { Product } from 'models'
 import { useState, createContext, useEffect } from 'react'
-import { cartStorage, saveCart } from '../utils/cartHandler'
+import { cartStorage, saveCart } from 'utils/cartHandler'
 import { SortMethod } from 'constant'
 import { loadStripe } from '@stripe/stripe-js'
 

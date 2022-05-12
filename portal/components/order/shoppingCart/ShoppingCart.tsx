@@ -5,7 +5,6 @@ import {
 	TableHead,
 	TableRow,
 	Grid,
-	IconButton,
 	Table,
 	Box
 } from '@mui/material'
@@ -15,17 +14,12 @@ import { ProductContext } from 'context/ProductContextProvider'
 import Image from 'next/image'
 import { Product } from 'models'
 import { ShoppingCartContainer } from 'styles/components/order'
-import { Remove, Add, Delete } from '@mui/icons-material'
-import {
-	quantityIncrease,
-	countCartTotal,
-	itemRemove,
-	quantityDecrease
-} from 'utils/cartHandler'
+import { Delete } from '@mui/icons-material'
+import { countCartTotal, itemRemove } from 'utils/cartHandler'
 import { priceFormatter } from 'utils'
-import CustomLink from 'components/customLink'
 import { OrderContext } from 'context/OrderContextProvider'
-
+import EmptyCart from './EmptyCart'
+import ProductQuantity from './ProductQuantity'
 const ShoppingCart = () => {
 	const { cart, setCart } = useContext(ProductContext)
 	const { order, setOrder } = useContext(OrderContext)
@@ -34,23 +28,7 @@ const ShoppingCart = () => {
 			{typeof window !== 'undefined' && (
 				<ShoppingCartContainer>
 					{cart.length === 0 ? (
-						<FlexBox className='empty-cart-container'>
-							<FlexBox className='image-container'>
-								<Image
-									src='/images/order/empty-cart.png'
-									alt='empty-cart'
-									width={158}
-									height={175}
-									layout='fixed'
-								/>
-							</FlexBox>
-							<Typography>
-								Your cart is currently empty. &nbsp;
-								<CustomLink href='/product-list/all-products'>
-									Go Shopping
-								</CustomLink>
-							</Typography>
-						</FlexBox>
+						<EmptyCart />
 					) : (
 						<Box>
 							<FlexBox className='table-container'>
@@ -105,90 +83,13 @@ const ShoppingCart = () => {
 													</Typography>
 												</TableCell>
 												<TableCell className='product-quantity-container'>
-													<Grid
-														container
-														className='product-quantity-detail'
-														sx={{ border: '1px solid #ADADAD' }}
-													>
-														<Grid
-															item
-															xs={4.5}
-															sx={{
-																display: 'flex',
-																alignItems: 'center',
-																justifyContent: 'center'
-															}}
-														>
-															<IconButton
-																className='btn-decrease'
-																disableRipple
-																disabled={
-																	Number(cartItem.quantity) <= 1 ? true : false
-																}
-																onClick={() => {
-																	quantityDecrease(
-																		cartItem,
-																		cart,
-																		setCart,
-																		order,
-																		setOrder
-																	)
-																}}
-															>
-																<Remove
-																	fontSize='medium'
-																	sx={{ color: '#333333' }}
-																/>
-															</IconButton>
-														</Grid>
-														<Grid
-															item
-															xs
-															sx={{
-																display: 'flex',
-																alignItems: 'center',
-																justifyContent: 'center'
-															}}
-														>
-															<Typography
-																variant='h6'
-																className='product-quantity'
-															>
-																{cartItem.quantity}
-															</Typography>
-														</Grid>
-														<Grid
-															item
-															xs={4.5}
-															sx={{
-																display: 'flex',
-																alignItems: 'center',
-																justifyContent: 'center'
-															}}
-														>
-															<IconButton
-																className='btn-increase'
-																disableRipple
-																disabled={
-																	Number(cartItem.quantity) >= 99 ? true : false
-																}
-																onClick={() => {
-																	quantityIncrease(
-																		cartItem,
-																		cart,
-																		setCart,
-																		order,
-																		setOrder
-																	)
-																}}
-															>
-																<Add
-																	fontSize='medium'
-																	sx={{ color: '#333333' }}
-																/>
-															</IconButton>
-														</Grid>
-													</Grid>
+													<ProductQuantity
+														cartItem={cartItem}
+														cart={cart}
+														setCart={setCart}
+														order={order}
+														setOrder={setOrder}
+													/>
 												</TableCell>
 												<TableCell>
 													<Typography className='product-subtotal'>
