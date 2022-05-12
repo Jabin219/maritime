@@ -25,15 +25,17 @@ const OrderContextProvider = ({ children }: Props) => {
 	const getOrderStatusButtonContent = (orderStatus: string) => {
 		switch (orderStatus) {
 			case OrderStatus.reserved:
-				return 'Unpaid'
+				return 'Reserved'
 			case OrderStatus.paid:
 				return 'Paid'
 			case OrderStatus.expired:
 				return 'Expired'
 			case OrderStatus.completed:
 				return 'Completed'
-			default:
+			case OrderStatus.unpaid:
 				return 'Unpaid'
+			default:
+				return ''
 		}
 	}
 

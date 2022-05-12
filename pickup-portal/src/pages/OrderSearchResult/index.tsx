@@ -27,7 +27,6 @@ const OrderSearchResult = () => {
 		})
 		order.products = JSON.stringify(stockResult.products)
 	}
-
 	return (
 		<Box
 			sx={{ backgroundColor: '#f5f5f5', paddingTop: '5px', minHeight: '100vh' }}
