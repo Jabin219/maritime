@@ -15,7 +15,7 @@ const sendOrderConfirmation = async (order: Order) => {
 			? 'Credit card'
 			: 'Pay on pickup'
 	const msg = {
-		to: contactInformation.email,
+		to: [contactInformation.email, 'jiabin@zmley.com', 'summer@zmley.com'],
 		// 需改成客户邮箱
 		from: 'dev@zmley.com',
 		templateId:
@@ -43,7 +43,7 @@ const sendOrderConfirmation = async (order: Order) => {
 const sendContactEmail = async (contactContent: ContactContent) => {
 	const msg = {
 		// 需改成客户邮箱
-		to: 'jabin219@gmail.com',
+		to: ['jiabin@zmley.com', 'summer@zmley.com'],
 		// 需改成客户邮箱
 		from: 'dev@zmley.com',
 		templateId: process.env.SENDGRID_CONTACT_TEMPLATE_ID as string,
