@@ -1,7 +1,8 @@
 import { Product } from 'models'
 import { useState, createContext, useEffect } from 'react'
-import { cartStorage, saveCart } from '../utils/cartHandler'
+import { cartStorage, saveCart } from 'utils/cartHandler'
 import { SortMethod } from 'constant'
+import { loadStripe } from '@stripe/stripe-js'
 
 export const ProductContext = createContext<any>(null)
 interface Props {
@@ -17,6 +18,9 @@ const ProductContextProvider = ({ children }: Props) => {
 		cachedProducts.splice(0, cachedProducts.length)
 		setCurrentPage(1)
 	}
+	const stripePromise = loadStripe(
+		`${process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY}`
+	)
 	useEffect(() => {
 		cachedProducts.splice(0, cachedProducts.length)
 	}, [sortMethod])
@@ -36,7 +40,8 @@ const ProductContextProvider = ({ children }: Props) => {
 				setSortMethod,
 				orderStep,
 				setOrderStep,
-				handleChangeCategory
+				handleChangeCategory,
+				stripePromise
 			}}
 		>
 			{children}

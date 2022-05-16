@@ -28,7 +28,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	const { subtotal, tax, total } = await orderCalculator(products)
 	const pickupNumber = generatePickupNumber()
 	const orderStatus =
-		paymentMethod === PaymentMethod.payAtPickup
+		paymentMethod === PaymentMethod.payOnPickup
 			? OrderStatus.reserved
 			: OrderStatus.unpaid
 	if (req.method === 'POST') {
@@ -61,7 +61,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 					intentSecret: intent.client_secret
 				})
 				return
-			} else if (paymentMethod === PaymentMethod.payAtPickup) {
+			} else if (paymentMethod === PaymentMethod.payOnPickup) {
 				orderedProducts.forEach(
 					async (product: { productId: string; quantity: number }) => {
 						const selectedProductResult: any = await ProductModel.findOne({

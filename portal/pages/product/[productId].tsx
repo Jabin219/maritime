@@ -15,7 +15,7 @@ import { ProductContext } from 'context/ProductContextProvider'
 import { SnackContext } from 'context/SnackContextProvider'
 import CustomLink from 'components/customLink'
 import { getProductById } from 'api/products'
-
+import ProductImages from './ProductImages'
 const Product = () => {
 	const router = useRouter()
 	const productId = router.query.productId as string
@@ -44,157 +44,102 @@ const Product = () => {
 	}, [productId])
 
 	return (
-		<ProductDetailContainer>
-			<Box
-				className='product-detail-container'
-				sx={{ margin: '105px auto', width: '60%' }}
-			>
-				<Grid container spacing={10}>
-					<Grid
-						item
-						xs={7}
-						sx={{
-							'& img': {
-								width: '80%'
-							}
-						}}
+		<Box sx={{ minHeight: '100vh' }}>
+			{showedProduct && (
+				<ProductDetailContainer>
+					<Box
+						className='product-info'
+						sx={{ margin: '0 auto', marginTop: '100px', width: '60%' }}
 					>
-						{showedProduct && (
-							<>
-								<Image
-									src={largeImage || showedProduct?.images[0]}
-									alt='product-image'
-									width={500}
-									height={500}
+						<Grid container spacing={10}>
+							<Grid item xs={7} className='product-image'>
+								<ProductImages
+									showedProduct={showedProduct}
+									largeImage={largeImage}
+									setLargeImage={setLargeImage}
 								/>
-								<Box className='mini-img-group'>
-									{(showedProduct?.images as string[]).map((image: string) => (
-										<Box
-											key={image}
-											className='mini-img-container'
-											sx={{
-												border: largeImage === image ? '3px solid #ff8800' : ''
-											}}
+							</Grid>
+							<Grid item xs={5}>
+								<Typography variant='h2' className='product-name'>
+									{showedProduct?.name}
+								</Typography>
+								<Typography className='product-original-price'>
+									${priceFormatter(Number(showedProduct?.originalPrice))} CAD
+								</Typography>
+								<Typography className='product-price'>
+									${priceFormatter(Number(showedProduct?.price))} CAD
+								</Typography>
+								<ProductButtonContainer className='btn-container'>
+									<Button
+										className='add-to-cart'
+										onClick={() => {
+											handleAddToCart()
+										}}
+									>
+										Add to Cart
+									</Button>
+									<CustomLink href='/order'>
+										<Button
+											className='buy-now'
 											onClick={() => {
-												setLargeImage(image)
+												handleAddToCart()
 											}}
 										>
+											Buy Now
+										</Button>
+									</CustomLink>
+								</ProductButtonContainer>
+							</Grid>
+						</Grid>
+					</Box>
+					<Box
+						className='related-products-container'
+						sx={{ paddingBottom: '100px' }}
+					>
+						<RelatedProductsTitle variant='h6'>
+							You May Also Like
+						</RelatedProductsTitle>
+						<Box>
+							<Grid container sx={{ width: '70%', margin: '0 auto' }}>
+								{showedProduct?.recommendedProducts &&
+									showedProduct?.recommendedProducts.map((product, index) => (
+										<RelatedProductGrid item key={index} xs={3}>
 											<Image
-												src={image}
-												alt='product-image-gallery'
-												width={100}
-												height={100}
+												src={product.coverImage}
+												alt='product-image'
+												onClick={() => {
+													router.push(`/product/${product._id}`)
+												}}
+												width={500}
+												height={500}
 											/>
-										</Box>
+											<Typography
+												className='product-name'
+												onClick={() => {
+													router.push(`/product/${product._id}`)
+												}}
+											>
+												{product.name}
+											</Typography>
+											<Typography
+												sx={{
+													color: '#ADADAD',
+													textDecoration: 'line-through'
+												}}
+											>
+												${priceFormatter(Number(product.originalPrice))} CAD
+											</Typography>
+											<Typography className='product-price'>
+												${priceFormatter(Number(product.price))} CAD
+											</Typography>
+										</RelatedProductGrid>
 									))}
-								</Box>
-							</>
-						)}
-					</Grid>
-					<Grid item xs={5}>
-						<Typography
-							className='product-name'
-							sx={{
-								fontWeight: 900,
-								fontSize: 40,
-								marginBottom: '40px',
-								lineHeight: '57px'
-							}}
-						>
-							{showedProduct?.name}
-						</Typography>
-						<Typography
-							className='product-price'
-							sx={{
-								fontWeight: 500,
-								fontSize: 40,
-								color: '#ADADAD',
-								textDecoration: 'line-through',
-								marginBottom: '15px'
-							}}
-						>
-							${priceFormatter(Number(showedProduct?.originalPrice))} CAD
-						</Typography>
-						<Typography
-							className='product-price'
-							sx={{
-								fontWeight: 700,
-								fontSize: 40,
-								color: '#FF8800'
-							}}
-						>
-							${priceFormatter(Number(showedProduct?.price))} CAD
-						</Typography>
-						<ProductButtonContainer className='btn-container'>
-							<Button
-								className='add-to-cart'
-								onClick={() => {
-									handleAddToCart()
-								}}
-							>
-								Add to Cart
-							</Button>
-							<CustomLink href='/order'>
-								<Button
-									className='buy-now'
-									onClick={() => {
-										handleAddToCart()
-									}}
-								>
-									Buy Now
-								</Button>
-							</CustomLink>
-						</ProductButtonContainer>
-					</Grid>
-				</Grid>
-			</Box>
-			<Box
-				className='related-products-container'
-				sx={{ paddingBottom: '100px' }}
-			>
-				<RelatedProductsTitle variant='h6'>
-					You May Also Like
-				</RelatedProductsTitle>
-				<Box>
-					<Grid container sx={{ width: '70%', margin: '0 auto' }}>
-						{showedProduct?.recommendedProducts &&
-							showedProduct?.recommendedProducts.map((product, index) => (
-								<RelatedProductGrid item key={index} xs={3}>
-									<Image
-										src={product.coverImage}
-										alt='product-image'
-										onClick={() => {
-											router.push(`/product/${product._id}`)
-										}}
-										width={500}
-										height={500}
-									/>
-									<Typography
-										className='product-name'
-										onClick={() => {
-											router.push(`/product/${product._id}`)
-										}}
-									>
-										{product.name}
-									</Typography>
-									<Typography
-										sx={{
-											color: '#ADADAD',
-											textDecoration: 'line-through'
-										}}
-									>
-										${priceFormatter(Number(product.originalPrice))} CAD
-									</Typography>
-									<Typography className='product-price'>
-										${priceFormatter(Number(product.price))} CAD
-									</Typography>
-								</RelatedProductGrid>
-							))}
-					</Grid>
-				</Box>
-			</Box>
-		</ProductDetailContainer>
+							</Grid>
+						</Box>
+					</Box>
+				</ProductDetailContainer>
+			)}
+		</Box>
 	)
 }
-
 export default Product

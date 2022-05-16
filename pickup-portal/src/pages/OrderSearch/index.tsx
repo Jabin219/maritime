@@ -12,7 +12,7 @@ const OrderSearch = () => {
 	const { setSearchedString } = useContext(OrderContext)
 	return (
 		<OrderSearchContainer>
-			<Typography>search by pick up number or phone number</Typography>
+			<Typography>search by pickup number or phone number</Typography>
 			<TextField
 				size='small'
 				fullWidth

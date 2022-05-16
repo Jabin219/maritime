@@ -86,10 +86,19 @@ export const ShoppingCartContainer = styled(Box)({
 				cursor: 'pointer'
 			}
 		},
-		'& .product-quantity': {
-			fontSize: 20,
-			lineHeight: '30px',
-			fontFamily: 'Myriad Pro'
+		'& .product-quantity-container': {
+			'& .product-quantity-detail': {
+				height: 40,
+				maxWidth: 120,
+				flexWrap: 'nowrap',
+				'& .product-quantity': {
+					width: 20,
+					textAlign: 'center',
+					fontSize: 20,
+					lineHeight: '40px',
+					fontFamily: 'Myriad Pro'
+				}
+			}
 		}
 	},
 
@@ -200,7 +209,11 @@ export const OrderConfirmationContainer = styled(Box)({
 
 export const OrderConfirmationTopBox = styled(FlexBox)({
 	border: '10px solid #EEEEEE',
-	padding: '65px 450px'
+	padding: '65px 400px',
+	'& h2': {
+		whiteSpace: 'nowrap'
+	},
+	'& p': { textAlign: 'center' }
 })
 export const OrderInformationContainer = styled(Box)({
 	border: '10px solid #EEEEEE',

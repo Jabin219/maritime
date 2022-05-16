@@ -71,7 +71,7 @@ const OrderDetail = () => {
 					</Grid>
 					<Grid container spacing={2} className='order-info-container'>
 						<Grid item className='order-info-label'>
-							Pick Up#:
+							Pickup#:
 						</Grid>
 						<Grid item>{selectedOrder.pickupNumber}</Grid>
 					</Grid>

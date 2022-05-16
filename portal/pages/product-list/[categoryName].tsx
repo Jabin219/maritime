@@ -79,7 +79,7 @@ const ProductList = () => {
 	}, [currentPage, categoryName, sortMethod])
 
 	return (
-		<ProductListPageContainer className='product-list-page'>
+		<ProductListPageContainer>
 			<Grid container>
 				<Grid item xs={3}>
 					<CategoryList />
