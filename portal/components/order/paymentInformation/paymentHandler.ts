@@ -61,7 +61,6 @@ export const handleSubmitOrder = async (
 	clearCart: any,
 	next: any
 ) => {
-	saveContactInformation(contactInformation)
 	const validatorResult = contactFormValidator(
 		contactInformation,
 		setContactNameError,
@@ -69,6 +68,7 @@ export const handleSubmitOrder = async (
 		setContactPhoneError
 	)
 	if (validatorResult) {
+		saveContactInformation(contactInformation)
 		setProcessing(true)
 		const orderedProducts = (order.products as Product[]).map(
 			(product: Product) => {

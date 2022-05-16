@@ -100,7 +100,11 @@ const Product = () => {
 							You May Also Like
 						</RelatedProductsTitle>
 						<Box>
-							<Grid container sx={{ width: '70%', margin: '0 auto' }}>
+							<Grid
+								container
+								sx={{ width: '70%', margin: '0 auto' }}
+								spacing={2}
+							>
 								{showedProduct?.recommendedProducts &&
 									showedProduct?.recommendedProducts.map((product, index) => (
 										<RelatedProductGrid item key={index} xs={3}>
