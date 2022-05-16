@@ -40,7 +40,6 @@ const ProductList = () => {
 	const loadPagesCount = async (category: string) => {
 		const pagesCountResult = await getPagesCount(category)
 		setPagesCount(pagesCountResult.data.count)
-		console.log(pagesCount)
 	}
 	const loadListedProducts = async (
 		currentPage: number,
