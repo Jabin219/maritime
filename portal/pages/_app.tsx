@@ -34,7 +34,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 							<Component {...pageProps} />
 						</Box>
 					) : (
-						<Box sx={{ minHeight: '100vh' }}></Box>
+						<Box sx={{ minHeight: '100vh', paddingBottom: '150px' }}></Box>
 					)}
 					{!router.pathname.startsWith('/admin') && <Footer />}
 				</SnackContextProvider>
