@@ -15,7 +15,7 @@ import { ProductContext } from 'context/ProductContextProvider'
 import { SnackContext } from 'context/SnackContextProvider'
 import CustomLink from 'components/customLink'
 import { getProductById } from 'api/products'
-
+import ProductImages from './ProductImages'
 const Product = () => {
 	const router = useRouter()
 	const productId = router.query.productId as string
@@ -48,86 +48,25 @@ const Product = () => {
 			{showedProduct && (
 				<ProductDetailContainer>
 					<Box
-						className='product-detail-container'
+						className='product-info'
 						sx={{ margin: '0 auto', marginTop: '100px', width: '60%' }}
 					>
 						<Grid container spacing={10}>
-							<Grid
-								item
-								xs={7}
-								sx={{
-									'& img': {
-										width: '80%'
-									}
-								}}
-							>
-								{showedProduct && (
-									<>
-										<Image
-											src={largeImage || showedProduct?.images[0]}
-											alt='product-image'
-											width={500}
-											height={500}
-										/>
-										<Box className='mini-img-group'>
-											{(showedProduct?.images as string[]).map(
-												(image: string) => (
-													<Box
-														key={image}
-														className='mini-img-container'
-														sx={{
-															border:
-																largeImage === image ? '3px solid #ff8800' : ''
-														}}
-														onClick={() => {
-															setLargeImage(image)
-														}}
-													>
-														<Image
-															src={image}
-															alt='product-image-gallery'
-															width={100}
-															height={100}
-														/>
-													</Box>
-												)
-											)}
-										</Box>
-									</>
-								)}
+							<Grid item xs={7} className='product-image'>
+								<ProductImages
+									showedProduct={showedProduct}
+									largeImage={largeImage}
+									setLargeImage={setLargeImage}
+								/>
 							</Grid>
 							<Grid item xs={5}>
-								<Typography
-									className='product-name'
-									sx={{
-										fontWeight: 900,
-										fontSize: 40,
-										marginBottom: '40px',
-										lineHeight: '57px'
-									}}
-								>
+								<Typography variant='h2' className='product-name'>
 									{showedProduct?.name}
 								</Typography>
-								<Typography
-									className='product-price'
-									sx={{
-										fontWeight: 500,
-										fontSize: 40,
-										color: '#ADADAD',
-										textDecoration: 'line-through',
-										marginBottom: '15px'
-									}}
-								>
+								<Typography className='product-original-price'>
 									${priceFormatter(Number(showedProduct?.originalPrice))} CAD
 								</Typography>
-								<Typography
-									className='product-price'
-									sx={{
-										fontWeight: 700,
-										fontSize: 40,
-										color: '#FF8800'
-									}}
-								>
+								<Typography className='product-price'>
 									${priceFormatter(Number(showedProduct?.price))} CAD
 								</Typography>
 								<ProductButtonContainer className='btn-container'>
@@ -203,5 +142,4 @@ const Product = () => {
 		</Box>
 	)
 }
-
 export default Product

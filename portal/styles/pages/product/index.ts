@@ -14,6 +14,26 @@ export const ProductDetailContainer = styled(Box)({
 			cursor: 'pointer',
 			marginRight: '10px'
 		}
+	},
+	'& .product-info': {
+		'& .product-image': {
+			'& img': {
+				width: '80%'
+			}
+		},
+		'& .product-name': {
+			textAlign: 'left',
+			fontWeight: 900,
+			marginBottom: '40px'
+		},
+		'& .product-original-price': {
+			fontWeight: 500,
+			fontSize: 40,
+			color: '#ADADAD',
+			textDecoration: 'line-through',
+			marginBottom: '15px'
+		},
+		'& .product-price': { fontWeight: 700, fontSize: 40, color: '#FF8800' }
 	}
 })
 export const ProductButtonContainer = styled(Box)({
