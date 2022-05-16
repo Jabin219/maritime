@@ -15,7 +15,7 @@ import { ProductContext } from 'context/ProductContextProvider'
 import { SnackContext } from 'context/SnackContextProvider'
 import CustomLink from 'components/customLink'
 import { getProductById } from 'api/products'
-import ProductImages from './ProductImages'
+import ProductImages from 'components/ProductImages'
 const Product = () => {
 	const router = useRouter()
 	const productId = router.query.productId as string
