@@ -25,7 +25,7 @@ const Home: NextPage = () => {
 	useEffect(() => {
 		loadHomePageProducts(categoryNames)
 	}, [])
-	return typeof window !== 'undefined' ? (
+	return (
 		<Box className='home-page'>
 			<FlexBox
 				className='home-page-banner'
@@ -80,8 +80,6 @@ const Home: NextPage = () => {
 				)
 			})}
 		</Box>
-	) : (
-		<></>
 	)
 }
 
