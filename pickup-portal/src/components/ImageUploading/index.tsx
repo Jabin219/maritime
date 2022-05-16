@@ -4,18 +4,19 @@ import { Add } from '@mui/icons-material'
 import { UploadImage } from './style'
 import { Grid, Box, Button } from '@mui/material'
 
-const ImageUploading = ({ dispatch, productInformation }: any) => {
+const ImageUploading = ({ images, setImages, processing }: any) => {
 	const handleUploadImage = (
 		imageList: ImageListType,
 		addUpdateIndex: number[] | undefined
 	) => {
 		// data for submit
-		dispatch({ type: 'CHANGE_PRODUCT_IMAGES', value: imageList as never[] })
+		setImages(imageList)
 	}
+
 	return (
 		<ReactImageUploading
 			multiple
-			value={productInformation.images}
+			value={images}
 			onChange={handleUploadImage}
 			dataURLKey='data_url'
 		>
@@ -38,6 +39,7 @@ const ImageUploading = ({ dispatch, productInformation }: any) => {
 										<Box className='image-item-btn'>
 											<Button
 												variant='contained'
+												disabled={processing}
 												onClick={() => onImageRemove(index)}
 											>
 												Remove

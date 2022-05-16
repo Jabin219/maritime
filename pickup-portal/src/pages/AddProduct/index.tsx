@@ -16,8 +16,8 @@ import { Categories, ResponseStatus } from 'constants/index'
 import { addNewProduct } from 'axios/product'
 import { useNavigate } from 'react-router-dom'
 import ImageUploading from 'components/ImageUploading'
+import { uploadImages } from './uploadImages'
 const initialProductInformation = {
-	images: [],
 	name: '',
 	price: 0,
 	originalPrice: 0,
@@ -28,8 +28,6 @@ const reducer = (state: any, action: any) => {
 	switch (action.type) {
 		case 'CHANGE_PRODUCT_NAME':
 			return { ...state, name: action.value }
-		case 'CHANGE_PRODUCT_IMAGES':
-			return { ...state, images: action.value }
 		case 'CHANGE_PRODUCT_ORIGINAL_PRICE':
 			return { ...state, originalPrice: Number(action.value) }
 		case 'CHANGE_PRODUCT_PRICE':
@@ -52,11 +50,15 @@ const AddProduct = () => {
 	)
 	const [checked, setChecked] = useState(false)
 	const [processing, setProcessing] = useState(false)
+	const [images, setImages] = useState([])
 	const handleSubmit = async (productInformation: any) => {
 		setProcessing(true)
-		const result = await addNewProduct(productInformation)
+		const uploadedFiles = await uploadImages(images)
+		const imageUrls = uploadedFiles.map(
+			(uploadedFile: any) => uploadedFile.fileUrl
+		)
+		const result = await addNewProduct(productInformation, imageUrls)
 		if (result.data.status === ResponseStatus.SUCCESS) {
-			setProcessing(false)
 			navigate('/add-product-complete')
 		} else {
 			setProcessing(false)
@@ -68,8 +70,9 @@ const AddProduct = () => {
 				<Typography>Upload Images</Typography>
 				<Grid container>
 					<ImageUploading
-						dispatch={dispatch}
-						productInformation={productInformation}
+						setImages={setImages}
+						images={images}
+						processing={processing}
 					/>
 				</Grid>
 			</Box>
@@ -158,7 +161,7 @@ const AddProduct = () => {
 			<Button
 				variant='contained'
 				fullWidth
-				disabled={!checked}
+				disabled={!checked || processing}
 				className='submit-btn'
 				onClick={() => {
 					handleSubmit(productInformation)
