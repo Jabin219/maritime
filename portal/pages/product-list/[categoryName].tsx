@@ -39,7 +39,8 @@ const ProductList = () => {
 	const [pagesCount, setPagesCount] = useState<any>(0)
 	const loadPagesCount = async (category: string) => {
 		const pagesCountResult = await getPagesCount(category)
-		setPagesCount(pagesCountResult.data.pagesCount)
+		setPagesCount(pagesCountResult.data.count)
+		console.log(pagesCount)
 	}
 	const loadListedProducts = async (
 		currentPage: number,
