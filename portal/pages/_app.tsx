@@ -1,83 +1,13 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
-import { createTheme, ThemeProvider, Box } from '@mui/material'
+import { ThemeProvider, Box } from '@mui/material'
 import Header from '../components/header'
 import Footer from '../components/footer'
 import ProductContextProvider from '../context/ProductContextProvider'
 import Head from 'next/head'
 import SnackContextProvider from '../context/SnackContextProvider'
 import { useRouter } from 'next/router'
-
-const theme = createTheme({
-	palette: {
-		primary: {
-			main: '#FF8800'
-		},
-		secondary: {
-			main: '#ffffff'
-		}
-	},
-	typography: {
-		body1: {
-			fontFamily: 'Source Sans Pro',
-			color: '#333333',
-			fontSize: 20,
-			lineHeight: '28px',
-			fontStyle: 'normal'
-		},
-		body2: {
-			fontSize: 30,
-			lineHeight: '43px',
-			fontFamily: 'Source Sans Pro',
-			color: '#333333',
-			fontStyle: 'normal'
-		},
-		h1: {
-			fontSize: 60,
-			fontWeight: 900,
-			lineHeight: '85px',
-			fontFamily: 'Source Sans Pro',
-			color: '#333333',
-			fontStyle: 'normal',
-			textAlign: 'center'
-		},
-		h2: {
-			fontFamily: 'Source Sans Pro',
-			color: '#333333',
-			fontStyle: 'normal',
-			fontSize: 40,
-			fontWeight: 700,
-			lineHeight: '57px',
-			textAlign: 'center'
-		},
-		h3: {
-			fontFamily: 'Source Sans Pro',
-			color: '#333333',
-			fontStyle: 'normal'
-		},
-		h4: {
-			fontFamily: 'Source Sans Pro',
-			color: '#333333',
-			fontStyle: 'normal'
-		},
-		h5: {
-			fontFamily: 'Source Sans Pro',
-			color: '#333333',
-			fontStyle: 'normal',
-			fontSize: 28,
-			fontWeight: 600,
-			lineHeight: '40px'
-		},
-		h6: {
-			fontFamily: 'Source Sans Pro',
-			color: '#333333',
-			fontStyle: 'normal',
-			fontSize: 20,
-			fontWeight: 600,
-			lineHeight: '28px'
-		}
-	}
-})
+import { theme } from 'styles/muiTheme'
 
 function MyApp({ Component, pageProps }: AppProps) {
 	const router = useRouter()
@@ -93,15 +23,19 @@ function MyApp({ Component, pageProps }: AppProps) {
 			<ProductContextProvider>
 				<SnackContextProvider>
 					{!router.pathname.startsWith('/admin') && <Header />}
-					<Box
-						sx={{
-							maxWidth: '1920px',
-							margin: '0 auto',
-							paddingBottom: '150px'
-						}}
-					>
-						<Component {...pageProps} />
-					</Box>
+					{typeof window !== 'undefined' ? (
+						<Box
+							sx={{
+								maxWidth: '1920px',
+								margin: '0 auto',
+								paddingBottom: '150px'
+							}}
+						>
+							<Component {...pageProps} />
+						</Box>
+					) : (
+						<Box sx={{ minHeight: '100vh' }}></Box>
+					)}
 					{!router.pathname.startsWith('/admin') && <Footer />}
 				</SnackContextProvider>
 			</ProductContextProvider>
