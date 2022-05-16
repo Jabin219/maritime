@@ -5,12 +5,14 @@ import Header from 'components/Header'
 import OrderContextProvider from 'contexts/OrderContext'
 import AppRoutes from 'routes'
 import { Box } from '@mui/material'
+import { useLocation } from 'react-router-dom'
 
-function App() {
+const App = () => {
+	const location = useLocation()
 	return (
 		<OrderContextProvider>
 			<TextContextProvider>
-				<Header />
+				{location.pathname !== '/' && <Header />}
 				<Box sx={{ paddingBottom: '100px' }}>
 					<AppRoutes />
 				</Box>

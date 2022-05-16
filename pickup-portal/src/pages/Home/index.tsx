@@ -1,13 +1,10 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { Box, Typography } from '@mui/material'
 import { Search, Upload } from '@mui/icons-material'
 import { HomePageButton } from './style'
 import { Link } from 'react-router-dom'
-import { TextContext } from 'contexts/TextContext'
 
 const Home = () => {
-	const { setHeaderTitle } = useContext(TextContext)
-	setHeaderTitle('Home')
 	return (
 		<Box>
 			<Box
