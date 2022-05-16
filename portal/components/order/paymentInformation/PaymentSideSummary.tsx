@@ -124,7 +124,7 @@ const PaymentSideSummary = ({
 				}}
 				sx={{ cursor: 'pointer' }}
 			>
-				Back To Cart
+				Back to Cart
 			</Typography>
 		</CartSideSummaryContainer>
 	)
