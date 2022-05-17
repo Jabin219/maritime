@@ -148,10 +148,18 @@ const AddProduct = () => {
 			</Box>
 			<FormControlLabel
 				className='final-check'
-				label='I checked all infomation above is correct'
+				label='I checked all information above is correct'
 				control={
 					<Checkbox
 						checked={checked}
+						disabled={
+							!productInformation.name ||
+							!productInformation.stock ||
+							!productInformation.originalPrice ||
+							!productInformation.price ||
+							!productInformation.category ||
+							!images
+						}
 						onChange={() => {
 							setChecked(!checked)
 						}}

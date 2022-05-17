@@ -12,8 +12,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	try {
 		const product = new ProductModel({
 			name,
-			price,
-			originalPrice,
+			price: price.toFixed(2),
+			originalPrice: originalPrice.toFixed(2),
 			coverImage: imageUrls[0],
 			images: JSON.stringify(imageUrls),
 			category,
