@@ -31,62 +31,55 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 		paymentMethod === PaymentMethod.payOnPickup
 			? OrderStatus.reserved
 			: OrderStatus.unpaid
-	if (req.method === 'POST') {
-		try {
-			const order = new OrderModel({
-				products: JSON.stringify(products),
-				subtotal,
-				tax,
+	try {
+		const order = new OrderModel({
+			products: JSON.stringify(products),
+			subtotal,
+			tax,
+			total,
+			contactInformation: contactInformation,
+			paymentMethod,
+			pickupNumber,
+			shippingMethod,
+			status: orderStatus
+		})
+		const orderAddedResult = await order.save()
+		if (paymentMethod === PaymentMethod.creditCard) {
+			const intent = await createPaymentIntent(
 				total,
-				contactInformation: contactInformation,
-				paymentMethod,
-				pickupNumber,
-				shippingMethod,
-				status: orderStatus
-			})
-			const orderAddedResult = await order.save()
-			if (paymentMethod === PaymentMethod.creditCard) {
-				const intent = await createPaymentIntent(
-					total,
-					orderAddedResult._id.toString(),
-					JSON.stringify(orderedProducts)
-				)
-				if (!intent.client_secret) {
-					res.json({ status: ResponseStatus.ERROR, message: 'Payment failed' })
-					return
-				}
-				res.status(200).json({
-					status: ResponseStatus.SUCCESS,
-					order: orderAddedResult,
-					intentSecret: intent.client_secret
-				})
+				orderAddedResult._id.toString(),
+				JSON.stringify(orderedProducts)
+			)
+			if (!intent.client_secret) {
+				res.json({ status: ResponseStatus.ERROR, message: 'Payment failed' })
 				return
-			} else if (paymentMethod === PaymentMethod.payOnPickup) {
-				orderedProducts.forEach(
-					async (product: { productId: string; quantity: number }) => {
-						const selectedProductResult: any = await ProductModel.findOne({
-							_id: product.productId
-						})
-						selectedProductResult.stock =
-							selectedProductResult.stock - product.quantity
-						await selectedProductResult.save()
-					}
-				)
-				sendOrderConfirmation(orderAddedResult)
 			}
 			res.status(200).json({
 				status: ResponseStatus.SUCCESS,
-				order: orderAddedResult
+				order: orderAddedResult,
+				intentSecret: intent.client_secret
 			})
-		} catch (err) {
-			console.error(err)
-			res.status(500).json({ status: ResponseStatus.FAIL, message: err })
+			return
+		} else if (paymentMethod === PaymentMethod.payOnPickup) {
+			orderedProducts.forEach(
+				async (product: { productId: string; quantity: number }) => {
+					const selectedProductResult: any = await ProductModel.findOne({
+						_id: product.productId
+					})
+					selectedProductResult.stock =
+						selectedProductResult.stock - product.quantity
+					await selectedProductResult.save()
+				}
+			)
+			await sendOrderConfirmation(orderAddedResult)
 		}
-	} else {
-		res.status(400).json({
-			status: ResponseStatus.FAIL,
-			message: 'incorrect request method'
+		res.status(200).json({
+			status: ResponseStatus.SUCCESS,
+			order: orderAddedResult
 		})
+	} catch (err) {
+		console.error(err)
+		res.status(500).json({ status: ResponseStatus.FAIL, message: err })
 	}
 }
 export default connectDB(handler)
