@@ -77,7 +77,6 @@ export const RelatedProductsTitle = styled(Typography)({
 export const RelatedProductGrid = styled(Grid)({
 	display: 'flex',
 	flexDirection: 'column',
-	justifyContent: 'center',
 	alignItems: 'center',
 	'& img': {
 		width: '80%',
@@ -88,6 +87,7 @@ export const RelatedProductGrid = styled(Grid)({
 		textAlign: 'center'
 	},
 	'& .product-name': {
+		marginTop: '10px',
 		cursor: 'pointer'
 	},
 	'& .product-price': {

@@ -26,7 +26,7 @@ const HomeProductGrid = ({ category, products }: Props) => {
 				className='products-container'
 				sx={{ flexDirection: 'row', width: '80%' }}
 			>
-				<Grid container sx={{ minHeight: 400 }} spacing={2}>
+				<Grid container spacing={2}>
 					{products &&
 						products.map((product, index) => (
 							<ProductListGrid key={index} item xs={3}>

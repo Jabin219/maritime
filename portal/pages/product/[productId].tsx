@@ -92,10 +92,7 @@ const Product = () => {
 							</Grid>
 						</Grid>
 					</Box>
-					<Box
-						className='related-products-container'
-						sx={{ paddingBottom: '100px' }}
-					>
+					<Box className='related-products-container'>
 						<RelatedProductsTitle variant='h6'>
 							You May Also Like
 						</RelatedProductsTitle>
