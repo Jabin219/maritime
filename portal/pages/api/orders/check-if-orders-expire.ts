@@ -4,8 +4,10 @@ import { OrderStatus, ResponseStatus } from 'constant'
 import OrderModel from 'models/mongodb/order'
 import { Order, Product } from 'models'
 import ProductModel from 'models/mongodb/product'
+import { corsHandler } from 'services/corsHandler'
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+	await corsHandler(req, res)
 	try {
 		const ordersResult = await OrderModel.find({ status: OrderStatus.reserved })
 		const orderReversedDays = 3
