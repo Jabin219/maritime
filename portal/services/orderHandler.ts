@@ -75,7 +75,6 @@ const decreaseOrderedProductsStock = async (orderedProducts: Product[]) => {
 			await selectedProductResult.save()
 		}
 	)
-	console.log(updatingStockFunctions)
 	await Promise.all(updatingStockFunctions)
 }
 export {
