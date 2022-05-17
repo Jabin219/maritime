@@ -29,7 +29,6 @@ const Product = () => {
 			quantity: 1
 		}
 		addToCart(cart, thisProduct as Product, setCart)
-		showSnackbar('add-to-cart')
 	}
 	const loadProduct = async (productId: string) => {
 		const productResult = await getProductById(productId)
@@ -74,6 +73,7 @@ const Product = () => {
 										className='add-to-cart'
 										onClick={() => {
 											handleAddToCart()
+											showSnackbar('add-to-cart')
 										}}
 									>
 										Add to Cart

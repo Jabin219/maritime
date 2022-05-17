@@ -40,7 +40,7 @@ const loadOrderedProducts = async (
 	}
 }
 
-const checkProductsStock = async (products: Product[]) => {
+const checkProductsStock = (products: Product[]) => {
 	const outOfStockProductIds: string[] = []
 	products.forEach(product => {
 		if (Number(product.quantity) > Number(product.stock)) {
@@ -50,7 +50,7 @@ const checkProductsStock = async (products: Product[]) => {
 	return outOfStockProductIds
 }
 
-const orderCalculator = async (products: Product[]) => {
+const orderCalculator = (products: Product[]) => {
 	let subtotal = 0
 	products.forEach((product: Product) => {
 		subtotal += Number(product.price) * Number(product.quantity)
@@ -64,9 +64,24 @@ const orderCalculator = async (products: Product[]) => {
 	}
 }
 
+const decreaseOrderedProductsStock = async (orderedProducts: Product[]) => {
+	const updatingStockFunctions = orderedProducts.map(
+		async (orderedProduct: any) => {
+			const selectedProductResult: any = await ProductModel.findOne({
+				_id: orderedProduct._id
+			})
+			selectedProductResult.stock =
+				selectedProductResult.stock - orderedProduct.quantity
+			await selectedProductResult.save()
+		}
+	)
+	console.log(updatingStockFunctions)
+	await Promise.all(updatingStockFunctions)
+}
 export {
 	generatePickupNumber,
 	orderCalculator,
 	checkProductsStock,
-	loadOrderedProducts
+	loadOrderedProducts,
+	decreaseOrderedProductsStock
 }

@@ -31,7 +31,7 @@ const sendOrderConfirmation = async (order: Order) => {
 		}
 	}
 	try {
-		await MailService.send(msg)
+		MailService.send(msg)
 	} catch (error) {
 		console.error(error)
 		if ((error as any).response) {
