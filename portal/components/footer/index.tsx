@@ -91,7 +91,9 @@ const Footer = () => {
 			</FooterContainer>
 			<CopyrightContainer>
 				<Divider variant='middle' sx={{ backgroundColor: '#adadad' }} />
-				<Typography sx={{ color: '#adadad' }}>Copyright Reserved</Typography>
+				<Typography sx={{ color: '#adadad' }}>
+					Copyright © 2022 — Maritime Household Outlet
+				</Typography>
 			</CopyrightContainer>
 		</>
 	)

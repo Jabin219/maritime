@@ -107,7 +107,7 @@ const ProductList = () => {
 								</MenuItem>
 							</Select>
 						</FormControl>
-						<Grid container>
+						<Grid container spacing={2}>
 							{listedProducts &&
 								listedProducts.map((product: Product) => (
 									<ProductListGrid key={product._id} item xs={3}>
