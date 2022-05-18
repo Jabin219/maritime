@@ -111,8 +111,8 @@ const Product = () => {
 												onClick={() => {
 													router.push(`/product/${product._id}`)
 												}}
-												width={500}
-												height={500}
+												width={256}
+												height={256}
 											/>
 											<Typography
 												className='product-name'

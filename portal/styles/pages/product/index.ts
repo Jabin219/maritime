@@ -1,6 +1,7 @@
 import { Box, Grid, Typography } from '@mui/material'
 import { styled } from '@mui/system'
 export const ProductDetailContainer = styled(Box)({
+	'& img': { objectFit: 'cover' },
 	'& .mini-img-group': {
 		height: 150,
 		width: 500,
@@ -80,7 +81,8 @@ export const RelatedProductGrid = styled(Grid)({
 	alignItems: 'center',
 	'& img': {
 		width: '80%',
-		cursor: 'pointer'
+		cursor: 'pointer',
+		objectFit: 'cover'
 	},
 	'& .product-name, .product-price': {
 		fontWeight: 600,
