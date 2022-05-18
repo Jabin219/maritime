@@ -67,12 +67,13 @@ const orderCalculator = (products: Product[]) => {
 const decreaseOrderedProductsStock = async (orderedProducts: Product[]) => {
 	const updatingStockFunctions = orderedProducts.map(
 		async (orderedProduct: any) => {
-			const selectedProductResult: any = await ProductModel.findOne({
-				_id: orderedProduct._id
-			})
-			selectedProductResult.stock =
-				selectedProductResult.stock - orderedProduct.quantity
-			await selectedProductResult.save()
+			const decNumber = 0 - orderedProduct.quantity
+			await ProductModel.findOneAndUpdate(
+				{
+					_id: orderedProduct._id
+				},
+				{ $inc: { stock: decNumber } }
+			)
 		}
 	)
 	await Promise.all(updatingStockFunctions)

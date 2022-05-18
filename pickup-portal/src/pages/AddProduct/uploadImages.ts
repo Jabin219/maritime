@@ -31,7 +31,6 @@ export const uploadImages = async (images: any[]) => {
 				if (err) {
 					throw err
 				}
-				console.log(`File uploaded successfully. ${data.Location}`)
 			})
 		})
 	)
