@@ -1,7 +1,7 @@
 name: daily-check-cron
 on:
   schedule:
-    - cron: "0 0 * * *"
+    - cron: "* * * * *"
 jobs:
   cron:
     runs-on: ubuntu-latest
