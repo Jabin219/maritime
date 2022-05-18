@@ -68,7 +68,14 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 				return
 			} else if (paymentMethod === PaymentMethod.payOnPickup) {
 				await decreaseOrderedProductsStock(products)
-				sendOrderConfirmation(orderAddedResult)
+				const emailResult = await sendOrderConfirmation(orderAddedResult)
+				if (emailResult.status === ResponseStatus.ERROR) {
+					res.status(200).json({
+						status: ResponseStatus.ERROR,
+						error: emailResult.error
+					})
+					return
+				}
 				res.status(200).json({
 					status: ResponseStatus.SUCCESS,
 					order: orderAddedResult
