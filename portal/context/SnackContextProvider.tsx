@@ -1,5 +1,6 @@
 import { createContext, useReducer } from 'react'
-import CustomSnackBar from '../components/customSnackBar'
+import CustomSnackBar from 'components/customSnackBar'
+
 export const SnackContext = createContext<ContextData>({
 	showSnackbar: () => {}
 })

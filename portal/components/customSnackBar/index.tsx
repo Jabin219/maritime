@@ -3,6 +3,7 @@ import MuiAlert from '@mui/material/Alert'
 import { SnackSeverity, SnackType } from 'constant'
 import { ProductContext } from 'context/ProductContextProvider'
 import { forwardRef, useContext } from 'react'
+import Fade from '@mui/material/Fade'
 
 const Alert: any = forwardRef(function Alert(props, ref) {
 	return <MuiAlert elevation={6} ref={ref as any} variant='filled' {...props} />
@@ -73,6 +74,7 @@ const CustomSnackBar = ({ open, snackClose, snackType }: Props) => {
 					onClose={snackClose}
 					action={getSnackbarAction(snackType)}
 					message={getSnackbarContent(snackType)}
+					TransitionComponent={Fade}
 					sx={{
 						fontSize: 18,
 						marginTop: '100px',
@@ -85,9 +87,14 @@ const CustomSnackBar = ({ open, snackClose, snackType }: Props) => {
 					open={open}
 					autoHideDuration={3000}
 					onClose={snackClose}
+					TransitionComponent={Fade}
 					sx={{ '& .MuiAlert-message': { fontSize: 18, padding: 0 } }}
 				>
-					<Alert onClose={snackClose} severity={getSnackSeverity(snackType)}>
+					<Alert
+						onClose={snackClose}
+						severity={getSnackSeverity(snackType)}
+						sx={{ width: '100%' }}
+					>
 						{getSnackbarContent(snackType)}
 					</Alert>
 				</Snackbar>
