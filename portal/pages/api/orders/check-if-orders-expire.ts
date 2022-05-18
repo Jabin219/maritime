@@ -28,14 +28,19 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 				{ _id: { $in: expiredOrderIds } },
 				{ status: OrderStatus.expired }
 			)
-			expiredOrders.forEach(order => {
-				const products = JSON.parse(String(order.products))
-				products.forEach(async (product: Product) => {
-					const productResult = await ProductModel.findOne({ _id: product._id })
-					productResult.stock += product.quantity
-					productResult.save()
+			Promise.all(
+				expiredOrders.map(async order => {
+					const products = JSON.parse(String(order.products))
+					await Promise.all(
+						products.map(async (product: Product) => {
+							await ProductModel.findOneAndUpdate(
+								{ _id: product._id },
+								{ $inc: { stock: product.quantity } }
+							)
+						})
+					)
 				})
-			})
+			)
 			res.status(200).json({
 				status: ResponseStatus.SUCCESS,
 				expiredOrders
