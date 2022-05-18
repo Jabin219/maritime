@@ -16,6 +16,7 @@ import { SnackContext } from 'context/SnackContextProvider'
 import CustomLink from 'components/customLink'
 import { getProductById } from 'api/products'
 import ProductImages from 'components/ProductImages'
+import { SnackType } from 'constant'
 const Product = () => {
 	const router = useRouter()
 	const productId = router.query.productId as string
@@ -73,7 +74,7 @@ const Product = () => {
 										className='add-to-cart'
 										onClick={() => {
 											handleAddToCart()
-											showSnackbar('add-to-cart')
+											showSnackbar(SnackType.ADD_TO_CART)
 										}}
 									>
 										Add to Cart
