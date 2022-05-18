@@ -81,7 +81,7 @@ const AddProduct = () => {
 				<TextField
 					fullWidth
 					size='small'
-					inputProps={{ maxLength: 100 }}
+					inputProps={{ maxLength: 80 }}
 					onChange={event => {
 						dispatch({
 							type: 'CHANGE_PRODUCT_NAME',
