@@ -41,7 +41,6 @@ export const CartSideSummaryContainer = styled(Box)({
 		color: '#ffffff',
 		fontSize: 20,
 		lineHeight: '30px',
-		textTransform: 'none',
 		'&:hover': {
 			backgroundColor: '#FF8800'
 		}
@@ -50,7 +49,8 @@ export const CartSideSummaryContainer = styled(Box)({
 
 export const ShoppingCartContainer = styled(Box)({
 	border: '10px solid #EEEEEE',
-	'.table-container': {
+	'& img': { objectFit: 'cover' },
+	'& .table-container': {
 		width: '95%',
 		margin: '0 auto',
 		'& table': {
@@ -75,14 +75,15 @@ export const ShoppingCartContainer = styled(Box)({
 			verticalAlign: 'top'
 		},
 		'& .product-name, .product-price, .product-subtotal': {
-			lineHeight: '40px'
+			lineHeight: '28px'
 		},
 		'& .product-name': {
 			position: 'relative',
+			paddingLeft: '10px',
 			'& .icon-delete': {
 				position: 'absolute',
-				left: '-0.3vw',
-				bottom: '10px',
+				left: '10px',
+				bottom: 0,
 				cursor: 'pointer'
 			}
 		},

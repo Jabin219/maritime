@@ -46,7 +46,7 @@ const ShoppingCart = () => {
 											<TableRow key={index}>
 												<TableCell>
 													<Grid container>
-														<Grid item xs>
+														<Grid item xs={3}>
 															<Image
 																src={cartItem.coverImage}
 																alt='product-image'
@@ -54,7 +54,7 @@ const ShoppingCart = () => {
 																height={200}
 															/>
 														</Grid>
-														<Grid className='product-name' item xs>
+														<Grid className='product-name' item xs={9}>
 															{cartItem.name}
 															{cartItem.outOfStock && (
 																<Typography sx={{ color: '#FF0000' }}>

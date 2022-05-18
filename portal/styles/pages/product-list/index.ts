@@ -31,15 +31,16 @@ const ProductListGrid = styled(Grid)({
 	marginBottom: '20px',
 	display: 'flex',
 	flexDirection: 'column',
-	justifyContent: 'center',
 	alignItems: 'center',
-	'& .product-name, .product-name': {
-		fontSize: 20,
-		fontWeight: 600,
-		textAlign: 'center'
+	'& img': {
+		objectFit: 'cover'
 	},
 	'& .product-name': {
-		cursor: 'pointer'
+		fontSize: 20,
+		fontWeight: 600,
+		textAlign: 'center',
+		cursor: 'pointer',
+		marginTop: '10px'
 	},
 	'& .product-price': {
 		color: '#FF8800',

@@ -19,19 +19,20 @@ export const uploadImages = async (images: any[]) => {
 			fileUrl: `https://maritime-household-media.s3.ca-central-1.amazonaws.com/${fileName}`
 		}
 	})
-	for await (const uploadedFile of uploadedFiles) {
-		const params: any = {
-			Bucket: process.env.REACT_APP_S3_BUCKET as string,
-			ACL: 'public-read',
-			Key: uploadedFile.fileName,
-			Body: uploadedFile.file
-		}
-		s3.upload(params, (err: any, data: any) => {
-			if (err) {
-				throw err
+	await Promise.all(
+		uploadedFiles.map(async (uploadedFile: any) => {
+			const params: any = {
+				Bucket: process.env.REACT_APP_S3_BUCKET as string,
+				ACL: 'public-read',
+				Key: uploadedFile.fileName,
+				Body: uploadedFile.file
 			}
-			console.log(`File uploaded successfully. ${data.Location}`)
+			s3.upload(params, (err: any, data: any) => {
+				if (err) {
+					throw err
+				}
+			})
 		})
-	}
+	)
 	return uploadedFiles
 }

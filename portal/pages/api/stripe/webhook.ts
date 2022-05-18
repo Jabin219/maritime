@@ -5,6 +5,7 @@ import Stripe from 'stripe'
 import { OrderStatus } from 'constant'
 import { sendOrderConfirmation } from 'services/emailHandler'
 import { Product } from 'models'
+import { decreaseOrderedProductsStock } from 'services/orderHandler'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
 	apiVersion: '2020-08-27'
@@ -27,14 +28,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 				)
 				const orderResult = await OrderModel.findOne({ _id: orderId })
 				const orderedProducts: Product[] = JSON.parse(orderResult.products)
-				orderedProducts.forEach(async orderedProduct => {
-					const productResult = await ProductModel.findOne({
-						_id: orderedProduct._id
-					})
-					productResult.stock =
-						productResult.stock - Number(orderedProduct.quantity)
-					await productResult.save()
-				})
+				decreaseOrderedProductsStock(orderedProducts)
 				orderResult.status = OrderStatus.paid
 				await orderResult.save()
 				sendOrderConfirmation(orderResult)

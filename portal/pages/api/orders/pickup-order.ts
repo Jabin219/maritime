@@ -5,6 +5,7 @@ import { OrderStatus, ResponseStatus } from 'constant'
 import { Product } from 'models'
 import ProductModel from 'models/mongodb/product'
 import { corsHandler } from 'services/corsHandler'
+import { decreaseOrderedProductsStock } from 'services/orderHandler'
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	await corsHandler(req, res)
@@ -21,14 +22,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 		} else {
 			if (order.status === OrderStatus.expired) {
 				const orderedProducts = JSON.parse(order.products)
-				orderedProducts.forEach(async (product: Product) => {
-					const selectedProductResult: any = await ProductModel.findOne({
-						_id: product._id
-					})
-					selectedProductResult.stock =
-						selectedProductResult.stock - Number(product.quantity)
-					await selectedProductResult.save()
-				})
+				await decreaseOrderedProductsStock(orderedProducts)
 			}
 			order.status = OrderStatus.completed
 			await order.save()

@@ -28,7 +28,6 @@ export const LoginContainer = styled(Box)({
 			fontWeight: 700,
 			fontSize: 20,
 			lineHeight: '30px',
-			textTransform: 'none',
 			borderRadius: '5px'
 		}
 	},
