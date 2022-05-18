@@ -21,7 +21,6 @@ export const AddProductContainer = styled(Box)({
 			}
 		},
 		'& button': {
-			textTransform: 'none',
 			backgroundColor: '#D8D8D8',
 			padding: '5px 10px',
 			fontSize: '12px',
@@ -37,7 +36,6 @@ export const AddProductContainer = styled(Box)({
 		marginBottom: '20px'
 	},
 	'& .submit-btn': {
-		textTransform: 'none',
 		fontSize: '20px',
 		fontWeight: '700'
 	}

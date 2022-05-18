@@ -41,7 +41,6 @@ export const CartSideSummaryContainer = styled(Box)({
 		color: '#ffffff',
 		fontSize: 20,
 		lineHeight: '30px',
-		textTransform: 'none',
 		'&:hover': {
 			backgroundColor: '#FF8800'
 		}
@@ -79,9 +78,10 @@ export const ShoppingCartContainer = styled(Box)({
 		},
 		'& .product-name': {
 			position: 'relative',
+			paddingLeft: '0.5vw',
 			'& .icon-delete': {
 				position: 'absolute',
-				left: '-0.3vw',
+				left: '0.5vw',
 				bottom: '10px',
 				cursor: 'pointer'
 			}

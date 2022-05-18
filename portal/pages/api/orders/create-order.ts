@@ -5,34 +5,39 @@ import {
 	generatePickupNumber,
 	orderCalculator,
 	checkProductsStock,
-	loadOrderedProducts
+	loadOrderedProducts,
+	decreaseOrderedProductsStock
 } from 'services/orderHandler'
 import { createPaymentIntent } from 'services/stripeHandler'
 import { ResponseStatus, PaymentMethod, OrderStatus } from 'constant'
-import ProductModel from 'models/mongodb/product'
 import { sendOrderConfirmation } from 'services/emailHandler'
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-	const { orderedProducts, contactInformation, paymentMethod, shippingMethod } =
-		req.body
-	const products = await loadOrderedProducts(orderedProducts)
-	const checkProductsStockResult = await checkProductsStock(products)
-	if (checkProductsStockResult.length > 0) {
-		res.status(200).json({
-			status: ResponseStatus.OUT_OF_STOCK,
-			message: 'One or more items in your cart are out of stock.',
-			products: checkProductsStockResult
-		})
-		return
-	}
-	const { subtotal, tax, total } = await orderCalculator(products)
-	const pickupNumber = generatePickupNumber()
-	const orderStatus =
-		paymentMethod === PaymentMethod.payOnPickup
-			? OrderStatus.reserved
-			: OrderStatus.unpaid
 	if (req.method === 'POST') {
+		const {
+			orderedProducts,
+			contactInformation,
+			paymentMethod,
+			shippingMethod
+		} = req.body
 		try {
+			const products = await loadOrderedProducts(orderedProducts)
+			const checkProductsStockResult = checkProductsStock(products)
+			if (checkProductsStockResult.length > 0) {
+				res.status(200).json({
+					status: ResponseStatus.OUT_OF_STOCK,
+					message: 'One or more items in your cart are out of stock.',
+					products: checkProductsStockResult
+				})
+				return
+			}
+			const { subtotal, tax, total } = orderCalculator(products)
+			const pickupNumber = generatePickupNumber()
+			const orderStatus =
+				paymentMethod === PaymentMethod.payOnPickup
+					? OrderStatus.reserved
+					: OrderStatus.unpaid
+
 			const order = new OrderModel({
 				products: JSON.stringify(products),
 				subtotal,
@@ -62,22 +67,25 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 				})
 				return
 			} else if (paymentMethod === PaymentMethod.payOnPickup) {
-				orderedProducts.forEach(
-					async (product: { productId: string; quantity: number }) => {
-						const selectedProductResult: any = await ProductModel.findOne({
-							_id: product.productId
-						})
-						selectedProductResult.stock =
-							selectedProductResult.stock - product.quantity
-						await selectedProductResult.save()
-					}
-				)
-				sendOrderConfirmation(orderAddedResult)
+				await decreaseOrderedProductsStock(products)
+				const emailResult = await sendOrderConfirmation(orderAddedResult)
+				if (emailResult.status === ResponseStatus.ERROR) {
+					res.json({
+						status: ResponseStatus.ERROR,
+						error: emailResult.error
+					})
+					return
+				}
+				res.status(200).json({
+					status: ResponseStatus.SUCCESS,
+					order: orderAddedResult
+				})
+			} else {
+				res.status(200).json({
+					status: ResponseStatus.ERROR,
+					message: 'No valid payment method'
+				})
 			}
-			res.status(200).json({
-				status: ResponseStatus.SUCCESS,
-				order: orderAddedResult
-			})
 		} catch (err) {
 			console.error(err)
 			res.status(500).json({ status: ResponseStatus.FAIL, message: err })

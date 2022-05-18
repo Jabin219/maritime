@@ -74,7 +74,7 @@ const OrderConfirmation = () => {
 										variant='h6'
 										className='pick-up-information-subtitle'
 									>
-										Items Will be Reserved for
+										Items Will be Reserved For
 									</Typography>
 									<Typography
 										variant='h6'
@@ -122,7 +122,7 @@ const OrderConfirmation = () => {
 								<Grid item xs>
 									<Box className='single-information-container'>
 										<Typography component='label'>Shipping Method: </Typography>
-										<Typography component='span'>In-store pickup</Typography>
+										<Typography component='span'>In-store Pickup</Typography>
 									</Box>
 									<Box className='single-information-container'>
 										<Typography component='label'>Payment Method: </Typography>

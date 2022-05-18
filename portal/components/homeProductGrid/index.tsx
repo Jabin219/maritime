@@ -1,4 +1,3 @@
-import { useContext } from 'react'
 import { Grid, Typography } from '@mui/material'
 import { Category, Product } from 'models'
 import Image from 'next/image'
@@ -7,7 +6,6 @@ import {
 	ProductListTitle,
 	HomeGridButton
 } from 'styles/components/homeProductGrid'
-import { ProductContext } from 'context/ProductContextProvider'
 import { FlexBox } from '../customStyle'
 import { ArrowForwardIos } from '@mui/icons-material'
 import CustomLink from '../customLink'
@@ -28,7 +26,7 @@ const HomeProductGrid = ({ category, products }: Props) => {
 				className='products-container'
 				sx={{ flexDirection: 'row', width: '80%' }}
 			>
-				<Grid container sx={{ minHeight: 400 }}>
+				<Grid container spacing={2}>
 					{products &&
 						products.map((product, index) => (
 							<ProductListGrid key={index} item xs={3}>

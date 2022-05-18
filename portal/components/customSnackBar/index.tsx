@@ -55,7 +55,7 @@ const CustomSnackBar = ({ open, snackClose, snackType }: Props) => {
 						onClick={() => {
 							setOrderStep(0)
 						}}
-						sx={{ fontSize: 20, marginLeft: '20px' }}
+						sx={{ fontSize: 18, marginLeft: '20px' }}
 					>
 						Back to cart
 					</Button>
@@ -74,6 +74,7 @@ const CustomSnackBar = ({ open, snackClose, snackType }: Props) => {
 					action={getSnackbarAction(snackType)}
 					message={getSnackbarContent(snackType)}
 					sx={{
+						fontSize: 18,
 						marginTop: '100px',
 						'& .MuiSnackbarContent-root': { padding: '15px 30px' }
 					}}
@@ -84,6 +85,7 @@ const CustomSnackBar = ({ open, snackClose, snackType }: Props) => {
 					open={open}
 					autoHideDuration={3000}
 					onClose={snackClose}
+					sx={{ '& .MuiAlert-message': { fontSize: 18, padding: 0 } }}
 				>
 					<Alert onClose={snackClose} severity={getSnackSeverity(snackType)}>
 						{getSnackbarContent(snackType)}

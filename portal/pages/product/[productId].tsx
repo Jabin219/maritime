@@ -29,7 +29,6 @@ const Product = () => {
 			quantity: 1
 		}
 		addToCart(cart, thisProduct as Product, setCart)
-		showSnackbar('add-to-cart')
 	}
 	const loadProduct = async (productId: string) => {
 		const productResult = await getProductById(productId)
@@ -74,6 +73,7 @@ const Product = () => {
 										className='add-to-cart'
 										onClick={() => {
 											handleAddToCart()
+											showSnackbar('add-to-cart')
 										}}
 									>
 										Add to Cart
@@ -92,10 +92,7 @@ const Product = () => {
 							</Grid>
 						</Grid>
 					</Box>
-					<Box
-						className='related-products-container'
-						sx={{ paddingBottom: '100px' }}
-					>
+					<Box className='related-products-container'>
 						<RelatedProductsTitle variant='h6'>
 							You May Also Like
 						</RelatedProductsTitle>
@@ -114,8 +111,8 @@ const Product = () => {
 												onClick={() => {
 													router.push(`/product/${product._id}`)
 												}}
-												width={500}
-												height={500}
+												width={256}
+												height={256}
 											/>
 											<Typography
 												className='product-name'

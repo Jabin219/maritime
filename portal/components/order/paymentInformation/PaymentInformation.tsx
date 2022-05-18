@@ -138,7 +138,7 @@ const PaymentInformation = () => {
 									<FormControlLabel
 										value='pickup'
 										control={<Radio color='primary' />}
-										label='In-store pickup'
+										label='In-store Pickup'
 									/>
 								</RadioGroup>
 							</FormControl>
