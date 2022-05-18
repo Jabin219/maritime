@@ -28,6 +28,7 @@ const Contact = () => {
 		contactReducer,
 		initialContactContent
 	)
+	const [error, setError] = useState(false)
 	const { showSnackbar } = useContext(SnackContext)
 	const handleSendContactEmail = async (contactContent: ContactContent) => {
 		if (
@@ -35,13 +36,28 @@ const Contact = () => {
 			!contactContent.email ||
 			!contactContent.message
 		) {
+			setError(true)
 			return false
 		}
 		if (!validator.isEmail(contactContent.email as string)) {
+			setError(true)
 			return false
 		}
 		const result = (await sendContactEmail(contactContent)).data
 		if (result.status === ResponseStatus.SUCCESS) {
+			setError(false)
+			dispatch({
+				type: 'CHANGE_NAME',
+				value: ''
+			})
+			dispatch({
+				type: 'CHANGE_EMAIL',
+				value: ''
+			})
+			dispatch({
+				type: 'CHANGE_MESSAGE',
+				value: ''
+			})
 			showSnackbar(SnackType.CONTACT_EMAIL_SENT)
 		} else {
 			showSnackbar(SnackType.UNKNOWN_ERROR)
@@ -75,8 +91,10 @@ const Contact = () => {
 							fullWidth
 							required
 							size='small'
-							error={!contactContent.name}
+							error={error && !contactContent.name}
+							value={contactContent.name}
 							onChange={event => {
+								setError(false)
 								dispatch({
 									type: 'CHANGE_NAME',
 									value: event.target.value
@@ -90,11 +108,14 @@ const Contact = () => {
 							fullWidth
 							required
 							size='small'
+							value={contactContent.email}
 							error={
-								!contactContent.email ||
-								!validator.isEmail(contactContent.email as string)
+								error &&
+								(!contactContent.email ||
+									!validator.isEmail(contactContent.email as string))
 							}
 							onChange={event => {
+								setError(false)
 								dispatch({
 									type: 'CHANGE_EMAIL',
 									value: event.target.value
@@ -108,9 +129,11 @@ const Contact = () => {
 							fullWidth
 							required
 							multiline
+							value={contactContent.message}
 							rows={8}
-							error={!contactContent.message}
+							error={error && !contactContent.message}
 							onChange={event => {
+								setError(false)
 								dispatch({
 									type: 'CHANGE_MESSAGE',
 									value: event.target.value

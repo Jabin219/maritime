@@ -8,10 +8,18 @@ import { useContext } from 'react'
 import { ProductContext } from 'context/ProductContextProvider'
 import { useRouter } from 'next/router'
 import ClientOnly from 'components/clientOnly'
+import { Product } from 'models'
 
 const Header = () => {
 	const router = useRouter()
 	const { cart, setOrderStep } = useContext(ProductContext)
+	const getCartCount = () => {
+		let count = 0
+		cart.forEach((cartItem: Product) => {
+			count += Number(cartItem.quantity)
+		})
+		return count
+	}
 	return (
 		<AppBar position='static' color='secondary' sx={{ boxShadow: 'none' }}>
 			<Grid
@@ -33,7 +41,11 @@ const Header = () => {
 				</CustomGrid>
 				<CustomGrid item xs>
 					<ClientOnly>
-						<Badge badgeContent={cart.length} color='primary' invisible={false}>
+						<Badge
+							badgeContent={getCartCount()}
+							color='primary'
+							invisible={false}
+						>
 							<ShoppingCart
 								sx={{ cursor: 'pointer' }}
 								onClick={() => {

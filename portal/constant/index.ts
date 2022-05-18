@@ -191,7 +191,7 @@ export const SampleProducts = [
 
 export enum PaymentMethod {
 	creditCard = 'credit-card',
-	payAtPickup = 'pay-at-pickup'
+	payOnPickup = 'pay-on-pickup'
 }
 
 export enum SortMethod {

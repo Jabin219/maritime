@@ -51,7 +51,7 @@ const OrderConfirmation = () => {
 									variant='h6'
 									className='pick-up-information-subtitle'
 								>
-									Pick Up Number
+									Pickup Number
 								</Typography>
 								<Typography variant='h6' className='pick-up-information-detail'>
 									{order.pickupNumber}
@@ -68,13 +68,13 @@ const OrderConfirmation = () => {
 									50 Tacoma Dr, Dartmouth, NS, B2W 3E6
 								</Typography>
 							</Grid>
-							{order.paymentMethod === PaymentMethod.payAtPickup && (
+							{order.paymentMethod === PaymentMethod.payOnPickup && (
 								<Grid item xs>
 									<Typography
 										variant='h6'
 										className='pick-up-information-subtitle'
 									>
-										Items will be Reserved for
+										Items Will be Reserved for
 									</Typography>
 									<Typography
 										variant='h6'
@@ -95,7 +95,7 @@ const OrderConfirmation = () => {
 							<Grid container>
 								<Grid item xs>
 									<Box className='single-information-container'>
-										<Typography component='label'>Pick Up#: </Typography>
+										<Typography component='label'>Pickup#: </Typography>
 										<Typography component='span'>
 											{order.pickupNumber}
 										</Typography>
@@ -122,13 +122,13 @@ const OrderConfirmation = () => {
 								<Grid item xs>
 									<Box className='single-information-container'>
 										<Typography component='label'>Shipping Method: </Typography>
-										<Typography component='span'>Pick Up</Typography>
+										<Typography component='span'>In-store pickup</Typography>
 									</Box>
 									<Box className='single-information-container'>
 										<Typography component='label'>Payment Method: </Typography>
 										<Typography component='span'>
-											{order.paymentMethod === PaymentMethod.payAtPickup &&
-												'Pay At Pickup'}
+											{order.paymentMethod === PaymentMethod.payOnPickup &&
+												'Pay on Pickup'}
 											{order.paymentMethod === PaymentMethod.creditCard &&
 												'Credit Card'}
 										</Typography>

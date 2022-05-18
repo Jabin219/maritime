@@ -1,6 +1,6 @@
 import { getOrderByPhoneOrPickupNumber } from 'axios/order'
-import { OrderStatus } from 'constants/index'
-import { Order, Product } from 'models'
+import { OrderStatus, ResponseStatus } from 'constants/index'
+import { Order } from 'models'
 import { useState, createContext } from 'react'
 
 export const OrderContext = createContext<any>(null)
@@ -11,31 +11,33 @@ const OrderContextProvider = ({ children }: Props) => {
 	const [orders, setOrders] = useState<Order[]>()
 	const [searchedString, setSearchedString] = useState('')
 	const [selectedOrder, setSelectedOrder] = useState<Order>()
-	const [orderProducts, setOrderProducts] = useState<Product[]>()
 	const [buttonDisabled, setButtonDisabled] = useState(false)
 	const findSelectedOrder = (orderId: string) => {
 		const order = orders?.find((order: Order) => order._id === orderId)
 		setSelectedOrder(order)
-		setOrderProducts(JSON.parse(order?.products as string))
 	}
 	const handleSearchOrders = async (searchedString: string) => {
-		const ordersResult = await (getOrderByPhoneOrPickupNumber(
-			searchedString
-		) as any)
-		setOrders(ordersResult.data.orders)
+		const ordersResult = await getOrderByPhoneOrPickupNumber(searchedString)
+		if (ordersResult.data.status === ResponseStatus.SUCCESS) {
+			setOrders(ordersResult.data.orders)
+			return ResponseStatus.SUCCESS
+		}
+		return ResponseStatus.ERROR
 	}
 	const getOrderStatusButtonContent = (orderStatus: string) => {
 		switch (orderStatus) {
 			case OrderStatus.reserved:
-				return 'Unpaid'
+				return 'Reserved'
 			case OrderStatus.paid:
 				return 'Paid'
 			case OrderStatus.expired:
 				return 'Expired'
 			case OrderStatus.completed:
 				return 'Completed'
-			default:
+			case OrderStatus.unpaid:
 				return 'Unpaid'
+			default:
+				return ''
 		}
 	}
 
@@ -47,7 +49,6 @@ const OrderContextProvider = ({ children }: Props) => {
 				findSelectedOrder,
 				selectedOrder,
 				getOrderStatusButtonContent,
-				orderProducts,
 				buttonDisabled,
 				setButtonDisabled,
 				searchedString,

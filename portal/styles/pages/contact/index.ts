@@ -1,7 +1,6 @@
 import { Box } from '@mui/material'
 import { styled } from '@mui/system'
 export const ContactPageContainer = styled(Box)({
-	paddingBottom: '200px',
 	'& .shop-information': {
 		maxWidth: '60%',
 		margin: '0 auto',

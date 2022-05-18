@@ -1,6 +1,5 @@
 import { Product } from 'models'
 import ProductModel from 'models/mongodb/product'
-import { priceFormatter } from 'utils'
 
 const generatePickupNumber = () => {
 	const characters = '0123456789'
@@ -59,9 +58,9 @@ const orderCalculator = async (products: Product[]) => {
 	const tax = subtotal * 0.15
 	const total = subtotal + tax
 	return {
-		subtotal: priceFormatter(subtotal),
-		total: priceFormatter(total),
-		tax: priceFormatter(tax)
+		subtotal: subtotal.toFixed(2),
+		total: total.toFixed(2),
+		tax: tax.toFixed(2)
 	}
 }
 

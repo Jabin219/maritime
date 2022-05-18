@@ -19,6 +19,15 @@ const CategoriesNavBar = () => {
 								key={index}
 								value={category.name}
 								label={category.label}
+								sx={{
+									color:
+										router.asPath === `/product-list/${category.name}`
+											? '#FF8800'
+											: '#333333',
+									fontFamily: 'Source Sans Pro',
+									fontWeight: 600,
+									fontSize: 18
+								}}
 								onClick={() => {
 									handleChangeCategory()
 									router.push(`/product-list/${category.name}`)

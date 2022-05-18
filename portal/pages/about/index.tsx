@@ -5,7 +5,7 @@ import PageBanner from 'components/pageBanner'
 
 const About = () => {
 	return (
-		<Box className='about-page' sx={{ marginBottom: '200px' }}>
+		<Box className='about-page'>
 			<PageBanner
 				pageTitle='About us'
 				pageDescription=''

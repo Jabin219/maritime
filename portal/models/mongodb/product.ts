@@ -28,11 +28,6 @@ export const productSchema = new Schema(
 			type: String,
 			required: false
 		},
-		status: {
-			type: String,
-			required: true,
-			default: 'inStock'
-		},
 		stock: {
 			type: Number,
 			required: true,

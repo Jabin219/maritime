@@ -2,7 +2,7 @@ import { Box, Typography, CardContent, Grid } from '@mui/material'
 import { FlexBox } from 'components/FlexBox'
 import { OrderContext } from 'contexts/OrderContext'
 import { Order, Product } from 'models'
-import React, { useContext, useEffect } from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { format, parseISO } from 'date-fns'
 import { OrderCard } from './style'
@@ -14,13 +14,8 @@ import { checkOrderStock } from 'axios/order'
 
 const OrderSearchResult = () => {
 	const navigate = useNavigate()
-	const {
-		orders,
-		getOrderStatusButtonContent,
-		setButtonDisabled,
-		handleSearchOrders,
-		searchedString
-	} = useContext(OrderContext)
+	const { orders, getOrderStatusButtonContent, setButtonDisabled } =
+		useContext(OrderContext)
 	const { setHeaderTitle } = useContext(TextContext)
 	setHeaderTitle('Search Result')
 	const checkStock = async (order: Order) => {
@@ -32,10 +27,6 @@ const OrderSearchResult = () => {
 		})
 		order.products = JSON.stringify(stockResult.products)
 	}
-	useEffect(() => {
-		handleSearchOrders(searchedString)
-	}, [])
-
 	return (
 		<Box
 			sx={{ backgroundColor: '#f5f5f5', paddingTop: '5px', minHeight: '100vh' }}

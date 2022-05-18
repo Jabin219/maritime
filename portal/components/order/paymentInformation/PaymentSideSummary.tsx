@@ -10,13 +10,11 @@ import { useContext, useState } from 'react'
 import { OrderContext } from 'context/OrderContextProvider'
 import { priceFormatter } from 'utils'
 import { CartSideSummaryContainer } from 'styles/components/order'
-import validator from 'validator'
-import { createOrder } from 'api/order'
 import { useStripe, useElements } from '@stripe/react-stripe-js'
 import { ProductContext } from 'context/ProductContextProvider'
-import { ContactInformation, Product } from 'models'
 import { SnackContext } from 'context/SnackContextProvider'
-import { ResponseStatus, SnackType, PaymentMethod } from 'constant'
+import { PaymentMethod } from 'constant'
+import { handleSubmitOrder } from './paymentHandler'
 interface Props {
 	contactInformation: { name: string; email: string; phone: string }
 	setContactNameError: (name: boolean) => void
@@ -44,90 +42,6 @@ const PaymentSideSummary = ({
 	const [processing, setProcessing] = useState(false)
 	const stripe: any = useStripe()
 	const elements: any = useElements()
-	const contactFormValidator = (contactInformation: ContactInformation) => {
-		if (!contactInformation.name) {
-			setContactNameError(true)
-			return false
-		}
-		if (
-			!contactInformation.email ||
-			!validator.isEmail(contactInformation.email as string)
-		) {
-			setContactEmailError(true)
-			return false
-		}
-		if (!contactInformation.phone) {
-			setContactPhoneError(true)
-			return false
-		}
-		return true
-	}
-	const handleSubmitOrder = async () => {
-		const validatorResult = contactFormValidator(contactInformation)
-		if (validatorResult) {
-			setProcessing(true)
-			const orderedProducts: { productId: string; quantity: number }[] = []
-			order.products.forEach((product: Product) => {
-				orderedProducts.push({
-					productId: product._id,
-					quantity: Number(product.quantity)
-				})
-			})
-			const createdOrderResult: any = await createOrder(
-				contactInformation,
-				shippingMethod,
-				paymentMethod,
-				orderedProducts
-			)
-			if (createdOrderResult.data.status === ResponseStatus.OUT_OF_STOCK) {
-				showSnackbar(SnackType.OUT_OF_STOCK)
-				createdOrderResult.data.products.forEach((productId: string) => {
-					cart.find(
-						(cartProduct: Product) => cartProduct._id === productId
-					).outOfStock = true
-				})
-				setCart(cart)
-				setProcessing(false)
-			} else if (createdOrderResult.data.status === ResponseStatus.SUCCESS) {
-				if (paymentMethod === PaymentMethod.creditCard) {
-					if (!stripe || !elements) {
-						setProcessing(false)
-						return
-					}
-					const cardInformation = elements.getElement(CardElement) as any
-					const payload = await stripe.confirmCardPayment(
-						createdOrderResult.data.intentSecret,
-						{
-							payment_method: {
-								card: cardInformation,
-								billing_details: contactInformation
-							}
-						}
-					)
-					if (payload.error) {
-						setCardInputError(`Payment error: ${payload.error.message}`)
-						setProcessing(false)
-						return
-					}
-				}
-				setCardInputError('')
-				setProcessing(false)
-				setOrder({
-					...order,
-					contactInformation: contactInformation,
-					shippingMethod: shippingMethod,
-					paymentMethod: paymentMethod,
-					createdAt: createdOrderResult.data.order.createdAt,
-					pickupNumber: createdOrderResult.data.order.pickupNumber
-				})
-				clearCart()
-				next()
-			} else {
-				showSnackbar(SnackType.PAYMENT_FAILED)
-				setProcessing(false)
-			}
-		}
-	}
 	return (
 		<CartSideSummaryContainer className='cart-side-summary'>
 			<Box className='header'>
@@ -147,7 +61,7 @@ const PaymentSideSummary = ({
 					<Typography variant='h6'>Tax</Typography>
 				</Grid>
 				<Grid className='rightFloat value' item xs={5}>
-					<Typography>{order.tax}</Typography>
+					<Typography>{priceFormatter(order.tax)}</Typography>
 				</Grid>
 				<Divider style={{ width: '100%' }} />
 				<Grid item xs={7} className='label' style={{ marginTop: 20 }}>
@@ -161,13 +75,34 @@ const PaymentSideSummary = ({
 					item
 					style={{ marginTop: 20 }}
 				>
-					<Typography className='total'>{order.total}</Typography>
+					<Typography className='total'>
+						{priceFormatter(order.total)}
+					</Typography>
 				</Grid>
 			</Grid>
 			<Button
 				className='btn-next-step'
 				onClick={() => {
-					handleSubmitOrder()
+					handleSubmitOrder(
+						contactInformation,
+						setContactNameError,
+						setContactEmailError,
+						setContactPhoneError,
+						setProcessing,
+						order,
+						shippingMethod,
+						paymentMethod,
+						showSnackbar,
+						cart,
+						setCart,
+						stripe,
+						elements,
+						CardElement,
+						setCardInputError,
+						setOrder,
+						clearCart,
+						next
+					)
 				}}
 				disabled={
 					(paymentMethod === PaymentMethod.creditCard &&
@@ -189,7 +124,7 @@ const PaymentSideSummary = ({
 				}}
 				sx={{ cursor: 'pointer' }}
 			>
-				Back To Cart
+				Back to Cart
 			</Typography>
 		</CartSideSummaryContainer>
 	)

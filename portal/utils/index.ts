@@ -8,7 +8,7 @@ export const priceFormatter = (price: number) => {
 	return formattedPrice
 }
 export const getBannerHeight = (widthHeightRate: number) => {
-	if (document) {
+	if (typeof window !== 'undefined') {
 		if (document.body.clientWidth >= 1920) {
 			return 1920 / widthHeightRate
 		} else {

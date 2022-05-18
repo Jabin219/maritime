@@ -16,7 +16,7 @@ import { useParams } from 'react-router-dom'
 import { format, parseISO } from 'date-fns'
 import { OrderDetailContainer } from './style'
 import OrderStatusButton from 'components/OrderStatusButton'
-import { Product } from 'models'
+import { Order, Product } from 'models'
 import { OrderStatus, ResponseStatus } from 'constants/index'
 import { pickupOrder } from 'axios/order'
 import { useNavigate } from 'react-router-dom'
@@ -28,8 +28,9 @@ const OrderDetail = () => {
 		findSelectedOrder,
 		selectedOrder,
 		getOrderStatusButtonContent,
-		orderProducts,
-		buttonDisabled
+		buttonDisabled,
+		setOrders,
+		orders
 	} = useContext(OrderContext)
 	const { setHeaderTitle } = useContext(TextContext)
 	setHeaderTitle('Order Detail')
@@ -37,6 +38,10 @@ const OrderDetail = () => {
 	const confirmPickup = async (orderId: string) => {
 		const result = await pickupOrder(orderId)
 		if (result.data.status === ResponseStatus.SUCCESS) {
+			const resultOrder = result.data.order
+			orders.find((order: Order) => order._id === resultOrder._id).status =
+				resultOrder.status
+			setOrders(orders)
 			navigate('/order-pickup-complete')
 		}
 	}
@@ -71,7 +76,7 @@ const OrderDetail = () => {
 					</Grid>
 					<Grid container spacing={2} className='order-info-container'>
 						<Grid item className='order-info-label'>
-							Pick Up#:
+							Pickup#:
 						</Grid>
 						<Grid item>{selectedOrder.pickupNumber}</Grid>
 					</Grid>
@@ -113,8 +118,8 @@ const OrderDetail = () => {
 				</Box>
 				<Divider />
 				<Box className='order-products'>
-					{orderProducts &&
-						orderProducts.map((product: Product) => (
+					{JSON.parse(selectedOrder.products) &&
+						JSON.parse(selectedOrder.products).map((product: Product) => (
 							<Box key={product._id}>
 								<Grid container className='product-container'>
 									<Grid item xs={3}>

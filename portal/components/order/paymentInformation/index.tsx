@@ -1,11 +1,10 @@
 import { Elements } from '@stripe/react-stripe-js'
-import { loadStripe } from '@stripe/stripe-js'
+import { ProductContext } from 'context/ProductContextProvider'
+import { useContext } from 'react'
 import PaymentInformation from './PaymentInformation'
 
 const PaymentInfoContainer = () => {
-	const stripePromise = loadStripe(
-		`${process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY}`
-	)
+	const { stripePromise } = useContext(ProductContext)
 	return (
 		<Elements stripe={stripePromise}>
 			<PaymentInformation />

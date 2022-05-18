@@ -9,8 +9,6 @@ import { HomePageCategories, HomePageCategoriesEnum } from 'constant'
 import { getHomePageProducts } from 'api/products'
 
 const Home: NextPage = () => {
-	const [bannerHeight, setBannerHeight] = useState(600)
-	const [middleBannerHeight, setMiddleBannerHeight] = useState(400)
 	const categoryNames = HomePageCategories.map(category => category.name)
 	const [homePageProducts, setHomePageProducts] = useState<
 		{
@@ -25,19 +23,15 @@ const Home: NextPage = () => {
 		setHomePageProducts(homeProductsResult.data.products)
 	}
 	useEffect(() => {
-		setBannerHeight(getBannerHeight(2.4))
-		setMiddleBannerHeight(getBannerHeight(3.6))
-	}, [])
-	useEffect(() => {
 		loadHomePageProducts(categoryNames)
 	}, [])
 	return (
-		<Box className='home-page' sx={{ marginBottom: '100px' }}>
+		<Box className='home-page'>
 			<FlexBox
 				className='home-page-banner'
 				sx={{
 					width: '100%',
-					height: bannerHeight,
+					height: getBannerHeight(2.4),
 					background: 'url(/images/home/home-banner.jpg) no-repeat',
 					backgroundSize: 'cover',
 					backgroundPosition: 'center'
@@ -74,7 +68,7 @@ const Home: NextPage = () => {
 							<FlexBox
 								sx={{
 									width: '100%',
-									height: middleBannerHeight,
+									height: getBannerHeight(3.6),
 									background:
 										'url(/images/home/home-middle-banner.jpg) no-repeat',
 									backgroundSize: 'cover',

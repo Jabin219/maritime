@@ -39,7 +39,7 @@ const ProductList = () => {
 	const [pagesCount, setPagesCount] = useState<any>(0)
 	const loadPagesCount = async (category: string) => {
 		const pagesCountResult = await getPagesCount(category)
-		setPagesCount(pagesCountResult.data.pagesCount)
+		setPagesCount(pagesCountResult.data.count)
 	}
 	const loadListedProducts = async (
 		currentPage: number,
@@ -79,7 +79,7 @@ const ProductList = () => {
 	}, [currentPage, categoryName, sortMethod])
 
 	return (
-		<ProductListPageContainer className='product-list-page'>
+		<ProductListPageContainer>
 			<Grid container>
 				<Grid item xs={3}>
 					<CategoryList />
@@ -107,7 +107,7 @@ const ProductList = () => {
 								</MenuItem>
 							</Select>
 						</FormControl>
-						<Grid container>
+						<Grid container spacing={2}>
 							{listedProducts &&
 								listedProducts.map((product: Product) => (
 									<ProductListGrid key={product._id} item xs={3}>
