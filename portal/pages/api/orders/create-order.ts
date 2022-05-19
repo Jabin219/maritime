@@ -53,8 +53,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 			if (paymentMethod === PaymentMethod.creditCard) {
 				const intent = await createPaymentIntent(
 					total,
-					orderAddedResult._id.toString(),
-					JSON.stringify(orderedProducts)
+					orderAddedResult._id.toString()
 				)
 				if (!intent.client_secret) {
 					res.json({ status: ResponseStatus.ERROR, message: 'Payment failed' })

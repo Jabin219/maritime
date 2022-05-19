@@ -49,7 +49,9 @@ export const CartSideSummaryContainer = styled(Box)({
 
 export const ShoppingCartContainer = styled(Box)({
 	border: '10px solid #EEEEEE',
-	'& img': { objectFit: 'cover' },
+	'& img': {
+		objectFit: 'cover'
+	},
 	'& .table-container': {
 		width: '95%',
 		margin: '0 auto',
@@ -79,10 +81,10 @@ export const ShoppingCartContainer = styled(Box)({
 		},
 		'& .product-name': {
 			position: 'relative',
-			paddingLeft: '10px',
+			paddingLeft: '30px',
 			'& .icon-delete': {
 				position: 'absolute',
-				left: '10px',
+				left: '30px',
 				bottom: 0,
 				cursor: 'pointer'
 			}
