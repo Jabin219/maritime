@@ -65,21 +65,22 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 					order: orderAddedResult,
 					intentSecret: intent.client_secret
 				})
-				return
 			} else if (paymentMethod === PaymentMethod.payOnPickup) {
 				await decreaseOrderedProductsStock(products)
 				const emailResult = await sendOrderConfirmation(orderAddedResult)
-				if (emailResult.status === ResponseStatus.ERROR) {
-					res.json({
-						status: ResponseStatus.ERROR,
-						error: emailResult.error
+				if (emailResult.status === ResponseStatus.SUCCESS) {
+					res.status(200).json({
+						status: ResponseStatus.SUCCESS,
+						order: orderAddedResult
 					})
 					return
+				} else {
+					res.status(200).json({
+						status: ResponseStatus.ERROR,
+						error: emailResult.error,
+						message: 'Send email error happened.'
+					})
 				}
-				res.status(200).json({
-					status: ResponseStatus.SUCCESS,
-					order: orderAddedResult
-				})
 			} else {
 				res.status(200).json({
 					status: ResponseStatus.ERROR,

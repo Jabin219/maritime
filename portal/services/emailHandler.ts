@@ -12,8 +12,8 @@ const sendOrderConfirmation = async (order: Order) => {
 	const products = JSON.parse(order.products as string)
 	const paymentMethod =
 		order.paymentMethod === PaymentMethod.creditCard
-			? 'Credit card'
-			: 'Pay on pickup'
+			? 'Credit Card'
+			: 'Pay on Pickup'
 	const msg = {
 		// 需添加客户邮箱
 		to: [contactInformation.email],
@@ -34,8 +34,8 @@ const sendOrderConfirmation = async (order: Order) => {
 		}
 	}
 	try {
-		MailService.send(msg)
-		return { status: 'success' }
+		await MailService.send(msg)
+		return { status: ResponseStatus.SUCCESS }
 	} catch (error: any) {
 		// Log friendly error
 		console.error(error)
@@ -63,8 +63,8 @@ const sendContactEmail = async (contactContent: ContactContent) => {
 		}
 	}
 	try {
-		MailService.send(msg)
-		return { status: 'success' }
+		await MailService.send(msg)
+		return { status: ResponseStatus.SUCCESS }
 	} catch (error: any) {
 		// Log friendly error
 		console.error(error)
