@@ -17,7 +17,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	if (req.method === 'POST') {
 		const bufferReq = await buffer(req)
 		const signature: any = req.headers['stripe-signature']
-		console.log(`====================signature: ${signature}`)
 		try {
 			const event: Stripe.Event = stripe.webhooks.constructEvent(
 				bufferReq,
