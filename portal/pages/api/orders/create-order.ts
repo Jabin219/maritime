@@ -73,12 +73,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 						status: ResponseStatus.SUCCESS,
 						order: orderAddedResult
 					})
-
 					return
 				} else {
 					res.status(200).json({
 						status: ResponseStatus.ERROR,
-						error: emailResult.error
+						error: emailResult.error,
+						message: 'Send email error happened.'
 					})
 				}
 			} else {
