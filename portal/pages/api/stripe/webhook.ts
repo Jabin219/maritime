@@ -5,7 +5,6 @@ import { OrderStatus } from 'constant'
 import { sendOrderConfirmation } from 'services/emailHandler'
 import { Product } from 'models'
 import { decreaseOrderedProductsStock } from 'services/orderHandler'
-import { stripe } from 'services/stripeHandler'
 import { buffer } from 'micro'
 
 export const config = {
@@ -16,13 +15,8 @@ export const config = {
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	if (req.method === 'POST') {
 		const bufferReq = await buffer(req)
-		const signature: any = req.headers['stripe-signature']
 		try {
-			const event: Stripe.Event = stripe.webhooks.constructEvent(
-				bufferReq,
-				signature,
-				process.env.STRIPE_WEBHOOK_SECRET as string
-			)
+			const event = JSON.parse(bufferReq as string)
 			switch (event.type) {
 				case 'payment_intent.succeeded':
 					const stripeObject: Stripe.PaymentIntent = event.data
@@ -36,7 +30,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 					decreaseOrderedProductsStock(orderedProducts)
 					orderResult.status = OrderStatus.paid
 					await orderResult.save()
-					sendOrderConfirmation(orderResult)
+					await sendOrderConfirmation(orderResult)
 					break
 				default:
 					console.log(`Unhandled event type ${event.type}`)
