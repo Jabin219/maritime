@@ -43,4 +43,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	// Return a response to acknowledge receipt of the event
 	res.json({ received: true })
 }
+export const config = {
+	api: {
+		bodyParser: false
+	}
+}
 export default handler
