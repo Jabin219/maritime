@@ -19,7 +19,7 @@ const sendOrderConfirmation = async (order: Order) => {
 		to: [contactInformation.email],
 		bcc: ['jiabin@zmley.com', 'summer@zmley.com'],
 		// 需改成客户邮箱
-		from: 'dev@zmley.com',
+		from: { name: 'Maritime Household', email: 'dev@zmley.com' },
 		subject: 'Order Confirmation',
 		templateId:
 			order.status === OrderStatus.reserved
@@ -56,7 +56,7 @@ const sendContactEmail = async (contactContent: ContactContent) => {
 		to: 'jabin219@gmail.com',
 		bcc: ['jiabin@zmley.com', 'summer@zmley.com'],
 		// 需改成客户邮箱
-		from: 'dev@zmley.com',
+		from: { name: 'Maritime Household', email: 'dev@zmley.com' },
 		templateId: process.env.SENDGRID_CONTACT_TEMPLATE_ID as string,
 		dynamicTemplateData: {
 			contactContent
