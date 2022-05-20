@@ -29,7 +29,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 			])
 			return products
 		}
-		const newArrivalsProducts = await ProductModel.find()
+		const newArrivalsProducts = await ProductModel.find({ stock: { $gte: 1 } })
 			.sort({ createdAt: 'desc' })
 			.limit(4)
 		const products = await findCategoryProducts(categories)

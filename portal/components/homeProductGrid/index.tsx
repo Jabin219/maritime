@@ -62,7 +62,7 @@ const HomeProductGrid = ({ category, products }: Props) => {
 				</CustomLink>
 			</FlexBox>
 			<CustomLink href={`/product-list/${category.name}`}>
-				<HomeGridButton>View all {category.name}</HomeGridButton>
+				<HomeGridButton>View all {category.label}</HomeGridButton>
 			</CustomLink>
 		</FlexBox>
 	)
