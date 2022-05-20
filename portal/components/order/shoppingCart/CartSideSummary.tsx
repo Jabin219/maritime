@@ -4,19 +4,18 @@ import { OrderContext } from 'context/OrderContextProvider'
 import CustomLink from 'components/customLink'
 import { priceFormatter, taxCalculator } from 'utils'
 import { CartSideSummaryContainer } from 'styles/components/order'
-import { Categories } from 'constant'
 import { ProductContext } from 'context/ProductContextProvider'
-import { useRouter } from 'next/router'
 
 const CartSideSummary = () => {
-	const router = useRouter()
 	const { cart } = useContext(ProductContext)
 	const { order, setOrder, next } = useContext(OrderContext)
 	const handleShoppingCartNext = async () => {
 		setOrder({
 			...order,
-			tax: taxCalculator(order.subtotal),
-			total: order.subtotal + taxCalculator(order.subtotal),
+			tax: Number(taxCalculator(order.subtotal).toFixed(2)),
+			total: Number(
+				(order.subtotal + taxCalculator(order.subtotal)).toFixed(2)
+			),
 			products: cart
 		})
 		next()
