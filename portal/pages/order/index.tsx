@@ -14,7 +14,7 @@ const Order = () => {
 	const [paymentMethod, setPaymentMethod] = useState(PaymentMethod.creditCard)
 	const { cart, setCart, orderStep, setOrderStep } = useContext(ProductContext)
 	const [order, setOrder] = useState<Order>({
-		subtotal: countCartTotal(cart)
+		subtotal: Number(countCartTotal(cart).toFixed(2))
 	})
 	const clearCart = () => {
 		setCart([])
