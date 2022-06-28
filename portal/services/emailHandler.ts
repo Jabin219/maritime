@@ -15,11 +15,15 @@ const sendOrderConfirmation = async (order: Order) => {
 			? 'Credit Card'
 			: 'Pay on Pickup'
 	const msg = {
-		// 需添加客户邮箱
-		to: [contactInformation.email],
+		to: [
+			contactInformation.email,
+			process.env.MARITIME_RECEIVER_EMAIL as string
+		],
 		bcc: ['jiabin@zmley.com', 'summer@zmley.com'],
-		// 需改成客户邮箱
-		from: { name: 'Maritime Household', email: 'dev@zmley.com' },
+		from: {
+			name: 'Maritime Household',
+			email: process.env.SENDGRID_SENDER_EMAIL as string
+		},
 		subject: 'Order Confirmation',
 		templateId:
 			order.status === OrderStatus.reserved
@@ -53,10 +57,13 @@ const sendOrderConfirmation = async (order: Order) => {
 const sendContactEmail = async (contactContent: ContactContent) => {
 	const msg = {
 		// 需改成客户邮箱
-		to: 'jabin219@gmail.com',
+		to: process.env.MARITIME_RECEIVER_EMAIL,
 		bcc: ['jiabin@zmley.com', 'summer@zmley.com'],
 		// 需改成客户邮箱
-		from: { name: 'Maritime Household', email: 'dev@zmley.com' },
+		from: {
+			name: 'Maritime Household',
+			email: process.env.SENDGRID_SENDER_EMAIL as string
+		},
 		templateId: process.env.SENDGRID_CONTACT_TEMPLATE_ID as string,
 		dynamicTemplateData: {
 			contactContent
